@@ -29,6 +29,7 @@
                 upload: true,
                 rename: true,
                 move: true,
+                rsync: true,
                 copy: true,
                 edit: true,
                 changePermissions: true,

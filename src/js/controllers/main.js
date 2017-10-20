@@ -7,11 +7,12 @@
         var $storage = $window.localStorage;
         $scope.config = fileManagerConfig;
         $scope.reverse = false;
-        $scope.predicate = ['model.type', 'model.name'];        
+        $scope.predicate = ['model.type', 'model.name'];
         $scope.order = function(predicate) {
             $scope.reverse = ($scope.predicate[1] === predicate) ? !$scope.reverse : false;
             $scope.predicate[1] = predicate;
         };
+            console.log("rsync=", fileManagerConfig.allowedActions.rsync)
         $scope.query = '';
         $scope.fileNavigator = new FileNavigator();
         $scope.apiMiddleware = new ApiMiddleware();
@@ -134,10 +135,10 @@
             if (item.isImage()) {
                 if ($scope.config.previewImagesInModal) {
                     return $scope.openImagePreview(item);
-                } 
+                }
                 return $scope.apiMiddleware.download(item, true);
             }
-            
+
             if (item.isEditable()) {
                 return $scope.openEditItem(item);
             }
@@ -282,7 +283,7 @@
             });
         };
 
-        $scope.move = function() {           
+        $scope.move = function() {
             var anyItem = $scope.singleSelection() || $scope.temps[0];
             if (anyItem && validateSamePath(anyItem)) {
                 $scope.apiMiddleware.apiHandler.error = $translate.instant('error_cannot_move_same_path');
@@ -291,6 +292,19 @@
             $scope.apiMiddleware.move($scope.temps, $rootScope.selectedModalPath).then(function() {
                 $scope.fileNavigator.refresh();
                 $scope.modal('move', true);
+            });
+        };
+
+        $scope.rsync = function() {
+            console.log("rsync");
+            var anyItem = $scope.singleSelection() || $scope.temps[0];
+            if (anyItem && validateSamePath(anyItem)) {
+                $scope.apiMiddleware.apiHandler.error = $translate.instant('error_cannot_move_same_path');
+                return false;
+            }
+            $scope.apiMiddleware.rsync($scope.temps, $rootScope.selectedModalPath).then(function() {
+                $scope.fileNavigator.refresh();
+                $scope.modal('rsync', true);
             });
         };
 

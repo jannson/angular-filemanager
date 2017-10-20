@@ -68,7 +68,7 @@
             if (singleFilename && items.length === 1) {
                 data.singleFilename = singleFilename;
             }
-            
+
             self.inprocess = true;
             self.error = '';
             $http.post(apiUrl, data).success(function(data, code) {
@@ -86,6 +86,26 @@
             var deferred = $q.defer();
             var data = {
                 action: 'move',
+                items: items,
+                newPath: path
+            };
+            self.inprocess = true;
+            self.error = '';
+            $http.post(apiUrl, data).success(function(data, code) {
+                self.deferredHandler(data, deferred, code);
+            }).error(function(data, code) {
+                self.deferredHandler(data, deferred, code, $translate.instant('error_moving'));
+            })['finally'](function() {
+                self.inprocess = false;
+            });
+            return deferred.promise;
+        };
+
+        ApiHandler.prototype.rsync = function(apiUrl, items, path) {
+            var self = this;
+            var deferred = $q.defer();
+            var data = {
+                action: 'rsync',
                 items: items,
                 newPath: path
             };
@@ -155,7 +175,7 @@
             return deferred.promise;
         };
 
-        ApiHandler.prototype.getContent = function(apiUrl, itemPath) {            
+        ApiHandler.prototype.getContent = function(apiUrl, itemPath) {
             var self = this;
             var deferred = $q.defer();
             var data = {
@@ -233,7 +253,7 @@
                 !$window.saveAs && $window.console.log('Your browser dont support ajax download, downloading by default');
                 return !!$window.open(url, '_blank', '');
             }
-            
+
             var deferred = $q.defer();
             self.inprocess = true;
             $http.get(url).success(function(data) {
@@ -262,7 +282,7 @@
                 !$window.saveAs && $window.console.log('Your browser dont support ajax download, downloading by default');
                 return !!$window.open(url, '_blank', '');
             }
-            
+
             self.inprocess = true;
             $http.get(apiUrl).success(function(data) {
                 var bin = new $window.Blob([data]);
@@ -330,7 +350,7 @@
                 permsCode: permsCode,
                 recursive: !!recursive
             };
-            
+
             self.inprocess = true;
             self.error = '';
             $http.post(apiUrl, data).success(function(data, code) {
@@ -360,7 +380,7 @@
             })['finally'](function() {
                 self.inprocess = false;
             });
-        
+
             return deferred.promise;
         };
 

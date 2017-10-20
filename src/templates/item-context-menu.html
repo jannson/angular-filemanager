@@ -49,6 +49,12 @@
             </a>
         </li>
 
+        <li ng-show="config.allowedActions.rsync">
+            <a href="" tabindex="-1" ng-click="modalWithPathSelector('rsync')">
+                <i class="glyphicon glyphicon-arrow-right"></i> {{'rsync' | translate}}
+            </a>
+        </li>
+
         <li ng-show="config.allowedActions.edit && singleSelection() && singleSelection().isEditable()">
             <a href="" tabindex="-1" ng-click="openEditItem()">
                 <i class="glyphicon glyphicon-pencil"></i> {{'edit' | translate}}

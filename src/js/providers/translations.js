@@ -67,6 +67,7 @@
             go_back: 'Go back',
             wait: 'Wait',
             move: 'Move',
+            rsync: 'Rsync',
             download: 'Download',
             view_item: 'View item',
             remove: 'Delete',
