@@ -49,7 +49,7 @@
             </a>
         </li>
 
-        <li ng-show="config.allowedActions.rsync">
+        <li ng-show="config.allowedActions.rsync && singleSelection()">
             <a href="" tabindex="-1" ng-click="modalWithPathSelector('rsync')">
                 <i class="glyphicon glyphicon-arrow-right"></i> {{'rsync' | translate}}
             </a>

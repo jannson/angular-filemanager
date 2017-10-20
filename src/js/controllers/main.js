@@ -12,7 +12,6 @@
             $scope.reverse = ($scope.predicate[1] === predicate) ? !$scope.reverse : false;
             $scope.predicate[1] = predicate;
         };
-            console.log("rsync=", fileManagerConfig.allowedActions.rsync)
         $scope.query = '';
         $scope.fileNavigator = new FileNavigator();
         $scope.apiMiddleware = new ApiMiddleware();
