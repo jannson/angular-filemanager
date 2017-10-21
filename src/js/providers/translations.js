@@ -855,6 +855,7 @@
             go_back: '后退',
             wait: '等待',
             move: '移动',
+            rsync: '增量同步',
             download: '下载',
             view_item: '查看子项',
             remove: '删除',

@@ -182,6 +182,13 @@
             return currentPath.indexOf(path + '/') !== -1;
         };
 
+        $scope.isRootPath = function() {
+            if ($scope.fileNavigator.currentPath && $scope.fileNavigator.currentPath.length == 0) {
+                return true
+            }
+            return false
+        }
+
         $scope.edit = function() {
             $scope.apiMiddleware.edit($scope.singleSelection()).then(function() {
                 $scope.modal('edit', true);
