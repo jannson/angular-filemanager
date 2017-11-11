@@ -39,7 +39,7 @@ routerId: 设备ID
 比如返回值如下：
 
 
-``
+```
 {
     "natTcpExternalAddr": "183.15.180.190:33574",
     "natTcpLocalAddr": "192.168.6.231:2300",
@@ -48,7 +48,7 @@ routerId: 设备ID
     "sharePath": "/home/janson/Downloads/tmp",
     "userToken": "0e48cd7b-4ddc-401e-a78f-22e3b4a522e1"
 }
-``
+```
 
 2. 获取设备正在执行的任务列表　符号　”[]“　表示要替换成具体的参数
 名字： /api/listTask/[当前设备ID]
@@ -56,7 +56,7 @@ routerId: 设备ID
 参数：当前设备 ID 为具体的设备名字，比如 8B46EC49E550
 返回值：
 
-``
+```
 {
     "result": [
         {
@@ -76,11 +76,11 @@ routerId: 设备ID
         }
     ]
 }
-``
+```
 
 具体一个请求的例子：
 
-``
+```
 http://127.0.0.1:4000/api/listTask/8B46EC49E550
 
 {
@@ -100,26 +100,26 @@ http://127.0.0.1:4000/api/listTask/8B46EC49E550
         }
     ]
 }
-``
+```
 
 3. 取消任务
 接口名字：　/api/cancelTask
 方法： POST
 参数：
 
-``
+```
 {"routerId":"[设备ID]","jobKey":"[任务唯一标识]"}
-``
+```
 
 返回：
-``
+```
 {
     "result": {
         "success": true,
         "error": ""
     }
 }
-``
+```
 
 4. 获取历史任务列表（成功失败的都有）
 名字： /api/listTask/[当前设备ID]
@@ -127,7 +127,7 @@ http://127.0.0.1:4000/api/listTask/8B46EC49E550
 参数：当前设备 ID 为具体的设备名字，比如 8B46EC49E550
 返回值：
 
-``
+```
 [
     {
         "key": "/go1.9.linux-amd64.tar.gz",
@@ -156,7 +156,7 @@ http://127.0.0.1:4000/api/listTask/8B46EC49E550
         "childs": null
     }
 ]
-``
+```
 
 5. 修改设备名字
 TODO 还没有完成
