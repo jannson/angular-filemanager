@@ -378,6 +378,7 @@
         $scope.changeLanguage(getQueryParam('lang'));
         $scope.isWindows = getQueryParam('server') === 'Windows';
         $scope.fileNavigator.refresh();
+        $scope.cogradient.getCurrentDevice();
         //显示同步对话框
         $scope.showProgress = function(id) {
             $('#'+id).toggle();
@@ -385,10 +386,10 @@
             if ($('#' + id).css('display') == 'block') {
                 $scope.cogradient.deviceList();
                 $scope.cogradient.refreshList();
-                // $scope.timer = $interval(function () {
-                //     console.log('start' + new Date().getTime());
-                //     $scope.cogradient.refreshList();
-                // }, 3000);
+                $scope.timer = $interval(function () {
+                    console.log('start' + new Date().getTime());
+                    $scope.cogradient.refreshList();
+                }, 3000);
             }else{
                 $interval.cancel($scope.timer);
             }
@@ -397,7 +398,6 @@
         //切换同步列表和同步历史界面
         $scope.selectHistoryList = function (className,type) {
             $('.' + className).toggle();
-            console.log(type);
             if(type=='list'){
                 $scope.timer = $interval(function () {
                     console.log('start' + new Date().getTime());
@@ -418,13 +418,9 @@
             }else{
 
             }
-            
-
         }
         // 显示详情
         $scope.showDetail = function (routerId) {
-            // alert(routerId);
-            console.log($scope.cogradient.deviceLists);
             var array = $scope.cogradient.deviceLists;
             for(var i = 0, len = array.length; i < len; i++){
                 console.log(array[i].routerId,routerId);
@@ -433,10 +429,23 @@
                     break;
                 }
             }
-           
             $scope.cogradient.refreshList(routerId);
-            // return false;
-            // event.stopPropagation(); 
+        }
+        $scope.reSynchro = function (params) {
+            var array = params.toPath.split('/');
+            array.splice(array.length-1);
+            // return;
+            var folderPath = params.toPath.split('/')
+            var param = {
+                action: "rsync",
+                items: [
+                    // "/C494ACB40260/[无XFS]第02集v1_bd.mp4"
+                    "/" + params.fromRouter + params.fromPath
+                ],
+                // newPath: "/8B46EC49E550/test11-13"
+                newPath: "/" + params.toRouter + array.join('/')
+            }
+            $scope.cogradient.reloadFile(param);
         }
     }]);
 })(angular, jQuery);

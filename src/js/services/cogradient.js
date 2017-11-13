@@ -9,6 +9,7 @@
                 this.historyList = [];
                 this.list = [];
                 this.deviceLists = [];
+                this.device = {};
                 this.error = '';
             };
             //异步处理，调用$q实现
@@ -48,6 +49,12 @@
             Cogradient.prototype.cancel = function (routerId, key) {
                 return this.apiMiddleware.cancelTask(routerId, key, this.deferredHandler.bind(this));
             };
+            Cogradient.prototype.getRouterInfo = function () {
+                return this.apiMiddleware.getRouterInfo(this.deferredHandler.bind(this));
+            };
+            Cogradient.prototype.uploadFile = function (params) {
+                return this.apiMiddleware.uploadFile(params,this.deferredHandler.bind(this));
+            };
             //刷新同步列表
             Cogradient.prototype.refreshHistory = function () {
                 var self = this;
@@ -62,9 +69,10 @@
             //根据[routerId]，默认当前设备，刷新同步列表 3秒一次
             Cogradient.prototype.refreshList = function (routerId) {
                 var self = this;
+                var deviceId = routerId||self.device.routerId;
                 self.requesting = true;
                 self.list = [];
-                return self.listTask(routerId).then(function (data) {
+                return self.listTask(deviceId).then(function (data) {
                     self.list = data.result;
                     var array = self.deviceLists;
                     console.log(data.result);
@@ -100,15 +108,15 @@
             Cogradient.prototype.deviceList = function () {
                 var self = this;
                 self.requesting = true;
-                console.log('???');
                 this.deviceLists = []
                 return self.lists().then(function (data) {
                     // self.deviceLists = data.result;
                     var tempArray = data.result;
                     for (var i = 0, len = tempArray.length; i < len; i++) {
+                        if (self.device.routerId == tempArray[i].name) { continue; }
                         var o = {};
                         o.routerId = tempArray[i].name;
-                        o.name = '打野的电脑' + i;
+                        o.name = tempArray[i].name;
                         o.hidden = true;
                         o.list = [];
                         o.child = false;
@@ -119,7 +127,28 @@
                     self.requesting = false;
                 });
             };
-
+            //获取当前设备信息
+            Cogradient.prototype.getCurrentDevice = function () {
+                var self = this;
+                self.requesting = true;
+                return self.getRouterInfo().then(function (data) {
+                    console.log(JSON.stringify(data));
+                    self.device = {
+                        routerId : data.routerId
+                    }
+                }).finally(function() {
+                    self.requesting = false;
+                })
+            }
+            Cogradient.prototype.reloadFile = function (param) {
+                var self = this;
+                self.requesting = true;
+                return self.uploadFile(param).then(function (data) {
+                    console.log(JSON.stringify(data));
+                }).finally(function () {
+                    self.requesting = false;
+                })
+            }
             return Cogradient;
         }
     ]);

@@ -34,7 +34,13 @@
             ApiMiddleware.prototype.cancelTask = function (routerId, key,customDeferredHandler) {
                 return this.apiHandler.cancelTask(routerId, key, fileManagerConfig.cancelTaskUrl, customDeferredHandler);
             };
-
+            ApiMiddleware.prototype.getRouterInfo = function (customDeferredHandler) {
+                return this.apiHandler.getRouterInfo(fileManagerConfig.routerInfoUrl, customDeferredHandler);
+            }; 
+            ApiMiddleware.prototype.uploadFile = function (params,customDeferredHandler) {
+                return this.apiHandler.uploadFile(fileManagerConfig.reloadFileUrl, params, customDeferredHandler);
+            };
+            
             ApiMiddleware.prototype.copy = function (files, path) {
                 var items = this.getFileList(files);
                 var singleFilename = items.length === 1 ? files[0].tempModel.name : undefined;

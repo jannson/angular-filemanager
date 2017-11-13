@@ -50,4 +50,9 @@
             return array[array.length-1];
         };
     }]);
+    app.filter('formatKB', ['$filter', function () {
+        return function (input) {
+            return parseInt(input/1024);
+        };
+    }]);
 })(angular);

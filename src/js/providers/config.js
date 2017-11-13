@@ -23,8 +23,9 @@
             permissionsUrl: 'bridges/php/handler.php',
             historyTaskUrl:'api/historyTask',
             listTaskUrl:'api/listTask',
-            currentDevice:'api/routerInfo',
+            routerInfoUrl:'api/routerInfo',
             cancelTaskUrl:'api/cancelTask',
+            reloadFileUrl: 'bridges/php/handler.php',
             basePath: '/',
 
             searchForm: true,
