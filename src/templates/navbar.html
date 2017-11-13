@@ -1,14 +1,14 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-9 col-md-10 hidden-xs">
+            <div class="col-sm-8 col-md-9 hidden-xs">
                 <div ng-show="!config.breadcrumb">
                     <a class="navbar-brand hidden-xs ng-binding" href="">angular-{{"filemanager" | translate}}</a>
                 </div>
                 <div ng-include="config.tplPath + '/current-folder-breadcrumb.html'" ng-show="config.breadcrumb">
                 </div>
             </div>
-            <div class="col-sm-3 col-md-2">
+            <div class="col-sm-4 col-md-3">
                 <div class="navbar-collapse">
                     <div class="navbar-form navbar-right text-right">
                         <div class="pull-left visible-xs" ng-if="fileNavigator.currentPath.length">
@@ -76,6 +76,11 @@
                                     </a>
                                 </li>
                             </ul>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-flat btn-sm" type="button" ng-click="showProgress('progress')">
+                                <i class="glyphicon glyphicon-retweet"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

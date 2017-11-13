@@ -32,7 +32,59 @@
             }
             return deferred.resolve(data);
         };
+        ApiHandler.prototype.historyTask = function (apiUrl, customDeferredHandler) {
+            var self = this;
+            var dfHandler = customDeferredHandler || self.deferredHandler;
+            var deferred = $q.defer();
 
+            self.inprocess = true;
+            self.error = '';
+            $http.get(apiUrl).success(function (data, code) {
+                console.log(data,deferred,code);
+                dfHandler(data, deferred, code);
+            }).error(function (data, code) {
+                dfHandler(data, deferred, code, 'Unknown error listing, check the response');
+            })['finally'](function () {
+                self.inprocess = false;
+            });
+            return deferred.promise;
+        };
+        ApiHandler.prototype.listTask = function (apiUrl, routerId, customDeferredHandler) {
+            var self = this;
+            var dfHandler = customDeferredHandler || self.deferredHandler;
+            var id = routerId || 'C494ACB40260';
+            var deferred = $q.defer();
+
+            self.inprocess = true;
+            self.error = '';
+            $http.get(apiUrl + '/' + id).success(function (data, code) {
+                console.log(data, deferred, code);
+                dfHandler(data, deferred, code);
+            }).error(function (data, code) {
+                dfHandler(data, deferred, code, 'Unknown error listing, check the response');
+            })['finally'](function () {
+                self.inprocess = false;
+            });
+            return deferred.promise;
+        };
+        ApiHandler.prototype.cancelTask = function (routerId,key,apiUrl,customDeferredHandler) {
+            var self = this;
+            var dfHandler = customDeferredHandler || self.deferredHandler;
+            var deferred = $q.defer();
+            var data = { "routerId": routerId, "jobKey": key }
+
+            self.inprocess = true;
+            self.error = '';
+
+            $http.post(apiUrl, data).success(function (data, code) {
+                dfHandler(data, deferred, code);
+            }).error(function (data, code) {
+                dfHandler(data, deferred, code, 'Unknown error listing, check the response');
+            })['finally'](function () {
+                self.inprocess = false;
+            });
+            return deferred.promise;
+        };
         ApiHandler.prototype.list = function(apiUrl, path, customDeferredHandler, exts) {
             var self = this;
             var dfHandler = customDeferredHandler || self.deferredHandler;

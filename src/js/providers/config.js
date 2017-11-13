@@ -21,6 +21,10 @@
             compressUrl: 'bridges/php/handler.php',
             extractUrl: 'bridges/php/handler.php',
             permissionsUrl: 'bridges/php/handler.php',
+            historyTaskUrl:'api/historyTask',
+            listTaskUrl:'api/listTask',
+            currentDevice:'api/routerInfo',
+            cancelTaskUrl:'api/cancelTask',
             basePath: '/',
 
             searchForm: true,

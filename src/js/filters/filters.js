@@ -43,4 +43,11 @@
         return Math.max(fileSizeInBytes, 0.1).toFixed(1) + ' ' + result;
       };
     }]);
+
+    app.filter('formatName', ['$filter', function () {
+        return function (input) {
+            var array = input.split('/')
+            return array[array.length-1];
+        };
+    }]);
 })(angular);

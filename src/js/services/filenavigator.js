@@ -47,7 +47,6 @@
         FileNavigator.prototype.list = function() {
             return this.apiMiddleware.list(this.currentPath, this.deferredHandler.bind(this));
         };
-
         FileNavigator.prototype.refresh = function() {
             var self = this;
             if (! self.currentPath.length) {

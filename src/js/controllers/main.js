@@ -1,8 +1,8 @@
 (function(angular, $) {
     'use strict';
     angular.module('FileManagerApp').controller('FileManagerCtrl', [
-        '$scope', '$rootScope', '$window', '$translate', 'fileManagerConfig', 'item', 'fileNavigator', 'apiMiddleware',
-        function($scope, $rootScope, $window, $translate, fileManagerConfig, Item, FileNavigator, ApiMiddleware) {
+        '$scope', '$rootScope', '$window', '$translate', '$interval','fileManagerConfig', 'item', 'fileNavigator', 'apiMiddleware', 'cogradient',
+        function($scope, $rootScope, $window, $translate, $interval,fileManagerConfig, Item, FileNavigator, ApiMiddleware, Cogradient) {
 
         var $storage = $window.localStorage;
         $scope.config = fileManagerConfig;
@@ -15,10 +15,12 @@
         $scope.query = '';
         $scope.fileNavigator = new FileNavigator();
         $scope.apiMiddleware = new ApiMiddleware();
+        $scope.cogradient = new Cogradient();
         $scope.uploadFileList = [];
         $scope.viewTemplate = $storage.getItem('viewTemplate') || 'main-icons.html';
         $scope.fileList = [];
         $scope.temps = [];
+        $scope.historyTask = [];
 
         $scope.$watch('temps', function() {
             if ($scope.singleSelection()) {
@@ -376,6 +378,65 @@
         $scope.changeLanguage(getQueryParam('lang'));
         $scope.isWindows = getQueryParam('server') === 'Windows';
         $scope.fileNavigator.refresh();
+        //显示同步对话框
+        $scope.showProgress = function(id) {
+            $('#'+id).toggle();
+            console.log($('#' + id).css('display'));
+            if ($('#' + id).css('display') == 'block') {
+                $scope.cogradient.deviceList();
+                $scope.cogradient.refreshList();
+                // $scope.timer = $interval(function () {
+                //     console.log('start' + new Date().getTime());
+                //     $scope.cogradient.refreshList();
+                // }, 3000);
+            }else{
+                $interval.cancel($scope.timer);
+            }
+            
+        }
+        //切换同步列表和同步历史界面
+        $scope.selectHistoryList = function (className,type) {
+            $('.' + className).toggle();
+            console.log(type);
+            if(type=='list'){
+                $scope.timer = $interval(function () {
+                    console.log('start' + new Date().getTime());
+                    $scope.cogradient.refreshList();
+                }, 3000);
+                $scope.cogradient.refreshList();
+            }else{
+                $scope.cogradient.refreshHistory();
+                $interval.cancel($scope.timer);
+            }
+            
+        }
+        // 取消任务
+        $scope.cancelTask =function (routerId,key) {
+            var r = confirm('是否取消同步？');
+            if (r==true) {
+                $scope.cogradient.cancelTask(routerId, key);
+            }else{
 
+            }
+            
+
+        }
+        // 显示详情
+        $scope.showDetail = function (routerId) {
+            // alert(routerId);
+            console.log($scope.cogradient.deviceLists);
+            var array = $scope.cogradient.deviceLists;
+            for(var i = 0, len = array.length; i < len; i++){
+                console.log(array[i].routerId,routerId);
+                if(array[i].routerId == routerId){
+                    array[i].hidden = !array[i].hidden;
+                    break;
+                }
+            }
+           
+            $scope.cogradient.refreshList(routerId);
+            // return false;
+            // event.stopPropagation(); 
+        }
     }]);
 })(angular, jQuery);
