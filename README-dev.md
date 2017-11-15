@@ -159,5 +159,61 @@ http://127.0.0.1:4000/api/listTask/8B46EC49E550
 ```
 
 5. 修改设备名字
-TODO 还没有完成
+/api/routerRename
+```
+{
+  "routerId": "9F154EFE83B0",
+  "name": "中文222"
+}
+
+{
+    "result": {
+        "success": true,
+        "error": ""
+    }
+}
+
+```
+
+6. 设备名字
+/api/routerInfo
+输入：空
+返回：
+```
+{
+    "natTcpExternalAddr": "",
+    "natTcpLocalAddr": "10.1.110.13:2300",
+    "natType": "\u0007",
+    "natUdpExternalAddr": "61.141.65.123:51602",
+    "routerId": "9F154EFE83B0",
+    "routers": [
+        {
+            "routerId": "8B46EC49E550",
+            "name": "test",
+            "useLan": false,
+            "p2pType": -1,
+            "useDirect": false,
+            "isConnect": false
+        },
+        {
+            "routerId": "947196565000",
+            "name": "MyRouter",
+            "useLan": false,
+            "p2pType": -1,
+            "useDirect": false,
+            "isConnect": false
+        },
+        {
+            "routerId": "9F154EFE83B0",
+            "name": "中文222",
+            "useLan": false,
+            "p2pType": 0,
+            "useDirect": false,
+            "isConnect": false
+        }
+    ],
+    "sharePath": "/home/janson/download",
+    "userToken": "0e48cd7b-4ddc-401e-a78f-22e3b4a522e1"
+}
+```
 
