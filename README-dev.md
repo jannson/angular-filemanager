@@ -217,3 +217,29 @@ http://127.0.0.1:4000/api/listTask/8B46EC49E550
 }
 ```
 
+7. 初始化数据
+POST http://127.0.0.1:4000/api/config
+输入
+
+```
+{"username":"xxx-xxx-xxx-xxxx","sharePath":"/home/janson/Downloads/tmp"}
+```
+
+返回
+
+```
+{
+    "result": {
+        "success": true,
+        "error": ""
+    }
+}
+```
+
+8. 获取初始化数据
+GET http://127.0.0.1:4000/api/config
+返回
+```
+{"username":"xxx-xxx-xxx-xxxx","sharePath":"/home/janson/Downloads/tmp"}
+```
+
