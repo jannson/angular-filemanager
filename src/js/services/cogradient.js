@@ -37,6 +37,7 @@
                 }
                 return deferred.resolve(data);
             };
+            //废弃该方法
             Cogradient.prototype.lists = function () {
                 return this.apiMiddleware.list([], this.deferredHandler.bind(this));
             };
@@ -53,7 +54,7 @@
                 return this.apiMiddleware.getRouterInfo(this.deferredHandler.bind(this));
             };
             Cogradient.prototype.uploadFile = function (params) {
-                return this.apiMiddleware.uploadFile(params,this.deferredHandler.bind(this));
+                return this.apiMiddleware.uploadFile(params, this.deferredHandler.bind(this));
             };
             //刷新同步列表
             Cogradient.prototype.refreshHistory = function () {
@@ -69,7 +70,7 @@
             //根据[routerId]，默认当前设备，刷新同步列表 3秒一次
             Cogradient.prototype.refreshList = function (routerId) {
                 var self = this;
-                var deviceId = routerId||self.device.routerId;
+                var deviceId = routerId || self.device.routerId;
                 self.requesting = true;
                 self.list = [];
                 return self.listTask(deviceId).then(function (data) {
@@ -81,7 +82,7 @@
                             array[i].list = data.result;
                             if (data.result == 0) {
                                 array[i].child = false;
-                            }else{
+                            } else {
                                 array[i].child = true;
                             }
                             break;
@@ -104,7 +105,7 @@
                     self.requesting = false;
                 });
             };
-            // 获取同步窗口下的设备列表
+            // 获取同步窗口下的设备列表  废弃该方法
             Cogradient.prototype.deviceList = function () {
                 var self = this;
                 self.requesting = true;
@@ -113,7 +114,9 @@
                     // self.deviceLists = data.result;
                     var tempArray = data.result;
                     for (var i = 0, len = tempArray.length; i < len; i++) {
-                        if (self.device.routerId == tempArray[i].name) { continue; }
+                        if (self.device.routerId == tempArray[i].name) {
+                            continue;
+                        }
                         var o = {};
                         o.routerId = tempArray[i].name;
                         o.name = tempArray[i].name;
@@ -122,7 +125,7 @@
                         o.child = false;
                         self.deviceLists.push(o);
                     }
-                    console.log(data);
+                    console.log(JSON.stringify(self.deviceLists));
                 }).finally(function () {
                     self.requesting = false;
                 });
@@ -132,11 +135,28 @@
                 var self = this;
                 self.requesting = true;
                 return self.getRouterInfo().then(function (data) {
-                    console.log(JSON.stringify(data));
-                    self.device = {
-                        routerId : data.routerId
+                    if(!data.success){
+                        alert('网络连接失败，请重试！');
+                        return;
                     }
-                }).finally(function() {
+                    var array = data.routers;
+                    for (var i = 0, len = array.length; i < len; i++) {
+                        if (data.routerId == array[i].routerId) {
+                            self.device = {
+                                routerId: array[i].routerId,
+                                name: array[i].name
+                            }
+                            continue;
+                        }
+                        var o = {};
+                        o.routerId = array[i].routerId;
+                        o.name = array[i].name;
+                        o.hidden = true;
+                        o.list = [];
+                        o.child = false;
+                        self.deviceLists.push(o);
+                    }
+                }).finally(function () {
                     self.requesting = false;
                 })
             }

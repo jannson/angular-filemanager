@@ -1,7 +1,9 @@
 <div ng-controller="FileManagerCtrl" ngf-drop="addForUpload($files)" ngf-drag-over-class="'upload-dragover'" ngf-multiple="true">
-    <div ng-include="config.tplPath + '/navbar.html'"></div>
+    <div ng-include="config.tplPath + '/option.html'" ng-show="option.isOptioned"></div>
+    
+    <div ng-include="config.tplPath + '/navbar.html'" ng-hide="option.isOptioned"></div>
 
-    <div class="container-fluid">
+    <div class="container-fluid" ng-hide="option.isOptioned">
         <div class="row">
 
             <div class="col-sm-4 col-md-3 sidebar file-tree animated slow fadeIn" ng-include="config.tplPath + '/sidebar.html'" ng-show="config.sidebar &amp;&amp; fileNavigator.history[0]">
@@ -13,7 +15,8 @@
         </div>
     </div>
 
-    <div ng-include="config.tplPath + '/modals.html'"></div>
-    <div ng-include="config.tplPath + '/synchroDialog.html'"></div>
-    <div ng-include="config.tplPath + '/item-context-menu.html'"></div>
+    <div ng-include="config.tplPath + '/modals.html'" ng-hide="option.isOptioned"></div>
+    <!-- <div ng-include="config.tplPath + '/synchroDialog.html'"></div> -->
+    <div ng-include="config.tplPath + '/synchroPanel.html'" ng-hide="option.isOptioned"></div>
+    <div ng-include="config.tplPath + '/item-context-menu.html'" ng-hide="option.isOptioned"></div>
 </div>

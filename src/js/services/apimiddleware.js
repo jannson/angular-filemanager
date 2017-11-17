@@ -40,7 +40,9 @@
             ApiMiddleware.prototype.uploadFile = function (params,customDeferredHandler) {
                 return this.apiHandler.uploadFile(fileManagerConfig.reloadFileUrl, params, customDeferredHandler);
             };
-            
+            ApiMiddleware.prototype.setConfigs = function (params,customDeferredHandler) {
+                return this.apiHandler.setConfigs(fileManagerConfig.setConfigUrl, params, customDeferredHandler);
+            };
             ApiMiddleware.prototype.copy = function (files, path) {
                 var items = this.getFileList(files);
                 var singleFilename = items.length === 1 ? files[0].tempModel.name : undefined;

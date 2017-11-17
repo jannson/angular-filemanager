@@ -14,6 +14,7 @@
         <tr ng-show="fileNavigator.requesting">
             <td colspan="2">
                 <div ng-include="config.tplPath + '/spinner.html'"></div>
+                <div class="text-center">请求中，请等待...</div>
             </td>
         </tr>
         <tr ng-show="!fileNavigator.requesting && !fileNavigator.listHasFolders() && !fileNavigator.error">
@@ -33,7 +34,7 @@
             <td>
                 <a href="" ng-click="fileNavigator.folderClick(item)" title="{{item.model.name}} ({{item.model.size | humanReadableFileSize}})">
                     <i class="glyphicon glyphicon-folder-close"></i>
-                    {{item.model.name | strLimit : 32}}
+                    {{(item.model.key || item.model.name) | strLimit : 32}}
                 </a>
             </td>
             <td class="text-right">

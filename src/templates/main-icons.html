@@ -6,13 +6,14 @@
                     <i class="glyphicon glyphicon-folder-open" ng-show="item.model.type === 'dir'"></i>
                     <i class="glyphicon glyphicon-file" data-ext="{{ item.model.name | fileExtension }}" ng-show="item.model.type === 'file'" ng-class="{'item-extension': config.showExtensionIcons}"></i>
                 </div>
-                {{item.model.name | strLimit : 11 }}
+                {{(item.model.key||item.model.name) | strLimit : 11 }}
             </a>
         </div>
     </div>
 
     <div ng-show="fileNavigator.requesting">
         <div ng-include="config.tplPath + '/spinner.html'"></div>
+        <div class="text-center">请求中，请等待...</div>
     </div>
 
     <div class="alert alert-warning" ng-show="!fileNavigator.requesting && fileNavigator.fileList.length < 1 && !fileNavigator.error">

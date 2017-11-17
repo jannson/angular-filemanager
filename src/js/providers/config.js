@@ -26,6 +26,7 @@
             routerInfoUrl:'api/routerInfo',
             cancelTaskUrl:'api/cancelTask',
             reloadFileUrl: 'bridges/php/handler.php',
+            setConfigUrl:'api/config',
             basePath: '/',
 
             searchForm: true,
