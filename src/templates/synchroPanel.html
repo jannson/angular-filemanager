@@ -107,7 +107,7 @@
         </div>
         <div class="fill-after">
             <h5>当前设备:{{cogradient.device.name}}</h5>
-            <div class="fill-after m10">
+            <!-- <div class="fill-after m10">
                 <div class="file-box">文件预览</div>
                 <div class="progress-content">
                     <div>
@@ -123,7 +123,7 @@
                 <div class="cancel-button">
                     取消
                 </div>
-            </div>
+            </div> -->
             <div class="fill-after m10" ng-repeat="item in cogradient.list">
                 <div class="file-box">文件预览</div>
                 <div class="progress-content">
@@ -143,9 +143,9 @@
                 </div>
             </div>
         </div>
-        <div class="fill-after m10">
+        <div class="fill-after">
             <h5>其他设备</h5>
-            <div class="fill-after">
+            <!-- <div class="fill-after">
                 <h6>大爷的电脑
                     <span class="detail-button" ng-click="$parent.progress('c9')">收起</span>
                 </h6>
@@ -166,7 +166,7 @@
                         取消
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="fill-after" ng-repeat="item in cogradient.deviceLists">
                 <h6>{{item.name}}
                     <span class="detail-button" ng-click="$parent.showDetail(item.routerId)">

@@ -1,8 +1,8 @@
 (function (angular, $) {
     'use strict';
     angular.module('FileManagerApp').controller('FileManagerCtrl', [
-        '$scope', '$rootScope', '$window', '$translate', '$interval', 'fileManagerConfig', 'item', 'fileNavigator', 'apiMiddleware', 'cogradient','option',
-        function ($scope, $rootScope, $window, $translate, $interval, fileManagerConfig, Item, FileNavigator, ApiMiddleware, Cogradient, Option) {
+        '$scope', '$rootScope', '$window', '$translate', '$interval', 'fileManagerConfig', 'item', 'fileNavigator', 'apiMiddleware', 'cogradient',
+        function ($scope, $rootScope, $window, $translate, $interval, fileManagerConfig, Item, FileNavigator, ApiMiddleware, Cogradient) {
 
             var $storage = $window.localStorage;
             $scope.config = fileManagerConfig;
@@ -16,18 +16,12 @@
             $scope.fileNavigator = new FileNavigator();
             $scope.apiMiddleware = new ApiMiddleware();
             $scope.cogradient = new Cogradient();
-            $scope.option = new Option();
             $scope.uploadFileList = [];
             $scope.viewTemplate = $storage.getItem('viewTemplate') || 'main-icons.html';
             $scope.fileList = [];
             $scope.temps = [];
             $scope.historyTask = [];
-            // $scope.isOptioned = true;
-            $scope.token_path_flag = true;
-            $scope.token_path_config = {
-                username:'0e48cd7b-4ddc-401e-a78f-22e3b4a522e1',
-                sharePath:'D:/groupInfo/nginx-1.13.1/html/client'
-            }
+
             $scope.$watch('temps', function () {
                 if ($scope.singleSelection()) {
                     $scope.temp = $scope.singleSelection();
@@ -385,22 +379,24 @@
 
             $scope.changeLanguage(getQueryParam('lang'));
             $scope.isWindows = getQueryParam('server') === 'Windows';
-            $scope.setOption = function(){
-                $scope.option.setConfig($scope.token_path_config, $scope.fileNavigator.getCurrentDevices());
-                
+            $scope.fileNavigator.deviceList = JSON.parse(localStorage.getItem('deviceList'));
+            
+            if (!$scope.fileNavigator.deviceList || $scope.fileNavigator.deviceList.length==0){
+                $scope.fileNavigator.getCurrentDevices()
+            }else{
+                $scope.fileNavigator.refresh2($scope.fileNavigator.deviceList)
             }
+
             //显示同步对话框
             $scope.showProgress = function (id) {
                 $('#' + id).toggle();
-                console.log($('#' + id).css('display'));
                 if ($('#' + id).css('display') == 'block') {
                     $scope.cogradient.getCurrentDevice();
                     // $scope.cogradient.deviceList();
                     $scope.cogradient.refreshList();
-                    // $scope.timer = $interval(function () {
-                    //     console.log('start' + new Date().getTime());
-                    //     $scope.cogradient.refreshList();
-                    // }, 3000);
+                    $scope.timer = $interval(function () {
+                        $scope.cogradient.refreshList();
+                    }, 5000);
                 } else {
                     $interval.cancel($scope.timer);
                 }
@@ -409,10 +405,8 @@
             //切换同步列表和同步历史界面
             $scope.selectHistoryList = function (className, type) {
                 $('.' + className).toggle();
-                console.log(className);
                 if (type == 'list') {
                     $scope.timer = $interval(function () {
-                        console.log('start' + new Date().getTime());
                         $scope.cogradient.refreshList();
                     }, 3000);
                     $scope.cogradient.refreshList();

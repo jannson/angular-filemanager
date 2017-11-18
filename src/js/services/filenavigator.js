@@ -64,17 +64,14 @@
                     self.fileList = (data.result || []).map(function (file) {
                         return new Item(file, self.currentPath);
                     });
-                    console.log(list)
                     for (var i = 0, len = list.length; i < len; i++) {
                         for (var j = 0, jLen = self.fileList.length; j < jLen; j++) {
-                            console.log(list[i].routerId, list[i].name, self.fileList[j].model.name);
                             if (list[i].routerId == self.fileList[j].model.name) {
                                 self.fileList[j].model.key = list[i].name;
                                 continue;
                             }
                         }
                     }
-                    console.log(JSON.stringify(self.fileList));
                     self.buildTree(path);
                     self.onRefresh();
                 }).finally(function () {

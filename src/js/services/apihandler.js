@@ -40,7 +40,6 @@
             self.inprocess = true;
             self.error = '';
             $http.get(apiUrl).success(function (data, code) {
-                console.log(data,deferred,code);
                 dfHandler(data, deferred, code);
             }).error(function (data, code) {
                 dfHandler(data, deferred, code, 'Unknown error listing, check the response');
@@ -58,7 +57,6 @@
             self.inprocess = true;
             self.error = '';
             $http.get(apiUrl + '/' + id).success(function (data, code) {
-                console.log(data, deferred, code);
                 dfHandler(data, deferred, code);
             }).error(function (data, code) {
                 dfHandler(data, deferred, code, 'Unknown error listing, check the response');
@@ -75,7 +73,6 @@
             self.inprocess = true;
             self.error = '';
             $http.get(apiUrl).success(function (data, code) {
-                console.log(data, deferred, code);
                 dfHandler(data, deferred, code);
             }).error(function (data, code) {
                 dfHandler(data, deferred, code, 'Unknown error listing, check the response');

@@ -62,7 +62,16 @@
                 self.requesting = true;
                 self.historyList = [];
                 return self.historyTask().then(function (data) {
-                    self.historyList = data;
+                    if (!data.success&&data.success==false) {
+                        var r = confirm('请求失败，是否重试');
+                        if (r == true) {
+                            self.refreshHistory();
+                        } else {
+                            alert('取消请求！');
+                        }
+                    } else {
+                        self.historyList = data;
+                    }
                 }).finally(function () {
                     self.requesting = false;
                 });
@@ -70,13 +79,13 @@
             //根据[routerId]，默认当前设备，刷新同步列表 3秒一次
             Cogradient.prototype.refreshList = function (routerId) {
                 var self = this;
+
                 var deviceId = routerId || self.device.routerId;
                 self.requesting = true;
                 self.list = [];
                 return self.listTask(deviceId).then(function (data) {
                     self.list = data.result;
                     var array = self.deviceLists;
-                    console.log(data.result);
                     for (var i = 0, len = array.length; i < len; i++) {
                         if (array[i].routerId == routerId) {
                             array[i].list = data.result;
@@ -105,60 +114,36 @@
                     self.requesting = false;
                 });
             };
-            // 获取同步窗口下的设备列表  废弃该方法
-            Cogradient.prototype.deviceList = function () {
-                var self = this;
-                self.requesting = true;
-                this.deviceLists = []
-                return self.lists().then(function (data) {
-                    // self.deviceLists = data.result;
-                    var tempArray = data.result;
-                    for (var i = 0, len = tempArray.length; i < len; i++) {
-                        if (self.device.routerId == tempArray[i].name) {
-                            continue;
-                        }
-                        var o = {};
-                        o.routerId = tempArray[i].name;
-                        o.name = tempArray[i].name;
-                        o.hidden = true;
-                        o.list = [];
-                        o.child = false;
-                        self.deviceLists.push(o);
-                    }
-                    console.log(JSON.stringify(self.deviceLists));
-                }).finally(function () {
-                    self.requesting = false;
-                });
-            };
             //获取当前设备信息
             Cogradient.prototype.getCurrentDevice = function () {
                 var self = this;
-                self.requesting = true;
-                return self.getRouterInfo().then(function (data) {
-                    if(!data.success){
-                        alert('网络连接失败，请重试！');
-                        return;
-                    }
-                    var array = data.routers;
-                    for (var i = 0, len = array.length; i < len; i++) {
-                        if (data.routerId == array[i].routerId) {
-                            self.device = {
-                                routerId: array[i].routerId,
-                                name: array[i].name
-                            }
-                            continue;
+
+                // self.requesting = true;
+                // return self.getRouterInfo().then(function (data) {
+                //     if (data.routers.length==0){
+                //         alert('网络连接失败，请重试！');
+                //         return;
+                //     }
+                var array = JSON.parse(localStorage.getItem('deviceList'));
+                for (var i = 0, len = array.length; i < len; i++) {
+                    if (array[i].isCurrentDevice) {
+                        self.device = {
+                            routerId: array[i].routerId,
+                            name: array[i].name
                         }
-                        var o = {};
-                        o.routerId = array[i].routerId;
-                        o.name = array[i].name;
-                        o.hidden = true;
-                        o.list = [];
-                        o.child = false;
-                        self.deviceLists.push(o);
+                        continue;
                     }
-                }).finally(function () {
-                    self.requesting = false;
-                })
+                    var o = {};
+                    o.routerId = array[i].routerId;
+                    o.name = array[i].name;
+                    o.hidden = true;
+                    o.list = [];
+                    o.child = false;
+                    self.deviceLists.push(o);
+                }
+                // }).finally(function () {
+                //     self.requesting = false;
+                // })
             }
             Cogradient.prototype.reloadFile = function (param) {
                 var self = this;

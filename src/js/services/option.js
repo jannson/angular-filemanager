@@ -44,7 +44,6 @@
                         self.isOptioned = false;
                         callBack();
                     }
-                    console.log(data);
                 }).finally(function () {
                     self.requesting = false;
                 });
