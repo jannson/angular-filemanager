@@ -76,7 +76,7 @@
         <svg class="spinner-container" style="width:65px;height:65px" viewBox="0 0 44 44">
             <circle class="path" cx="22" cy="22" r="20" fill="none" stroke-width="4"></circle>
         </svg>
-        <div>请求中，请稍后</div>
+        <div>配置中，请稍候</div>
     </div>
     <script src="jquery/dist/jquery.min.js"></script>
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
@@ -167,19 +167,22 @@
                 self.set();
             });
         }
-
-        $(function () {
-            (new Config()).initEvent();
-        })
-
-        //初始化默认值
-        $(document).ready(function() {
-            $.getJSON("/api/config", function(data) {
+        Config.prototype.init =function(){
+            this.initEvent();
+            this.getDefaultConfig();
+        }
+        Config.prototype.getDefaultConfig = function() {
+             $.getJSON("/api/config", function (data) {
+                $('#username').val(data.username);
                 $('#sharePath').val(data.sharePath);
                 $('#fePath').val(data.fePath);
             });
-        });
-
+        }
+        //初始化默认值
+        $(function () {
+            (new Config()).init();
+           
+        })
     </script>
 </body>
 
