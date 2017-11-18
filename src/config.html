@@ -43,13 +43,14 @@
             <div class="form-group">
                 <label for="username" class="col-sm-3 control-label">token:</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="username" placeholder="请输入token" value="0e48cd7b-4ddc-401e-a78f-22e3b4a522e1">
+                    <input type="text" class="form-control" id="username" placeholder="请输入token" value="">
                 </div>
             </div>
             <div class="form-group">
                 <label for="sharePath" class="col-sm-3 control-label">共享路径:</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="sharePath" placeholder="请输入共享路径" value="D:/groupInfo/nginx-1.13.1/html/client">
+                    <input type="text" class="form-control" id="sharePath" placeholder="请输入共享路径" value="">
+                    <input type="hidden" class="form-control" id="fePath" value="">
                 </div>
             </div>
             <div class="form-group">
@@ -81,7 +82,7 @@
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
     <script>
         function Config() {
-            this.baseUrl = 'http://localhost:4000';
+            this.baseUrl = '';
             this.deviceList = [];
             this.$option = $('.option-box');
         };
@@ -96,10 +97,12 @@
             }
             var self = this;
             var username = $('#username').val(),
-                sharePath = $('#sharePath').val();
+                sharePath = $('#sharePath').val(),
+                fePath = $('#fePath').val();
             var data = {
                 username: username,
-                sharePath: sharePath
+                sharePath: sharePath,
+                fePath: fePath
             }
             self.Loading();
             $.ajax({
@@ -149,7 +152,7 @@
                             self.deviceList.push(o);
                         }
                         localStorage.setItem('deviceList', JSON.stringify(self.deviceList));
-                        window.location.href = 'http://localhost:4000/'
+                        window.location.href = '/'
                     }
                 },
                 error: function (error) {
@@ -168,6 +171,15 @@
         $(function () {
             (new Config()).initEvent();
         })
+
+        //初始化默认值
+        $(document).ready(function() {
+            $.getJSON("/api/config", function(data) {
+                $('#sharePath').val(data.sharePath);
+                $('#fePath').val(data.fePath);
+            });
+        });
+
     </script>
 </body>
 
