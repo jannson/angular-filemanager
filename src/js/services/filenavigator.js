@@ -72,6 +72,9 @@
                             }
                         }
                     }
+                    if (!path) {
+                        self.getCurrentDevices();
+                    }
                     self.buildTree(path);
                     self.onRefresh();
                 }).finally(function () {

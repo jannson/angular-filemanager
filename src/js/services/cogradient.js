@@ -76,10 +76,9 @@
                     self.requesting = false;
                 });
             };
-            //根据[routerId]，默认当前设备，刷新同步列表 3秒一次
+            //根据[routerId]，默认当前设备，刷新同步列表 5秒一次
             Cogradient.prototype.refreshList = function (routerId) {
                 var self = this;
-
                 var deviceId = routerId || self.device.routerId;
                 self.requesting = true;
                 self.list = [];
@@ -105,9 +104,7 @@
             Cogradient.prototype.cancelTask = function (routerId, key) {
                 var self = this;
                 self.requesting = true;
-                // self.list = [];
                 return self.cancel(routerId, key).then(function (data) {
-                    // self.list = data.result;
                     console.log(data);
                 }).finally(function () {
                     self.requesting = false;
@@ -116,13 +113,7 @@
             //获取当前设备信息
             Cogradient.prototype.getCurrentDevice = function () {
                 var self = this;
-
-                // self.requesting = true;
-                // return self.getRouterInfo().then(function (data) {
-                //     if (data.routers.length==0){
-                //         alert('网络连接失败，请重试！');
-                //         return;
-                //     }
+                self.deviceLists=[];
                 var array = JSON.parse(localStorage.getItem('deviceList'));
                 for (var i = 0, len = array.length; i < len; i++) {
                     if (array[i].isCurrentDevice) {
@@ -140,9 +131,6 @@
                     o.child = false;
                     self.deviceLists.push(o);
                 }
-                // }).finally(function () {
-                //     self.requesting = false;
-                // })
             }
             Cogradient.prototype.reloadFile = function (param) {
                 var self = this;
