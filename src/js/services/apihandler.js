@@ -59,6 +59,7 @@
                     break;
                 }
             };
+            
             var id = routerId || currentId;
             var deferred = $q.defer();
             self.inprocess = true;
