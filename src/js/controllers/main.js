@@ -380,12 +380,7 @@
             $scope.changeLanguage(getQueryParam('lang'));
             $scope.isWindows = getQueryParam('server') === 'Windows';
             $scope.fileNavigator.deviceList = JSON.parse(localStorage.getItem('deviceList'));
-            
-            if (!$scope.fileNavigator.deviceList || $scope.fileNavigator.deviceList.length==0){
-                $scope.fileNavigator.getCurrentDevices()
-            }else{
-                $scope.fileNavigator.refresh2($scope.fileNavigator.deviceList)
-            }
+            $scope.fileNavigator.getCurrentDevices()
 
             //显示同步对话框
             $scope.showProgress = function (id) {
