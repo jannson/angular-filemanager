@@ -61,7 +61,6 @@
             };
             var id = routerId || currentId;
             var deferred = $q.defer();
-
             self.inprocess = true;
             self.error = '';
             $http.get(apiUrl + '/' + id).success(function (data, code) {
