@@ -97,7 +97,6 @@
                             break;
                         }
                     }
-
                 }).finally(function () {
                     self.requesting = false;
                 });

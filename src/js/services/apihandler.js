@@ -51,7 +51,15 @@
         ApiHandler.prototype.listTask = function (apiUrl, routerId, customDeferredHandler) {
             var self = this;
             var dfHandler = customDeferredHandler || self.deferredHandler;
-            var id = routerId || 'C494ACB40260';
+            var currentId;
+            var deviceList = JSON.parse(localStorage.getItem('deviceList'));
+            for(var i = 0,len = deviceList.length;i < len; i++){
+                if (deviceList[i].isCurrentDevice) {
+                    currentId = deviceList[i].routerId;
+                    break;
+                }
+            };
+            var id = routerId || currentId;
             var deferred = $q.defer();
 
             self.inprocess = true;

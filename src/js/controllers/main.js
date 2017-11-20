@@ -393,6 +393,7 @@
                 if ($('#' + id).css('display') == 'block') {
                     $scope.cogradient.getCurrentDevice();
                     // $scope.cogradient.deviceList();
+                    
                     $scope.cogradient.refreshList();
                     $scope.timer = $interval(function () {
                         $scope.cogradient.refreshList();
@@ -408,7 +409,7 @@
                 if (type == 'list') {
                     $scope.timer = $interval(function () {
                         $scope.cogradient.refreshList();
-                    }, 3000);
+                    }, 5000);
                     $scope.cogradient.refreshList();
                 } else {
                     $scope.cogradient.refreshHistory();
