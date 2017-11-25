@@ -11,6 +11,118 @@
                 this.deviceLists = [];
                 this.device = {};
                 this.error = '';
+                this.testArray = [{
+                        "key": "/test11-13/test/[无心]第02集v2_bd.mp4",
+                        "parentKey": "",
+                        "fromRouter": "C494ACB40260",
+                        "fromRouterName": "",
+                        "fromPath": "/[无心]第02集v2_bd.mp4",
+                        "toPath": "/test11-13/test/[无心]第02集v2_bd.mp4",
+                        "toRouter": "8B46EC49E550",
+                        "toRouterName": "",
+                        "progress": 48,
+                        "downloadSpeed": 0,
+                        "uploadSpeed": 262994,
+                        "isDir": false,
+                        "error": "",
+                        "childs": null
+                    },
+                    {
+                        "key": "/test11-13/test/hello",
+                        "parentKey": "",
+                        "fromRouter": "C494ACB40260",
+                        "fromRouterName": "",
+                        "fromPath": "/test",
+                        "toPath": "/test11-13/test/test",
+                        "toRouter": "8B46EC49E550",
+                        "toRouterName": "",
+                        "progress": 89,
+                        "downloadSpeed": 20,
+                        "uploadSpeed": 150482,
+                        "isDir": true,
+                        "error": "",
+                        "childs": [{
+                                "key": "/test11-13/test/test/hello.exe",
+                                "parentKey": "/test11-13/test/test",
+                                "fromRouter": "C494ACB40260",
+                                "fromRouterName": "",
+                                "fromPath": "/test/client-11-11.exe",
+                                "toPath": "/test11-13/test/test/client-11-11.exe",
+                                "toRouter": "8B46EC49E550",
+                                "toRouterName": "",
+                                "progress": 7,
+                                "downloadSpeed": 5,
+                                "uploadSpeed": 36050,
+                                "isDir": false,
+                                "error": "",
+                                "childs": null
+                            },
+                            {
+                                "key": "/test11-13/test/test/client-11-13.exe",
+                                "parentKey": "/test11-13/test/test",
+                                "fromRouter": "C494ACB40260",
+                                "fromRouterName": "",
+                                "fromPath": "/test/client-11-13.exe",
+                                "toPath": "/test11-13/test/test/client-11-13.exe",
+                                "toRouter": "8B46EC49E550",
+                                "toRouterName": "",
+                                "progress": 7,
+                                "downloadSpeed": 5,
+                                "uploadSpeed": 36186,
+                                "isDir": false,
+                                "error": "",
+                                "childs": null
+                            },
+                            {
+                                "key": "/test11-13/test/test",
+                                "parentKey": "",
+                                "fromRouter": "C494ACB40260",
+                                "fromRouterName": "",
+                                "fromPath": "/test222",
+                                "toPath": "/test11-13/test/test",
+                                "toRouter": "8B46EC49E550",
+                                "toRouterName": "",
+                                "progress": 80,
+                                "downloadSpeed": 20,
+                                "uploadSpeed": 10000,
+                                "isDir": true,
+                                "error": "",
+                                "childs": [{
+                                    "key": "/test11-13/test/test/client-11-11.exe",
+                                    "parentKey": "/test11-13/test/test",
+                                    "fromRouter": "C494ACB40260",
+                                    "fromRouterName": "",
+                                    "fromPath": "/test/hello",
+                                    "toPath": "/test11-13/test/test/client-11-11.exe",
+                                    "toRouter": "8B46EC49E550",
+                                    "toRouterName": "",
+                                    "progress": 7,
+                                    "downloadSpeed": 5,
+                                    "uploadSpeed": 10000,
+                                    "isDir": false,
+                                    "error": "",
+                                    "childs": null
+                                }]
+                            },
+                            {
+                                "key": "/test11-13/test/test/client-1117.exe",
+                                "parentKey": "/test11-13/test/test",
+                                "fromRouter": "C494ACB40260",
+                                "fromRouterName": "",
+                                "fromPath": "/test/client-1117.exe",
+                                "toPath": "/test11-13/test/test/client-1117.exe",
+                                "toRouter": "8B46EC49E550",
+                                "toRouterName": "",
+                                "progress": 7,
+                                "downloadSpeed": 5,
+                                "uploadSpeed": 37143,
+                                "isDir": false,
+                                "error": "",
+                                "childs": null
+                            }
+                        ]
+                    }
+                ]
             };
             //异步处理，调用$q实现
             Cogradient.prototype.deferredHandler = function (data, deferred, code, defaultMsg) {
@@ -62,7 +174,7 @@
                 self.requesting = true;
                 self.historyList = [];
                 return self.historyTask().then(function (data) {
-                    if (!data.success&&data.success==false) {
+                    if (!data.success && data.success == false) {
                         var r = confirm('请求失败，是否重试');
                         if (r == true) {
                             self.refreshHistory();
@@ -80,24 +192,32 @@
             Cogradient.prototype.refreshList = function (routerId) {
                 var self = this;
                 var deviceId = routerId || self.device.routerId;
-                self.requesting = true;
+                // self.requesting = true;
+                // self.list = [];
                 self.list = [];
+                // self.deviceLists[1].list = self.testArray;
+                // self.deviceLists[1].child = true;
+                // return;
                 return self.listTask(deviceId).then(function (data) {
-                    self.list = data.result;
-                    var array = self.deviceLists;
-                    for (var i = 0, len = array.length; i < len; i++) {
-                        if (array[i].routerId == routerId) {
-                            array[i].list = data.result;
-                            if (data.result == 0) {
-                                array[i].child = false;
-                            } else {
-                                array[i].child = true;
+                    if (deviceId == self.device.routerId) {
+                        self.list = data.result;
+                        console.log(JSON.stringify(self.list))
+                    } else {
+                        var array = self.deviceLists;
+                        for (var i = 0, len = array.length; i < len; i++) {
+                            if (array[i].routerId == routerId) {
+                                array[i].list = data.result;
+                                if (data.result == 0) {
+                                    array[i].child = false;
+                                } else {
+                                    array[i].child = true;
+                                }
+                                break;
                             }
-                            break;
                         }
                     }
                 }).finally(function () {
-                    self.requesting = false;
+                    // self.requesting = false;
                 });
             };
             //根据routerId和key取消任务
@@ -113,7 +233,7 @@
             //获取当前设备信息
             Cogradient.prototype.getCurrentDevice = function () {
                 var self = this;
-                self.deviceLists=[];
+                self.deviceLists = [];
                 var array = JSON.parse(localStorage.getItem('deviceList'));
                 for (var i = 0, len = array.length; i < len; i++) {
                     if (array[i].isCurrentDevice) {

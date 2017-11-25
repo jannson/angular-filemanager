@@ -380,20 +380,13 @@
             $scope.changeLanguage(getQueryParam('lang'));
             $scope.isWindows = getQueryParam('server') === 'Windows';
             $scope.fileNavigator.deviceList = JSON.parse(localStorage.getItem('deviceList'));
-            
-            if (!$scope.fileNavigator.deviceList || $scope.fileNavigator.deviceList.length==0){
-                $scope.fileNavigator.getCurrentDevices()
-            }else{
-                $scope.fileNavigator.refresh2($scope.fileNavigator.deviceList)
-            }
+            $scope.fileNavigator.getCurrentDevices()
 
             //显示同步对话框
-            $scope.showProgress = function (id) {
-                $('#' + id).toggle();
-                if ($('#' + id).css('display') == 'block') {
+            $scope.showProgress = function () {
+                $('#progress').toggle();
+                if ($('#progress').css('display') == 'block' && $('.list-history').css('display') == 'block') {
                     $scope.cogradient.getCurrentDevice();
-                    // $scope.cogradient.deviceList();
-                    
                     $scope.cogradient.refreshList();
                     $scope.timer = $interval(function () {
                         $scope.cogradient.refreshList();
@@ -401,21 +394,20 @@
                 } else {
                     $interval.cancel($scope.timer);
                 }
-
             }
             //切换同步列表和同步历史界面
             $scope.selectHistoryList = function (className, type) {
-                $('.' + className).toggle();
-                if (type == 'list') {
+                if (className == 'list-history') {
+                    $scope.cogradient.refreshHistory();
+                    $interval.cancel($scope.timer);
+                } else {
                     $scope.timer = $interval(function () {
                         $scope.cogradient.refreshList();
                     }, 5000);
                     $scope.cogradient.refreshList();
-                } else {
-                    $scope.cogradient.refreshHistory();
-                    $interval.cancel($scope.timer);
                 }
-
+                $('.list-history').toggle();
+                $('.history-list').toggle();
             }
             // 取消任务
             $scope.cancelTask = function (routerId, key) {
@@ -432,30 +424,29 @@
                 for (var i = 0, len = array.length; i < len; i++) {
                     if (array[i].routerId == routerId) {
                         array[i].hidden = !array[i].hidden;
-                    }else{
+                        if (array[i].hidden == false) {
+                            $scope.cogradient.refreshList(routerId);
+                        }
+                    } else {
                         array[i].hidden = true;
                     }
                 }
-                $scope.cogradient.refreshList(routerId);
             }
             $scope.reSynchro = function (params) {
                 var array = params.toPath.split('/');
                 array.splice(array.length - 1);
-                // return;
                 var folderPath = params.toPath.split('/')
                 var param = {
                     action: "rsync",
                     items: [
-                        // "/C494ACB40260/[无XFS]第02集v1_bd.mp4"
                         "/" + params.fromRouter + params.fromPath
                     ],
-                    // newPath: "/8B46EC49E550/test11-13"
                     newPath: "/" + params.toRouter + array.join('/')
                 }
                 var r = confirm('是否再次同步？');
                 if (r == true) {
                     $scope.cogradient.reloadFile(param);
-                    $scope.selectHistoryList('list-history','list')
+                    $scope.selectHistoryList('list-history', 'list')
 
                 } else {
                     console.log('再次同步取消');
