@@ -22,6 +22,26 @@
   </div>
 </div>
 
+<div class="modal animated fadeIn" id="videopreview">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" onclick="document.getElementsByTagName('video')[0].src='';">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">{{"close" | translate}}</span>
+        </button>
+        <h4 class="modal-title">{{"preview" | translate}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <video id="videopreview-target" class="col-xs-12" alt="{{singleSelection().model.name}}" ng-class="{'loading': apiMiddleware.apiHandler.inprocess}" controls autobuffer></video>
+        </div>
+        <div ng-include data-src="'error-bar'" class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal animated fadeIn" id="remove">
   <div class="modal-dialog">
     <div class="modal-content">

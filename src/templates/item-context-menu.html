@@ -31,6 +31,12 @@
             </a>
         </li>
 
+        <li ng-show="config.allowedActions.preview && singleSelection().isVideo() && singleSelection()">
+            <a href="" tabindex="-1" ng-click="openVideoPreview()">
+                <i class="glyphicon glyphicon-film"></i> {{'view_video' | translate}}
+            </a>
+        </li>
+
         <li ng-show="config.allowedActions.rename && singleSelection()">
             <a href="" tabindex="-1" ng-click="modal('rename')">
                 <i class="glyphicon glyphicon-edit"></i> {{'rename' | translate}}

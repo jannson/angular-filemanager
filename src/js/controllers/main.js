@@ -142,6 +142,13 @@
                     return $scope.apiMiddleware.download(item, true);
                 }
 
+                if (item.isVideo()) {
+                    if ($scope.config.previewVideosInModal) {
+                        return $scope.openVideoPreview(item);
+                    }
+                    return $scope.apiMiddleware.download(item, true);
+                }
+
                 if (item.isEditable()) {
                     return $scope.openEditItem(item);
                 }
@@ -152,6 +159,19 @@
                 $scope.apiMiddleware.apiHandler.inprocess = true;
                 $scope.modal('imagepreview', null, true)
                     .find('#imagepreview-target')
+                    .attr('src', $scope.apiMiddleware.getUrl(item))
+                    .unbind('load error')
+                    .on('load error', function () {
+                        $scope.apiMiddleware.apiHandler.inprocess = false;
+                        $scope.$apply();
+                    });
+            };
+
+            $scope.openVideoPreview = function () {
+                var item = $scope.singleSelection();
+                $scope.apiMiddleware.apiHandler.inprocess = true;
+                $scope.modal('videopreview', null, true)
+                    .find('#videopreview-target')
                     .attr('src', $scope.apiMiddleware.getUrl(item))
                     .unbind('load error')
                     .on('load error', function () {

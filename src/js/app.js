@@ -11,9 +11,37 @@
         }.bind(this), 100);
     });
 
-    $(window.document).on('click', function() {
-        $('#context-menu').hide();
-    });
+    var userAgentInfo = navigator.userAgent;  
+    var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");  
+    var flag = true;  
+    for (var v = 0; v < Agents.length; v++) {  
+        if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }  
+    }  
+    if(flag==true){
+        $(window.document).on('click', function() {
+            $('#context-menu').hide();
+        });
+    }else{
+        $(window.document).on('click', function(e) {
+            var menu = $('#context-menu');
+
+            if (e.pageX >= window.innerWidth - menu.width()) {
+                e.pageX -= menu.width();
+            }
+            if (e.pageY >= window.innerHeight - menu.height()) {
+                e.pageY -= menu.height();
+            }
+
+            menu.hide().css({
+                left: e.pageX,
+                top: e.pageY
+            }).appendTo('body').show();
+            e.preventDefault();
+            setTimeout("$('#context-menu').hide()",3000);
+        });
+    }
+    
+
 
     $(window.document).on('contextmenu', '.main-navigation .table-files tr.item-list:has("td"), .item-list', function(e) {
         var menu = $('#context-menu');
