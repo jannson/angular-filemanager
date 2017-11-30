@@ -31,7 +31,8 @@
         <tr ng-show="fileNavigator.requesting">
             <td colspan="5">
                 <div ng-include="config.tplPath + '/spinner.html'"></div>
-                <div class="text-center">请求中，请等待...</div>
+                <div class="text-center">P2P连接中，请等待...
+                <a href="/static/log.html" target="_blank" style="color:red">点击查看日志</a></div>
             </td>
         </tr>
         <tr ng-show="!fileNavigator.requesting &amp;&amp; fileNavigator.fileList.length < 1 &amp;&amp; !fileNavigator.error">
