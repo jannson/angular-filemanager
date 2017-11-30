@@ -29,7 +29,7 @@ apiHandler 是负责网络请求的，通过 promise 等机制，请求网络，
 ## 新增接口
 
 1. 获取当前设备信息
-名字： /api/routerInfo 比如 GET http://127.0.0.1:4000/api/routerInfo
+名字： /api/routerInfo 比如 GET http://127.0.0.1:8899/api/routerInfo
 方法：GET
 返回值：
 
@@ -81,7 +81,7 @@ routerId: 设备ID
 具体一个请求的例子：
 
 ```
-http://127.0.0.1:4000/api/listTask/8B46EC49E550
+http://127.0.0.1:8899/api/listTask/8B46EC49E550
 
 {
     "result": [
@@ -218,7 +218,7 @@ http://127.0.0.1:4000/api/listTask/8B46EC49E550
 ```
 
 7. 初始化数据
-POST http://127.0.0.1:4000/api/config
+POST http://127.0.0.1:8899/api/config
 输入
 
 ```
@@ -237,12 +237,15 @@ POST http://127.0.0.1:4000/api/config
 ```
 
 8. 获取初始化数据
-GET http://127.0.0.1:4000/api/config
+GET http://127.0.0.1:8899/api/config
 返回
 ```
 {"username":"xxx-xxx-xxx-xxxx","sharePath":"/home/janson/Downloads/tmp"}
 ```
-
+9. 获取日志
+GET http://127.0.0.1:8899/api/log
+返回：
+最近的　4096 个字节的日志，日志界面应该自动滚动到最下面。
 
 ## BUG 列表
 1. 多次点图标，会出现多个设备的列表
