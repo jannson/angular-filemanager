@@ -1,4 +1,4 @@
-<div ng-controller="FileManagerCtrl" ngf-drop="addForUpload($files)" ngf-drag-over-class="'upload-dragover'" ngf-multiple="true">
+<div class="app-container" ng-click="clickContainer()" ng-controller="FileManagerCtrl" ngf-drop="addForUpload($files)" ngf-drag-over-class="'upload-dragover'" ngf-multiple="true">
     
     <div ng-include="config.tplPath + '/navbar.html'" ></div>
 
@@ -13,6 +13,8 @@
             </div>
         </div>
     </div>
+
+    <button type="button" class="btn btn-primary operation-btn" ng-show="!isPc" ng-disabled="selectIndex === undefined" ng-click="showContextMenuInMobile($event)">操作</button>
 
     <div ng-include="config.tplPath + '/modals.html'" ></div>
     <!-- <div ng-include="config.tplPath + '/synchroDialog.html'"></div> -->

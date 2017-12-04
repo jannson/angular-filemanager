@@ -198,7 +198,7 @@
                 for(var i = 0,iLen = this.history[0].nodes.length; i < iLen;i++){
                     for(var j = 0,jLen = this.deviceList.length; j < jLen; j++){;
                         if (this.history[0].nodes[i].name == this.deviceList[j].routerId&&this.deviceList[j].isCurrentDevice){
-                            var temp = this.history[0].nodes.splice(i,1);                            
+                            var temp = this.history[0].nodes.splice(i,1);
                             this.history[0].nodes.unshift(temp[0]);
                             break;
                         }

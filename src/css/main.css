@@ -8,6 +8,14 @@ body {
   outline: 0!important;
 }
 
+angular-filemanager > div,.row,.main,.sidebar {
+  height: 100%;
+}
+
+.app-container {
+  position: relative;
+}
+
 .navbar {
   min-height: 32px;
   margin-bottom: 0;
@@ -443,4 +451,10 @@ table th > a:focus {
   width: 18px;
   height: 18px;
   line-height: 100%;
+}
+
+.operation-btn {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
 }

@@ -21,6 +21,18 @@
             $scope.fileList = [];
             $scope.temps = [];
             $scope.historyTask = [];
+            $scope.isPc = IsPC();
+            $scope.selectIndex = undefined;
+
+            function IsPC() {
+                var userAgentInfo = navigator.userAgent;
+                var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+                var flag = true;
+                for (var v = 0; v < Agents.length; v++) {
+                  if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+                }
+                return flag;
+            }
 
             $scope.$watch('temps', function () {
                 if ($scope.singleSelection()) {
@@ -37,6 +49,7 @@
             $scope.fileNavigator.onRefresh = function () {
                 $scope.temps = [];
                 $scope.query = '';
+                $scope.selectIndex = undefined;
                 $rootScope.selectedModalPath = $scope.fileNavigator.currentPath;
             };
 
@@ -57,7 +70,23 @@
                 return $scope.temps.indexOf(item) !== -1;
             };
 
-            $scope.selectOrUnselect = function (item, $event) {
+            $scope.showContextMenuInMobile = function ($event) {
+                $event.stopPropagation();
+                var menu = $('#context-menu');
+                var item = $('.main-navigation .main-item')[$scope.selectIndex];
+                var pos = item.getBoundingClientRect();
+
+                menu.hide().css({
+                  left: pos.left + 30,
+                  top: pos.top + 20
+                }).appendTo('body').show();
+            };
+
+            $scope.clickContainer = function() {
+              $('#context-menu').hide();
+            };
+
+            $scope.selectOrUnselect = function (item, $event, index) {
                 var indexInTemp = $scope.temps.indexOf(item);
                 var isRightClick = $event && $event.which == 3;
 
@@ -96,6 +125,10 @@
                 if ($event && !isRightClick && ($event.ctrlKey || $event.metaKey)) {
                     $scope.isSelected(item) ? $scope.temps.splice(indexInTemp, 1) : $scope.temps.push(item);
                     return;
+                }
+
+                if(!isRightClick && !$scope.isPc) {
+                  $scope.selectIndex = index;
                 }
                 $scope.temps = [item];
             };
