@@ -208,12 +208,15 @@
 				var index2=item_url.length; 
 				var postf=item_url.substring(index1+1,index2);//后缀名
 				var strTem1=postf.toLocaleLowerCase();
-				
 				if('mp4'==strTem1){
 					item_url = $scope.apiMiddleware.getUrl(item);
-				}else{
+				}else{	
 					item_url = item_url.slice(30);
-					item_url = "/res-video?"+item_url+"&transcode=chromecast";
+					if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+					    item_url = "/res-video?"+item_url+"&transcode=hls";
+					}else{
+					    item_url = "/res-video?"+item_url+"&transcode=chromecast";
+					}
 				}
 				//alert(item_url);
                 $scope.modal('videopreview', null, true)
