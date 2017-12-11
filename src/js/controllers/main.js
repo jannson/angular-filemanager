@@ -223,6 +223,7 @@
                     .find('#videopreview-target')
                     .attr('controls','controls')
                     .attr('autoplay','autoplay')
+		    .attr('preload','auto')
                     .attr('src', item_url)
                     .unbind('load error')
                     .on('load error', function () {
