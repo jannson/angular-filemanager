@@ -12,13 +12,7 @@
         overflow: auto
 
     }
-
-    .panel-heading>button {
-        position: absolute;
-        right: 20px;
-        top: 10px;
-    }
-
+    
     .fill-after:after {
         content: '.';
         height: 0;
@@ -33,10 +27,10 @@
     }
 </style>
 <div class="panel panel-default" id="systeminfo">
-    <div class="panel-heading list-history" style="display:block">
+    <div class="panel-heading" style="display:block">
         系统信息
     </div>
-    <div class="panel-body list-history" style="display:block">
+    <div class="panel-body" style="display:block">
         <div class="fill-after">
             <p class="info">外网TCP： <span id="wtcp"></span></p>
             <p class="info">外网UDP： <span id="wudp"></span></p>
@@ -45,7 +39,8 @@
             <p class="info">设备编号： <span id="routerid"></span></p>
             <p class="info">共享路径： <span id="sharePath"></span></p>
             <p class="info">用户令牌：<a href="#" onclick="$('#userToken').show();">点击显示</a><br><span style="display: none;" id="userToken"></span></p>
-            <p class="info">软件版本： <span id="version"></span></p>
+            <p class="info">当前版本： <span id="version"></span></p>
+            <p class="info">最新版本： <span id="newversion"></span></p>
         </div>
     </div>
 </div>
