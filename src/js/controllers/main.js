@@ -460,7 +460,15 @@
                     $('#progress').toggle();
                 }
                 $('#systeminfo').toggle();
-                $scope.getSys();
+                if ($('#systeminfo').css('display') == 'block') {
+                    $scope.getSys();
+                    $scope.timer = $interval(function () {
+                        $scope.getSys();
+                    }, 5000);
+                } else {
+                    $interval.cancel($scope.timer);
+                }
+                
             }
             //获取系统状态信息
              $scope.getSys = function(){
@@ -473,7 +481,7 @@
                     $("#sharePath").text(result.sharePath);
                     $("#userToken").text(result.userToken);
                     $("#version").text(result.version);
-		    var listHtml = "<p><b>其他设备信息</b></p>";
+                    var listHtml;
                     for (var i=0;i<result.routers.length; i++) {
                         listHtml+='<ul><li class="info">设备编号：'+result.routers[i]['routerId']+'</li>';
                         listHtml+='<li class="info">设备名称：'+result.routers[i]['name']+'</li>';
