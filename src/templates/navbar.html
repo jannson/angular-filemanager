@@ -61,17 +61,17 @@
                                         <i class="glyphicon glyphicon-cloud-upload"></i> {{"upload_files" | translate}}
                                     </a>
                                 </li>
+                                <li role="presentation" ng-click="showProgress()">
+                                    <a href="" role="menuitem" tabindex="-1">
+                                        <i class="glyphicon glyphicon-retweet"></i> 同步状态
+                                    </a>
+                                </li>
+                                <li role="presentation" ng-click="showSysteminfo()">
+                                    <a href="" role="menuitem" tabindex="-1">
+                                        <i class="glyphicon glyphicon-cog"></i> 系统信息
+                                    </a>
+                                </li> 
                             </ul>
-                        </div>
-                        <!-- <div class="btn-group" title="日志查看">
-                            <a href="/static/log.html" target="_blank" class="btn btn-flat btn-sm">
-                                <i class="glyphicon glyphicon-file"></i>
-                            </a>
-                        </div> -->
-                        <div class="btn-group" title="同步记录">
-                            <button class="btn btn-flat btn-sm" type="button" ng-click="showProgress()">
-                                <i class="glyphicon glyphicon-retweet"></i>
-                            </button>
                         </div>
                     </div>
                 </div>
