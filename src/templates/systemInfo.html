@@ -25,6 +25,12 @@
         font-size: 12px;
         /*line-height: 5px;*/
     }
+    
+    .abinfo{
+        font-size: 12px;
+        color: #FF7F24;
+    }
+    
     #dlist ul li{
         list-style-type:none;
     }
@@ -44,8 +50,14 @@
             <p class="info">用户令牌：<a href="#" onclick="$('#userToken').show();">点击显示</a><br><span style="display: none;" id="userToken"></span></p>
             <p class="info">当前版本： <span id="version"></span></p>
             <p class="info">最新版本： <span id="newversion"></span></p>
-            <div id="dlist">
-
+            <div>
+                <p><b>其他设备信息</b> (<a href="#" onclick="$('#dlist').show();">点击显示</a>)</p>
+                <div id="dlist" style="display: none;">
+                </div>
+            </div>
+            <div id="aboutus">
+                <p><b>贡献列表</b> (<a href="#" onclick="$('.abinfo').show();">点击显示</a>)</p>
+                <p class="abinfo" style="display: none;">1. 服务器端 winkidney<br>2. Web端 JSMonkey, 峰<br>3. 客户端 小宝<br>4. Android TODO<br>5. iOS TODO<br>6. 群辉插件 fw867<br>7. 梅林插件 clang<br>8. 测试与教程 bbis</p>
             </div>
         </div>
     </div>
