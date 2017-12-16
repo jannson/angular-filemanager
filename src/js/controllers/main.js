@@ -456,34 +456,36 @@
 	    
 	    //显示系统对话框
             $scope.showSysteminfo = function () {
-                $('#systeminfo').toggle();
-                if ($('#systeminfo').css('display') == 'block' && $('.list-history').css('display') == 'block') {
-                    $scope.getSys();
-                    $scope.timer = $interval(function () {
-                        $scope.getSys();
-                    }, 5000);
-                } else {
-                    $interval.cancel($scope.timer);
+                if ($('#progress').css('display') == 'block'){
+                    $('#progress').toggle();
                 }
+                $('#systeminfo').toggle();
+                $scope.getSys();
             }
             //获取系统状态信息
              $scope.getSys = function(){
                 $.get("/api/routerInfo", function(result){
-                      $("#wtcp").text(result.natTcpExternalAddr);
-                      $("#wudp").text(result.natUdpExternalAddr);
-                      $("#ntcp").text(result.natTcpLocalAddr);
-                      $("#nattype").text(result.natType);
-                      $("#routerid").text(result.routerId);
-                      $("#sharePath").text(result.sharePath);
-                      $("#userToken").text(result.userToken);
-                      $("#version").text(result.version);
+                    $("#wtcp").text(result.natTcpExternalAddr);
+                    $("#wudp").text(result.natUdpExternalAddr);
+                    $("#ntcp").text(result.natTcpLocalAddr);
+                    $("#nattype").text(result.natType);
+                    $("#routerid").text(result.routerId);
+                    $("#sharePath").text(result.sharePath);
+                    $("#userToken").text(result.userToken);
+                    $("#version").text(result.version);
+                }); 
+                $.get("/static/version.json", function(result){
+                    $("#newversion").text(result.version);
                 }); 
             }
-	     
             //显示同步对话框
             $scope.showProgress = function () {
+                if ($('#systeminfo').css('display') == 'block'){
+                    $('#systeminfo').toggle();
+                }
                 $('#progress').toggle();
                 if ($('#progress').css('display') == 'block' && $('.list-history').css('display') == 'block') {
+                    
                     $scope.cogradient.getCurrentDevice();
                     $scope.cogradient.refreshList();
                     $scope.timer = $interval(function () {
