@@ -46,7 +46,9 @@ routerId: 设备ID
     "natUdpExternalAddr": "183.15.180.190:35590",
     "routerId": "8B46EC49E550",
     "sharePath": "/home/janson/Downloads/tmp",
-    "userToken": "xxxx"
+    "userToken": "xxxx",
+    “natType”: “网络类型”,
+    “version”: “0.1.3”,
 }
 ```
 
