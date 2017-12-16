@@ -453,7 +453,27 @@
             $scope.isWindows = getQueryParam('server') === 'Windows';
             $scope.fileNavigator.deviceList = JSON.parse(localStorage.getItem('deviceList'));
             $scope.fileNavigator.getCurrentDevices()
-
+	    
+	    //显示系统对话框
+            $scope.showSysteminfo = function () {
+                $('#systeminfo').toggle();
+                if ($('#systeminfo').css('display') == 'block' && $('.list-history').css('display') == 'block') {
+                    $scope.getSys();
+                    $scope.timer = $interval(function () {
+                        $scope.getSys();
+                    }, 5000);
+                } else {
+                    $interval.cancel($scope.timer);
+                }
+            }
+            //获取系统状态信息
+             $scope.getSys = function(){
+                $.get("/api/routerInfo", function(result){
+                      $("#tcp").text(result.natTcpExternalAddr);
+                      $("#udp").text(result.natTcpExternalAddr);
+                }); 
+            }
+	     
             //显示同步对话框
             $scope.showProgress = function () {
                 $('#progress').toggle();
