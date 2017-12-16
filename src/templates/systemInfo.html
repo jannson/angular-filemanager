@@ -38,8 +38,14 @@
     </div>
     <div class="panel-body list-history" style="display:block">
         <div class="fill-after">
-            <p class="info">TCP： <span id="tcp"></span></p>
-            <p class="info">UDP： <span id="udp"></span></p>
+            <p class="info">外网TCP： <span id="wtcp"></span></p>
+            <p class="info">外网UDP： <span id="wudp"></span></p>
+            <p class="info">内网TCP： <span id="ntcp"></span></p>
+            <p class="info">NAT类型： <span id="nattype"></span></p>
+            <p class="info">设备编号： <span id="routerid"></span></p>
+            <p class="info">共享路径： <span id="sharePath"></span></p>
+            <p class="info">用户令牌：<a href="#" onclick="$('#userToken').show();">点击显示</a><br><span style="display: none;" id="userToken"></span></p>
+            <p class="info">软件版本： <span id="version"></span></p>
         </div>
     </div>
 </div>
