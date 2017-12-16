@@ -469,8 +469,14 @@
             //获取系统状态信息
              $scope.getSys = function(){
                 $.get("/api/routerInfo", function(result){
-                      $("#tcp").text(result.natTcpExternalAddr);
-                      $("#udp").text(result.natTcpExternalAddr);
+                      $("#wtcp").text(result.natTcpExternalAddr);
+                      $("#wudp").text(result.natUdpExternalAddr);
+                      $("#ntcp").text(result.natTcpLocalAddr);
+                      $("#nattype").text(result.natType);
+                      $("#routerid").text(result.routerId);
+                      $("#sharePath").text(result.sharePath);
+                      $("#userToken").text(result.userToken);
+                      $("#version").text(result.version);
                 }); 
             }
 	     
