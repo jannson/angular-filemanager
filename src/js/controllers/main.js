@@ -473,6 +473,16 @@
                     $("#sharePath").text(result.sharePath);
                     $("#userToken").text(result.userToken);
                     $("#version").text(result.version);
+		    var listHtml = "<p><b>其他设备信息</b></p>";
+                    for (var i=0;i<result.routers.length; i++) {
+                        listHtml+='<ul><li class="info">设备编号：'+result.routers[i]['routerId']+'</li>';
+                        listHtml+='<li class="info">设备名称：'+result.routers[i]['name']+'</li>';
+                        listHtml+='<li class="info">本地设备：'+result.routers[i]['useLan']+'</li>';
+                        listHtml+='<li class="info">P2P类型：'+result.routers[i]['p2pType']+'</li>';
+                        listHtml+='<li class="info">是否直连：'+result.routers[i]['useDirect']+'</li>';
+                        listHtml+='<li class="info">正在连接：'+result.routers[i]['isConnect']+'</li></ul>';   
+                    }
+                    $('#dlist').html(listHtml);
                 }); 
                 $.get("/static/version.json", function(result){
                     $("#newversion").text(result.version);
