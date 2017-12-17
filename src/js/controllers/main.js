@@ -204,13 +204,13 @@
                 var item = $scope.singleSelection();
                 $scope.apiMiddleware.apiHandler.inprocess = true;
                 var item_url=$scope.apiMiddleware.getUrl(item);
-                var index1=item_url.lastIndexOf(".");  
-				var index2=item_url.length; 
+                var index1=item_url.lastIndexOf(".");
+				var index2=item_url.length;
 				var postf=item_url.substring(index1+1,index2);//后缀名
 				var strTem1=postf.toLocaleLowerCase();
 				if('mp4'==strTem1){
 					item_url = $scope.apiMiddleware.getUrl(item);
-				}else{	
+				}else{
 					item_url = item_url.slice(30);
 					if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
 					    item_url = "/res-video?"+item_url+"&transcode=hls";
@@ -453,7 +453,7 @@
             $scope.isWindows = getQueryParam('server') === 'Windows';
             $scope.fileNavigator.deviceList = JSON.parse(localStorage.getItem('deviceList'));
             $scope.fileNavigator.getCurrentDevices()
-	    
+
 	    //显示系统对话框
             $scope.showSysteminfo = function () {
                 if ($('#progress').css('display') == 'block'){
@@ -468,7 +468,7 @@
                 } else {
                     $interval.cancel($scope.timer);
                 }
-                
+
             }
             //获取系统状态信息
              $scope.getSys = function(){
@@ -483,18 +483,20 @@
                     $("#version").text(result.version);
                     var listHtml;
                     for (var i=0;i<result.routers.length; i++) {
-                        listHtml+='<ul><li class="info">设备编号：'+result.routers[i]['routerId']+'</li>';
-                        listHtml+='<li class="info">设备名称：'+result.routers[i]['name']+'</li>';
-                        listHtml+='<li class="info">本地设备：'+result.routers[i]['useLan']+'</li>';
-                        listHtml+='<li class="info">P2P类型：'+result.routers[i]['p2pType']+'</li>';
-                        listHtml+='<li class="info">是否直连：'+result.routers[i]['useDirect']+'</li>';
-                        listHtml+='<li class="info">正在连接：'+result.routers[i]['isConnect']+'</li></ul>';   
+                        if (result.routers[i]['routerId'] != result.routerId) {
+                            listHtml+='<ul><li class="info">设备编号：'+result.routers[i]['routerId']+'</li>';
+                            listHtml+='<li class="info">设备名称：'+result.routers[i]['name']+'</li>';
+                            listHtml+='<li class="info">本地设备：'+result.routers[i]['useLan']+'</li>';
+                            listHtml+='<li class="info">P2P类型：'+result.routers[i]['p2pType']+'</li>';
+                            listHtml+='<li class="info">是否直连：'+result.routers[i]['useDirect']+'</li>';
+                            listHtml+='<li class="info">正在连接：'+result.routers[i]['isConnect']+'</li></ul>';
+                        }
                     }
                     $('#dlist').html(listHtml);
-                }); 
+                });
                 $.get("/static/version.json", function(result){
                     $("#newversion").text(result.version);
-                }); 
+                });
             }
             //显示同步对话框
             $scope.showProgress = function () {
@@ -503,7 +505,7 @@
                 }
                 $('#progress').toggle();
                 if ($('#progress').css('display') == 'block' && $('.list-history').css('display') == 'block') {
-                    
+
                     $scope.cogradient.getCurrentDevice();
                     $scope.cogradient.refreshList();
                     $scope.timer = $interval(function () {
