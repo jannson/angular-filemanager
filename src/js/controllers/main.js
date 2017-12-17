@@ -481,7 +481,7 @@
                     $("#sharePath").text(result.sharePath);
                     $("#userToken").text(result.userToken);
                     $("#version").text(result.version);
-                    var listHtml;
+                    var listHtml = "";
                     for (var i=0;i<result.routers.length; i++) {
                         if (result.routers[i]['routerId'] != result.routerId) {
                             listHtml+='<ul><li class="info">设备编号：'+result.routers[i]['routerId']+'</li>';
