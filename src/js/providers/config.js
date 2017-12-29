@@ -60,7 +60,7 @@
             downloadFilesByAjax: true,
             previewImagesInModal: true,
             previewVideosInModal: true,
-            previewVideosVlcInModal: true,
+            previewVlcInModal: true,
             enablePermissionsRecursive: true,
             compressAsync: false,
             extractAsync: false,
