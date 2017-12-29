@@ -207,7 +207,7 @@
             };
 	    $scope.openVideoVlc = function () {
                 var item = $scope.singleSelection();
-		widow.open('vlc://'+$scope.apiMiddleware.getUrl(item));
+		window.open('vlc://'+$scope.apiMiddleware.getUrl(item));
             };
 
             $scope.openVideoPreview = function () {
