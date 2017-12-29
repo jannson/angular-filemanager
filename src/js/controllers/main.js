@@ -183,7 +183,7 @@
                 }
 		if (item.isVlc()) {
                     if ($scope.config.previewVlcInModal) {
-                        return $scope.openVideoVlcPreview(item);
+                        return $scope.openVideoVlc(item);
                     }
                     return $scope.apiMiddleware.download(item, true);
                 }
@@ -205,7 +205,7 @@
                         $scope.$apply();
                     });
             };
-	    $scope.openVideoVlcPreview = function () {
+	    $scope.openVideoVlc = function () {
                 var item = $scope.singleSelection();
 		widow.open('vlc://'+$scope.apiMiddleware.getUrl(item));
             };
