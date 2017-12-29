@@ -36,7 +36,19 @@
                 <i class="glyphicon glyphicon-film"></i> {{'view_item' | translate}}
             </a>
         </li>
-
+        
+        <li id="vlc" ng-show="config.allowedActions.preview && singleSelection().isVlc() && singleSelection()">
+            <a href="" tabindex="-1" ng-click="openVideoVlc()">
+                <i class="glyphicon glyphicon-film"></i> VLC播放
+            </a>
+        </li>
+        <script>
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+					    $('#vlc').show();
+					}else{
+					    $('#vlc').hide();
+					}
+        </script>
         <li ng-show="config.allowedActions.rename && singleSelection()">
             <a href="" tabindex="-1" ng-click="modal('rename')">
                 <i class="glyphicon glyphicon-edit"></i> {{'rename' | translate}}
