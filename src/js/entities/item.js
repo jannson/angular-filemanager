@@ -55,6 +55,9 @@
         Item.prototype.isVideo = function () {
             return fileManagerConfig.isVidoeFilePattern.test(this.model.name);
         };
+        Item.prototype.isVlc = function () {
+            return fileManagerConfig.isVidoeFilePattern.test(this.model.name);
+        };
 
         Item.prototype.isCompressible = function () {
             return this.isFolder();
