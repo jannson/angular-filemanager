@@ -181,12 +181,6 @@
                     }
                     return $scope.apiMiddleware.download(item, true);
                 }
-		if (item.isVlc()) {
-                    if ($scope.config.previewVlcInModal) {
-                        return $scope.openVideoVlc(item);
-                    }
-                    return $scope.apiMiddleware.download(item, true);
-                }
 
                 if (item.isEditable()) {
                     return $scope.openEditItem(item);
@@ -205,10 +199,6 @@
                         $scope.$apply();
                     });
             };
-	    $scope.openVideoVlc = function () {
-                var item = $scope.singleSelection();
-		window.open('vlc://'+$scope.apiMiddleware.getUrl(item));
-            };
 
             $scope.openVideoPreview = function () {
                 var item = $scope.singleSelection();
@@ -223,23 +213,24 @@
 				}else{
 					item_url = item_url.slice(30);
 					if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-					    item_url = "/res-video?"+item_url+"&transcode=hls";
+					    window.open('vlc://'+window.location.href+$scope.apiMiddleware.getUrl(item).slice(1));
 					}else{
 					    item_url = "/res-video?"+item_url+"&transcode=chromecast";
+					    //alert(item_url);
+		                $scope.modal('videopreview', null, true)
+		                    .find('#videopreview-target')
+		                    .attr('controls','controls')
+		                    .attr('autoplay','autoplay')
+				    		.attr('preload','auto')
+		                    .attr('src', item_url)
+		                    .unbind('load error')
+		                    .on('load error', function () {
+		                        $scope.apiMiddleware.apiHandler.inprocess = false;
+		                        $scope.$apply();
+		                    });
 					}
 				}
-				//alert(item_url);
-                $scope.modal('videopreview', null, true)
-                    .find('#videopreview-target')
-                    .attr('controls','controls')
-                    .attr('autoplay','autoplay')
-		    .attr('preload','auto')
-                    .attr('src', item_url)
-                    .unbind('load error')
-                    .on('load error', function () {
-                        $scope.apiMiddleware.apiHandler.inprocess = false;
-                        $scope.$apply();
-                    });
+				
             };
 
             $scope.openEditItem = function () {
