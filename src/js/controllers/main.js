@@ -209,19 +209,33 @@
 				var postf=item_url.substring(index1+1,index2);//后缀名
 				var strTem1=postf.toLocaleLowerCase();
 				if('mp4'==strTem1){
-					item_url = $scope.apiMiddleware.getUrl(item);
-				}else{
-					item_url = item_url.slice(30);
+                    // Play directly
+                    $scope.modal('videopreview', null, true)
+                        .find('#videopreview-target')
+                        .attr('controls','controls')
+                        .attr('autoplay','autoplay')
+                        .attr('preload','auto')
+                        .attr('src', item_url)
+                        .unbind('load error')
+                        .on('load error', function () {
+                            $scope.apiMiddleware.apiHandler.inprocess = false;
+                            $scope.$apply();
+                        });
+
+				} else {
+                    var sfile = "/files";
+					item_url = item_url.slice(sfile.length);
 					if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                        // Use VLC to play
 					    window.open('vlc://'+window.location.href+$scope.apiMiddleware.getUrl(item).slice(1));
-					}else{
-					    item_url = "/res-video?"+item_url+"&transcode=chromecast";
+					} else {
+					    item_url = "/res-video?path="+item_url+"&transcode=chromecast";
 					    //alert(item_url);
 		                $scope.modal('videopreview', null, true)
 		                    .find('#videopreview-target')
 		                    .attr('controls','controls')
 		                    .attr('autoplay','autoplay')
-				    		.attr('preload','auto')
+                            .attr('preload','auto')
 		                    .attr('src', item_url)
 		                    .unbind('load error')
 		                    .on('load error', function () {
@@ -230,7 +244,7 @@
 		                    });
 					}
 				}
-				
+
             };
 
             $scope.openEditItem = function () {

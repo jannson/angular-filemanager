@@ -59,7 +59,7 @@
                     break;
                 }
             };
-            
+
             var id = routerId || currentId;
             var deferred = $q.defer();
             self.inprocess = true;
@@ -346,11 +346,12 @@
         };
 
         ApiHandler.prototype.getUrl = function(apiUrl, path) {
-            var data = {
+            /*var data = {
                 action: 'download',
                 path: path
             };
-            return path && [apiUrl, $.param(data)].join('?');
+            return path && [apiUrl, $.param(data)].join('?');*/
+            return apiUrl + path;
         };
 
         ApiHandler.prototype.download = function(apiUrl, itemPath, toFilename, downloadByAjax, forceNewWindow) {
