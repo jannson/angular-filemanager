@@ -26,7 +26,7 @@
 
             function IsPC() {
                 var userAgentInfo = navigator.userAgent;
-                var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+                var Agents = new Array('Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod');
                 var flag = true;
                 for (var v = 0; v < Agents.length; v++) {
                   if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
@@ -204,11 +204,11 @@
                 var item = $scope.singleSelection();
                 $scope.apiMiddleware.apiHandler.inprocess = true;
                 var item_url=$scope.apiMiddleware.getUrl(item);
-                var index1=item_url.lastIndexOf(".");
-				var index2=item_url.length;
-				var postf=item_url.substring(index1+1,index2);//后缀名
-				var strTem1=postf.toLocaleLowerCase();
-				if('mp4'==strTem1){
+                var index1=item_url.lastIndexOf('.');
+                var index2=item_url.length;
+                var postf=item_url.substring(index1+1,index2);//后缀名
+                var strTem1=postf.toLocaleLowerCase();
+                if('mp4'==strTem1){
                     // Play directly
                     $scope.modal('videopreview', null, true)
                         .find('#videopreview-target')
@@ -222,28 +222,28 @@
                             $scope.$apply();
                         });
 
-				} else {
-                    var sfile = "/files";
-					item_url = item_url.slice(sfile.length);
-					if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                } else {
+                    var sfile = '/files';
+                    item_url = item_url.slice(sfile.length);
+                    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
                         // Use VLC to play
-					    window.open('vlc://'+window.location.href+$scope.apiMiddleware.getUrl(item).slice(1));
-					} else {
-					    item_url = "/res-video?path="+item_url+"&transcode=chromecast";
-					    //alert(item_url);
-		                $scope.modal('videopreview', null, true)
-		                    .find('#videopreview-target')
-		                    .attr('controls','controls')
-		                    .attr('autoplay','autoplay')
+                        window.open('vlc://'+window.location.href+$scope.apiMiddleware.getUrl(item).slice(1));
+                    } else {
+                        item_url = '/res-video?path='+item_url+'&transcode=chromecast';
+                        //alert(item_url);
+                        $scope.modal('videopreview', null, true)
+                            .find('#videopreview-target')
+                            .attr('controls','controls')
+                            .attr('autoplay','autoplay')
                             .attr('preload','auto')
-		                    .attr('src', item_url)
-		                    .unbind('load error')
-		                    .on('load error', function () {
-		                        $scope.apiMiddleware.apiHandler.inprocess = false;
-		                        $scope.$apply();
-		                    });
-					}
-				}
+                            .attr('src', item_url)
+                            .unbind('load error')
+                            .on('load error', function () {
+                                $scope.apiMiddleware.apiHandler.inprocess = false;
+                                $scope.$apply();
+                            });
+                    }
+                }
 
             };
 
@@ -275,10 +275,10 @@
 
             $scope.isRootPath = function () {
                 if ($scope.fileNavigator.currentPath && $scope.fileNavigator.currentPath.length == 0) {
-                    return true
+                    return true;
                 }
-                return false
-            }
+                return false;
+            };
 
             $scope.edit = function () {
                 $scope.apiMiddleware.edit($scope.singleSelection()).then(function () {
@@ -393,7 +393,6 @@
             };
 
             $scope.rsync = function () {
-                console.log("rsync");
                 var anyItem = $scope.singleSelection() || $scope.temps[0];
                 if (anyItem && validateSamePath(anyItem)) {
                     $scope.apiMiddleware.apiHandler.error = $translate.instant('error_cannot_move_same_path');
@@ -467,9 +466,9 @@
             $scope.changeLanguage(getQueryParam('lang'));
             $scope.isWindows = getQueryParam('server') === 'Windows';
             $scope.fileNavigator.deviceList = JSON.parse(localStorage.getItem('deviceList'));
-            $scope.fileNavigator.getCurrentDevices()
+            $scope.fileNavigator.getCurrentDevices();
 
-	    //显示系统对话框
+        //显示系统对话框
             $scope.showSysteminfo = function () {
                 if ($('#progress').css('display') == 'block'){
                     $('#progress').toggle();
@@ -483,20 +482,20 @@
                 } else {
                     $interval.cancel($scope.timer);
                 }
+            };
 
-            }
             //获取系统状态信息
              $scope.getSys = function(){
-                $.get("/api/routerInfo", function(result){
-                    $("#wtcp").text(result.natTcpExternalAddr);
-                    $("#wudp").text(result.natUdpExternalAddr);
-                    $("#ntcp").text(result.natTcpLocalAddr);
-                    $("#nattype").text(result.natType);
-                    $("#routerid").text(result.routerId);
-                    $("#sharePath").text(result.sharePath);
-                    $("#userToken").text(result.userToken);
-                    $("#version").text(result.version);
-                    var listHtml = "";
+                $.get('/api/routerInfo', function(result){
+                    $('#wtcp').text(result.natTcpExternalAddr);
+                    $('#wudp').text(result.natUdpExternalAddr);
+                    $('#ntcp').text(result.natTcpLocalAddr);
+                    $('#nattype').text(result.natType);
+                    $('#routerid').text(result.routerId);
+                    $('#sharePath').text(result.sharePath);
+                    $('#userToken').text(result.userToken);
+                    $('#version').text(result.version);
+                    var listHtml = '';
                     for (var i=0;i<result.routers.length; i++) {
                         if (result.routers[i]['routerId'] != result.routerId) {
                             listHtml+='<ul><li class="info">设备编号：'+result.routers[i]['routerId']+'</li>';
@@ -509,10 +508,10 @@
                     }
                     $('#dlist').html(listHtml);
                 });
-                $.get("/static/version.json", function(result){
-                    $("#newversion").text(result.version);
+                $.get('/static/version.json', function(result){
+                    $('#newversion').text(result.version);
                 });
-            }
+            };
             //显示同步对话框
             $scope.showProgress = function () {
                 if ($('#systeminfo').css('display') == 'block'){
@@ -529,7 +528,7 @@
                 } else {
                     $interval.cancel($scope.timer);
                 }
-            }
+            };
             //切换同步列表和同步历史界面
             $scope.selectHistoryList = function (className, type) {
                 if (className == 'list-history') {
@@ -543,7 +542,7 @@
                 }
                 $('.list-history').toggle();
                 $('.history-list').toggle();
-            }
+            };
             // 取消任务
             $scope.cancelTask = function (routerId, key) {
                 var r = confirm('是否取消同步？');
@@ -552,7 +551,7 @@
                 } else {
                     console.log('继续同步！');
                 }
-            }
+            };
             // 显示详情
             $scope.showDetail = function (routerId) {
                 var array = $scope.cogradient.deviceLists;
@@ -566,27 +565,27 @@
                         array[i].hidden = true;
                     }
                 }
-            }
+            };
             $scope.reSynchro = function (params) {
                 var array = params.toPath.split('/');
                 array.splice(array.length - 1);
-                var folderPath = params.toPath.split('/')
+                var folderPath = params.toPath.split('/');
                 var param = {
-                    action: "rsync",
+                    action: 'rsync',
                     items: [
-                        "/" + params.fromRouter + params.fromPath
+                        '/' + params.fromRouter + params.fromPath
                     ],
-                    newPath: "/" + params.toRouter + array.join('/')
-                }
+                    newPath: '/' + params.toRouter + array.join('/')
+                };
                 var r = confirm('是否再次同步？');
                 if (r == true) {
                     $scope.cogradient.reloadFile(param);
-                    $scope.selectHistoryList('list-history', 'list')
+                    $scope.selectHistoryList('list-history', 'list');
 
                 } else {
                     console.log('再次同步取消');
                 }
-            }
+            };
         }
     ]);
 })(angular, jQuery);

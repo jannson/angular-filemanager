@@ -12,117 +12,117 @@
                 this.device = {};
                 this.error = '';
                 this.testArray = [{
-                        "key": "/test11-13/test/[无心]第02集v2_bd.mp4",
-                        "parentKey": "",
-                        "fromRouter": "C494ACB40260",
-                        "fromRouterName": "",
-                        "fromPath": "/[无心]第02集v2_bd.mp4",
-                        "toPath": "/test11-13/test/[无心]第02集v2_bd.mp4",
-                        "toRouter": "8B46EC49E550",
-                        "toRouterName": "",
-                        "progress": 48,
-                        "downloadSpeed": 0,
-                        "uploadSpeed": 262994,
-                        "isDir": false,
-                        "error": "",
-                        "childs": null
+                        'key': '/test11-13/test/[无心]第02集v2_bd.mp4',
+                        'parentKey': '',
+                        'fromRouter': 'C494ACB40260',
+                        'fromRouterName': '',
+                        'fromPath': '/[无心]第02集v2_bd.mp4',
+                        'toPath': '/test11-13/test/[无心]第02集v2_bd.mp4',
+                        'toRouter': '8B46EC49E550',
+                        'toRouterName': '',
+                        'progress': 48,
+                        'downloadSpeed': 0,
+                        'uploadSpeed': 262994,
+                        'isDir': false,
+                        'error': '',
+                        'childs': null
                     },
                     {
-                        "key": "/test11-13/test/hello",
-                        "parentKey": "",
-                        "fromRouter": "C494ACB40260",
-                        "fromRouterName": "",
-                        "fromPath": "/test",
-                        "toPath": "/test11-13/test/test",
-                        "toRouter": "8B46EC49E550",
-                        "toRouterName": "",
-                        "progress": 89,
-                        "downloadSpeed": 20,
-                        "uploadSpeed": 150482,
-                        "isDir": true,
-                        "error": "",
-                        "childs": [{
-                                "key": "/test11-13/test/test/hello.exe",
-                                "parentKey": "/test11-13/test/test",
-                                "fromRouter": "C494ACB40260",
-                                "fromRouterName": "",
-                                "fromPath": "/test/client-11-11.exe",
-                                "toPath": "/test11-13/test/test/client-11-11.exe",
-                                "toRouter": "8B46EC49E550",
-                                "toRouterName": "",
-                                "progress": 7,
-                                "downloadSpeed": 5,
-                                "uploadSpeed": 36050,
-                                "isDir": false,
-                                "error": "",
-                                "childs": null
+                        'key': '/test11-13/test/hello',
+                        'parentKey': '',
+                        'fromRouter': 'C494ACB40260',
+                        'fromRouterName': '',
+                        'fromPath': '/test',
+                        'toPath': '/test11-13/test/test',
+                        'toRouter': '8B46EC49E550',
+                        'toRouterName': '',
+                        'progress': 89,
+                        'downloadSpeed': 20,
+                        'uploadSpeed': 150482,
+                        'isDir': true,
+                        'error': '',
+                        'childs': [{
+                                'key': '/test11-13/test/test/hello.exe',
+                                'parentKey': '/test11-13/test/test',
+                                'fromRouter': 'C494ACB40260',
+                                'fromRouterName': '',
+                                'fromPath': '/test/client-11-11.exe',
+                                'toPath': '/test11-13/test/test/client-11-11.exe',
+                                'toRouter': '8B46EC49E550',
+                                'toRouterName': '',
+                                'progress': 7,
+                                'downloadSpeed': 5,
+                                'uploadSpeed': 36050,
+                                'isDir': false,
+                                'error': '',
+                                'childs': null
                             },
                             {
-                                "key": "/test11-13/test/test/client-11-13.exe",
-                                "parentKey": "/test11-13/test/test",
-                                "fromRouter": "C494ACB40260",
-                                "fromRouterName": "",
-                                "fromPath": "/test/client-11-13.exe",
-                                "toPath": "/test11-13/test/test/client-11-13.exe",
-                                "toRouter": "8B46EC49E550",
-                                "toRouterName": "",
-                                "progress": 7,
-                                "downloadSpeed": 5,
-                                "uploadSpeed": 36186,
-                                "isDir": false,
-                                "error": "",
-                                "childs": null
+                                'key': '/test11-13/test/test/client-11-13.exe',
+                                'parentKey': '/test11-13/test/test',
+                                'fromRouter': 'C494ACB40260',
+                                'fromRouterName': '',
+                                'fromPath': '/test/client-11-13.exe',
+                                'toPath': '/test11-13/test/test/client-11-13.exe',
+                                'toRouter': '8B46EC49E550',
+                                'toRouterName': '',
+                                'progress': 7,
+                                'downloadSpeed': 5,
+                                'uploadSpeed': 36186,
+                                'isDir': false,
+                                'error': '',
+                                'childs': null
                             },
                             {
-                                "key": "/test11-13/test/test",
-                                "parentKey": "",
-                                "fromRouter": "C494ACB40260",
-                                "fromRouterName": "",
-                                "fromPath": "/test222",
-                                "toPath": "/test11-13/test/test",
-                                "toRouter": "8B46EC49E550",
-                                "toRouterName": "",
-                                "progress": 80,
-                                "downloadSpeed": 20,
-                                "uploadSpeed": 10000,
-                                "isDir": true,
-                                "error": "",
-                                "childs": [{
-                                    "key": "/test11-13/test/test/client-11-11.exe",
-                                    "parentKey": "/test11-13/test/test",
-                                    "fromRouter": "C494ACB40260",
-                                    "fromRouterName": "",
-                                    "fromPath": "/test/hello",
-                                    "toPath": "/test11-13/test/test/client-11-11.exe",
-                                    "toRouter": "8B46EC49E550",
-                                    "toRouterName": "",
-                                    "progress": 7,
-                                    "downloadSpeed": 5,
-                                    "uploadSpeed": 10000,
-                                    "isDir": false,
-                                    "error": "",
-                                    "childs": null
+                                'key': '/test11-13/test/test',
+                                'parentKey': '',
+                                'fromRouter': 'C494ACB40260',
+                                'fromRouterName': '',
+                                'fromPath': '/test222',
+                                'toPath': '/test11-13/test/test',
+                                'toRouter': '8B46EC49E550',
+                                'toRouterName': '',
+                                'progress': 80,
+                                'downloadSpeed': 20,
+                                'uploadSpeed': 10000,
+                                'isDir': true,
+                                'error': '',
+                                'childs': [{
+                                    'key': '/test11-13/test/test/client-11-11.exe',
+                                    'parentKey': '/test11-13/test/test',
+                                    'fromRouter': 'C494ACB40260',
+                                    'fromRouterName': '',
+                                    'fromPath': '/test/hello',
+                                    'toPath': '/test11-13/test/test/client-11-11.exe',
+                                    'toRouter': '8B46EC49E550',
+                                    'toRouterName': '',
+                                    'progress': 7,
+                                    'downloadSpeed': 5,
+                                    'uploadSpeed': 10000,
+                                    'isDir': false,
+                                    'error': '',
+                                    'childs': null
                                 }]
                             },
                             {
-                                "key": "/test11-13/test/test/client-1117.exe",
-                                "parentKey": "/test11-13/test/test",
-                                "fromRouter": "C494ACB40260",
-                                "fromRouterName": "",
-                                "fromPath": "/test/client-1117.exe",
-                                "toPath": "/test11-13/test/test/client-1117.exe",
-                                "toRouter": "8B46EC49E550",
-                                "toRouterName": "",
-                                "progress": 7,
-                                "downloadSpeed": 5,
-                                "uploadSpeed": 37143,
-                                "isDir": false,
-                                "error": "",
-                                "childs": null
+                                'key': '/test11-13/test/test/client-1117.exe',
+                                'parentKey': '/test11-13/test/test',
+                                'fromRouter': 'C494ACB40260',
+                                'fromRouterName': '',
+                                'fromPath': '/test/client-1117.exe',
+                                'toPath': '/test11-13/test/test/client-1117.exe',
+                                'toRouter': '8B46EC49E550',
+                                'toRouterName': '',
+                                'progress': 7,
+                                'downloadSpeed': 5,
+                                'uploadSpeed': 37143,
+                                'isDir': false,
+                                'error': '',
+                                'childs': null
                             }
                         ]
                     }
-                ]
+                ];
             };
             //异步处理，调用$q实现
             Cogradient.prototype.deferredHandler = function (data, deferred, code, defaultMsg) {
@@ -201,7 +201,7 @@
                 return self.listTask(deviceId).then(function (data) {
                     if (deviceId == self.device.routerId) {
                         self.list = data.result;
-                        console.log(JSON.stringify(self.list))
+                        console.log(JSON.stringify(self.list));
                     } else {
                         var array = self.deviceLists;
                         for (var i = 0, len = array.length; i < len; i++) {
@@ -240,7 +240,7 @@
                         self.device = {
                             routerId: array[i].routerId,
                             name: array[i].name
-                        }
+                        };
                         continue;
                     }
                     var o = {};
@@ -251,7 +251,7 @@
                     o.child = false;
                     self.deviceLists.push(o);
                 }
-            }
+            };
             Cogradient.prototype.reloadFile = function (param) {
                 var self = this;
                 self.requesting = true;
@@ -259,8 +259,8 @@
                     console.log(JSON.stringify(data));
                 }).finally(function () {
                     self.requesting = false;
-                })
-            }
+                });
+            };
             return Cogradient;
         }
     ]);

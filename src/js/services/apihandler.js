@@ -58,7 +58,7 @@
                     currentId = deviceList[i].routerId;
                     break;
                 }
-            };
+            }
 
             var id = routerId || currentId;
             var deferred = $q.defer();
@@ -94,7 +94,7 @@
             var self = this;
             var dfHandler = customDeferredHandler || self.deferredHandler;
             var deferred = $q.defer();
-            var data = { "routerId": routerId, "jobKey": key }
+            var data = { 'routerId': routerId, 'jobKey': key };
 
             self.inprocess = true;
             self.error = '';

@@ -47,11 +47,11 @@
                 }).finally(function () {
                     self.requesting = false;
                 });
-            }
+            };
             Option.prototype.getConfig = function(){
 
                 return JSON.parse(localStorage.getItem('token_path'));
-            }
+            };
             return Option;
         }
     ]);

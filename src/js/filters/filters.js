@@ -46,7 +46,7 @@
 
     app.filter('formatName', ['$filter', function () {
         return function (input) {
-            var array = input.split('/')
+            var array = input.split('/');
             return array[array.length-1];
         };
     }]);
