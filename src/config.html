@@ -46,7 +46,7 @@
                     <input type="text" class="form-control" id="username" placeholder="请输入Token" value="">
                 </div>
                 <div class="col-sm-3">
-                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#myModal">微信</button>
+                    <button id="btnweixin" type="button" class="btn btn-link" data-toggle="modal">微信</button>
                 </div>
             </div>
             <div class="form-group">
@@ -74,7 +74,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="myModal" style="width:370px" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -82,7 +82,7 @@
             <span id="myModalLabel">请使用微信扫码</span>
           </div>
           <div class="modal-body">
-            ...
+              <div id="qrimg" width="330px" height="330px"></div>
           </div>
         </div>
       </div>
@@ -97,8 +97,10 @@
         <div>配置中，请稍候 (<a href="/static/log.html" target="_blank">点击查看日志</a>)</div>
     </div>
     <script src="jquery/dist/jquery.min.js"></script>
+    <script src="jquery/dist/qrcode.min.js"></script>
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
     <script>
+        var DDNSTO_BASE = "https://service.koolshare.cn";
         function Config() {
             this.baseUrl = '';
             this.deviceList = [];
@@ -195,11 +197,68 @@
         }
 
         //TODO $('#myModal').modal('hide');
+        var qrcode;
+        $(document).ready(function () {
+            qrcode = new QRCode(document.getElementById("qrimg"), {
+                width : 330,
+                height : 330
+            });
 
-        //初始化默认值
-        $(function () {
+            $("#btnweixin").click(function () {
+                var listen_id;
+                var since_time;
+                var listen_qr = function () {
+                    if(!since_time || !listen_id) {
+                        return;
+                    }
+                    var now = (new Date(Date.now())).getTime();
+                    if((now-since_time) > 120*1000) {
+                        if(self.qrlink != "") {
+                            $("#myModal").modal('hide');
+                        }
+                        return;
+                    }
+                    var timeout = 30;
+                    var optional_since = "&since_time=" + since_time;
+                    var pollUrl = DDNSTO_BASE + "/longpoll/events?timeout=" + timeout + "&category=weixinoauth-" + listen_id + optional_since;
+                    $.ajax({ url: pollUrl, success: function(data) {
+                        if(data.timeout) {
+                            setTimeout(listen_qr, 200);
+                        } else {
+                            var event = data.events[data.events.length-1];
+                            $("#username").val(event.data);
+                            $("#myModal").modal('hide');
+                        }
+                       }, dataType: "json",
+                       error: function (data) {
+                            setTimeout(listen_qr, 2000);
+                       }
+                    });
+                };
+
+                $.ajax({
+                    url: DDNSTO_BASE + '/wechat/oauth/login/sso/',
+                    dataType: 'jsonp',
+                    success: function(data) {
+                        if(data.status === "not_logined") {
+                            $("#myModal").modal('show');
+                            qrcode.makeCode(data.image);
+                            listen_id = data.event_id;
+                            since_time = (new Date(Date.now())).getTime();
+                            listen_qr();
+                        } else {
+                            $("#username").val(data.token);
+                        }
+                    },
+                    error: function() {
+                        console.error("jsonp request failed");
+                    }
+                });
+
+            });
+
             (new Config()).init();
-        })
+        });
     </script>
 </body>
 
