@@ -530,7 +530,7 @@
                 }
             };
             //切换同步列表和同步历史界面
-            $scope.selectHistoryList = function (className, type) {
+            $scope.selectHistoryList = function (className) {
                 if (className == 'list-history') {
                     $scope.cogradient.refreshHistory();
                     $interval.cancel($scope.timer);
@@ -549,7 +549,7 @@
                 if (r == true) {
                     $scope.cogradient.cancelTask(routerId, key);
                 } else {
-                    console.log('继续同步！');
+                    //console.log('继续同步！');
                 }
             };
             // 显示详情
@@ -569,7 +569,7 @@
             $scope.reSynchro = function (params) {
                 var array = params.toPath.split('/');
                 array.splice(array.length - 1);
-                var folderPath = params.toPath.split('/');
+                //var folderPath = params.toPath.split('/');
                 var param = {
                     action: 'rsync',
                     items: [
@@ -583,7 +583,7 @@
                     $scope.selectHistoryList('list-history', 'list');
 
                 } else {
-                    console.log('再次同步取消');
+                    //console.log('再次同步取消');
                 }
             };
         }

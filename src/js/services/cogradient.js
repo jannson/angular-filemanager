@@ -201,7 +201,7 @@
                 return self.listTask(deviceId).then(function (data) {
                     if (deviceId == self.device.routerId) {
                         self.list = data.result;
-                        console.log(JSON.stringify(self.list));
+                        //console.log(JSON.stringify(self.list));
                     } else {
                         var array = self.deviceLists;
                         for (var i = 0, len = array.length; i < len; i++) {
@@ -224,8 +224,8 @@
             Cogradient.prototype.cancelTask = function (routerId, key) {
                 var self = this;
                 self.requesting = true;
-                return self.cancel(routerId, key).then(function (data) {
-                    console.log(data);
+                return self.cancel(routerId, key).then(function () {
+                    //console.log(data);
                 }).finally(function () {
                     self.requesting = false;
                 });
@@ -255,8 +255,8 @@
             Cogradient.prototype.reloadFile = function (param) {
                 var self = this;
                 self.requesting = true;
-                return self.uploadFile(param).then(function (data) {
-                    console.log(JSON.stringify(data));
+                return self.uploadFile(param).then(function () {
+                    //console.log(JSON.stringify(data));
                 }).finally(function () {
                     self.requesting = false;
                 });
