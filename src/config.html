@@ -56,6 +56,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="upload" class="col-sm-3 control-label">共享带宽:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="upload" placeholder="不懂别设置" value="0">
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-6">
                     <div class="checkbox">
                         <label>
@@ -117,10 +123,12 @@
             }
             var self = this;
             var username = $('#username').val(),
-                sharePath = $('#sharePath').val();
+                sharePath = $('#sharePath').val(),
+                upload = $('#upload').val();
             var data = {
                 username: username,
-                sharePath: sharePath
+                sharePath: sharePath,
+                upload: parseInt(upload),
             }
             self.Loading();
             $.ajax({
