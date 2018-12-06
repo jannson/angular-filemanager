@@ -512,7 +512,7 @@
                     $('#newversion').text(result.version);
                 });
                 $.get('/api/createShare', function(result){
-                    if (typeof(result.result) === "string") {
+                    if (typeof(result.result) === 'string') {
                         $('#shareKey').text(result.result);
                     }
                 });
