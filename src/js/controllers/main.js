@@ -476,11 +476,11 @@
                 $('#systeminfo').toggle();
                 if ($('#systeminfo').css('display') == 'block') {
                     $scope.getSys();
-                    $scope.timer = $interval(function () {
-                        $scope.getSys();
-                    }, 5000);
+                    //$scope.timer = $interval(function () {
+                    //    $scope.getSys();
+                    //}, 5000);
                 } else {
-                    $interval.cancel($scope.timer);
+                    //$interval.cancel($scope.timer);
                 }
             };
 
@@ -510,6 +510,11 @@
                 });
                 $.get('/static/version.json', function(result){
                     $('#newversion').text(result.version);
+                });
+                $.get('/api/createShare', function(result){
+                    if (typeof(result.result) === "string") {
+                        $('#shareKey').text(result.result);
+                    }
                 });
             };
             //显示同步对话框
