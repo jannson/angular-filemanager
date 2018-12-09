@@ -491,7 +491,7 @@
                     $('#wudp').text(result.natUdpExternalAddr);
                     $('#ntcp').text(result.natTcpLocalAddr);
                     $('#nattype').text(result.natType);
-                    $('#routerid').text(result.routerId);
+                    $('#routerid').html('<a target="_blank" href="http://www.ddnsto.com:5000/desktop.html?ksdev='+result.routerId+'">'+result.routerId+'</a>');
                     $('#sharePath').text(result.sharePath);
                     $('#userToken').text(result.userToken);
                     $('#version').text(result.version);
