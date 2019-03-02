@@ -88,7 +88,12 @@
                 return self.getRouterInfo().then(function (data) {
                     var array = data.routers;
                     if(!array){
-                        alert('网络存在问题，请重试！');
+                        if (data.err === "unready") {
+                            alert('未初始化，请填写正确的信息');
+                            window.location.href="/static/config.html";
+                        } else {
+                            alert('网络存在问题，请重试！');
+                        }
                         return;
                     }else{
                         self.deviceList = [];
