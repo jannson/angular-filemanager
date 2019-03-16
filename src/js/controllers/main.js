@@ -487,6 +487,10 @@
             //获取系统状态信息
              $scope.getSys = function(){
                 $.get('/api/routerInfo', function(result){
+                    if(result.result) {
+                        //get inner result
+                        result = result.result;
+                    }
                     $('#wtcp').text(result.natTcpExternalAddr);
                     $('#wudp').text(result.natUdpExternalAddr);
                     $('#ntcp').text(result.natTcpLocalAddr);

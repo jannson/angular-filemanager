@@ -22,7 +22,7 @@
                 this.error = data.result.error;
             }
             if (!this.error && data.error) {
-                this.error = data.error.message;
+                this.error = data.error;
             }
             if (!this.error && defaultMsg) {
                 this.error = defaultMsg;

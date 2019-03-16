@@ -30,11 +30,8 @@
                 if (code == 200) {
                     this.error = null;
                 }
-                if (!this.error && data.result && data.result.error) {
-                    this.error = data.result.error;
-                }
                 if (!this.error && data.error) {
-                    this.error = data.error.message;
+                    this.error = data.error;
                 }
                 if (!this.error && defaultMsg) {
                     this.error = defaultMsg;
@@ -86,11 +83,14 @@
                 var self = this;
                 self.requesting = true;
                 return self.getRouterInfo().then(function (data) {
+                    if(data.result) {
+                        data = data.result;
+                    }
                     var array = data.routers;
                     if(!array){
-                        if (data.err === "unready") {
+                        if (data.err === 'unready') {
                             alert('未初始化，请填写正确的信息');
-                            window.location.href="/static/config.html";
+                            window.location.href='/static/config.html';
                         } else {
                             alert('网络存在问题，请重试！');
                         }
