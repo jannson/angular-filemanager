@@ -139,7 +139,7 @@
                     this.error = data.result.error;
                 }
                 if (!this.error && data.error) {
-                    this.error = data.error.message;
+                    this.error = data.error;
                 }
                 if (!this.error && defaultMsg) {
                     this.error = defaultMsg;
@@ -174,7 +174,7 @@
                 self.requesting = true;
                 self.historyList = [];
                 return self.historyTask().then(function (data) {
-                    if (!data.success && data.success == false) {
+                    if (!data.success && data.success != 0) {
                         var r = confirm('请求失败，是否重试');
                         if (r == true) {
                             self.refreshHistory();
@@ -182,7 +182,7 @@
                             alert('取消请求！');
                         }
                     } else {
-                        self.historyList = data;
+                        self.historyList = data.result;
                     }
                 }).finally(function () {
                     self.requesting = false;
