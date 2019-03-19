@@ -484,6 +484,11 @@
                 }
             };
 
+            //重新进行配置
+            $scope.sysReconfig = function () {
+                window.location.href='/static/config.html';
+            };
+
             //获取系统状态信息
              $scope.getSys = function(){
                 $.get('/api/routerInfo', function(result){
