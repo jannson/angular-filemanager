@@ -1,5 +1,5 @@
 ### 测试方法
-easy-explorer-amd64.exe -fePath D:\\angular-filemanager
+easy-explorer-amd64.exe -fePath D:\\\\angular-filemanager
 
 手动加 -fePath 指向 代码的原始路径
 
