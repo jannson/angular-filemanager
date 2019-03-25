@@ -1,3 +1,21 @@
+### 测试方法
+easy-explorer-amd64.exe -fePath D:\\angular-filemanager
+
+手动加 -fePath 指向 代码的原始路径
+
+### 统一 API 风格，返回值如下
+```
+{
+    "success": 0,
+    “result”: xxx,
+    "error": ""
+}
+
+success 为 0 表示成功
+result 为具体的业务返回值
+
+```
+
 以右键菜单，“增量同步” 来描述 fe 的 js 开发过程：
 1. template
 
@@ -60,6 +78,7 @@ routerId: 设备ID
 
 ```
 {
+    "success": 0,
     "result": [
         {
             "key": 任务唯一标识，用于取消任务的参数,
@@ -86,6 +105,7 @@ routerId: 设备ID
 http://127.0.0.1:8899/api/listTask/8B46EC49E550
 
 {
+    "success": 0,
     "result": [
         {
             "key": "/go1.9.linux-amd64.tar.gz",
@@ -116,10 +136,8 @@ http://127.0.0.1:8899/api/listTask/8B46EC49E550
 返回：
 ```
 {
-    "result": {
-        "success": true,
-        "error": ""
-    }
+    "success": 0,
+    "error": ""
 }
 ```
 
@@ -169,10 +187,8 @@ http://127.0.0.1:8899/api/listTask/8B46EC49E550
 }
 
 {
-    "result": {
-        "success": true,
-        "error": ""
-    }
+    "success": 0,
+    "error": ""
 }
 
 ```
@@ -231,10 +247,8 @@ POST http://127.0.0.1:8899/api/config
 
 ```
 {
-    "result": {
-        "success": true,
-        "error": ""
-    }
+    "success": 0,
+    "error": ""
 }
 ```
 

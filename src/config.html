@@ -141,7 +141,7 @@
                 data: JSON.stringify(data),
                 success: function (data) {
                     self.Loading();
-                    if (data.result.success) {
+                    if (data.success == 0) {
                         self.getRouterInfo();
                     }
                 },
@@ -160,6 +160,9 @@
                 dataType: 'json',
                 success: function (data) {
                     self.Loading();
+                    if(data.result) {
+                        data = data.result;
+                    }
                     if (!data.routers) {
                         var r = confirm('获取路信息失败请重试');
                         if (r == true) {
