@@ -26,7 +26,7 @@ gulp.task('cache-templates', function () {
     .pipe(templateCache(jsFile, {
       module: 'FileManagerApp',
       base: function(file) {
-        return tplPath + '/' + path.basename(file.history[0]);
+        return tplPath + '/' + path.basename(file.history);
       }
     }))
     .pipe(gulp.dest(dst));
@@ -44,7 +44,7 @@ gulp.task('concat-uglify-js', ['cache-templates'], function() {
 });
 
 gulp.task('minify-css', function() {
-  return gulp.src(src + 'css/*.css').watch('src/**/*.html', ['html'])
+  return gulp.src(src + 'css/*.css')
     .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe(concat(cssFile))
     .pipe(gulp.dest(dst));
@@ -54,7 +54,7 @@ gulp.task('lint', function () {
   return gulp.src([src + 'js/app.js', src + 'js/*/*.js'])
     .pipe(eslint({
       'rules': {
-          'quotes': [2, 'single'],
+          'quotes': [2, 'single'], 
           //'linebreak-style': [2, 'unix'],
           'semi': [2, 'always']
       },
