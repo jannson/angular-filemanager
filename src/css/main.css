@@ -8,6 +8,14 @@ body {
   outline: 0!important;
 }
 
+.icon { // iconfont taobao
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
 angular-filemanager > div,.row,.main,.sidebar {
   height: 100%;
 }
@@ -21,7 +29,7 @@ angular-filemanager > div,.row,.main,.sidebar {
   margin-bottom: 0;
   border: 0;
   border-radius: 0;
-  color: #fff;
+  /* color: #fff; */
 }
 
 .navbar .navbar-collapse {
@@ -417,27 +425,28 @@ table th > a:focus {
   max-height: 30px
 }
 
-.breadcrumb>.active,
-.breadcrumb a {
-  color: #fff;
+.breadcrumb>.active {
+  color: rgba(0,0,0,0.65);
 }
-
-.breadcrumb>li+li:before {
+.breadcrumb a {
+  color: rgba(0,0,0,0.45);
+}
+/* > */
+/* .breadcrumb>li+li:before {
   font-family: 'Glyphicons Halflings';
   content: "\e080";
   font-size: 12px;
-  color: #fff;
-}
+  color: rgba(0,0,0,0.45);
+} */
 
 .scrollable-menu {
   height: auto;
-  max-height: 200px;
   overflow-x: hidden;
 }
 
 .btn.btn-flat {
   background: none;
-  color: #fff;
+  color: #697276;
 }
 
 .btn-group.open > .btn-flat,

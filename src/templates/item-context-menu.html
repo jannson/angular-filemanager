@@ -36,7 +36,7 @@
                 <i class="glyphicon glyphicon-film"></i> {{'view_item' | translate}}
             </a>
         </li>
-        
+
         <li ng-show="config.allowedActions.rename && singleSelection()">
             <a href="" tabindex="-1" ng-click="modal('rename')">
                 <i class="glyphicon glyphicon-edit"></i> {{'rename' | translate}}
@@ -86,7 +86,7 @@
         </li>
 
         <li class="divider" ng-show="config.allowedActions.remove"></li>
-        
+
         <li ng-show="config.allowedActions.remove && !isRootPath()">
             <a href="" tabindex="-1" ng-click="modal('remove')">
                 <i class="glyphicon glyphicon-trash"></i> {{'remove' | translate}}

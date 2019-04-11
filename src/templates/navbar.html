@@ -1,7 +1,22 @@
+<style>
+    .navbar-inverse {
+        background-color: #ffffff;
+    }
+    .middle {
+       transform: translateY(5px)
+    }
+    .logo {width:42px;margin: 0 16px}
+    .dropdown-menu {width: 250px}
+    .icon {width: 50px;height: 50px;}
+    .mt-10px {margin-top: 8px;}
+    .mt-34px {margin-top: 34px;}
+    .my-34px {margin: 34px 0;}
+</style>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-8 col-md-9 hidden-xs">
+            <div class="col-sm-8 col-md-9 hidden-xs ">
+              <img class="logo pull-left middle" src="static/assets/icon.png">
                 <div ng-show="!config.breadcrumb">
                     <a class="navbar-brand hidden-xs ng-binding" href="">angular-{{"filemanager" | translate}}</a>
                 </div>
@@ -45,37 +60,66 @@
                             </ul>
                         </div>
 
-                        <div class="btn-group" title="文件操作">
+                        <div class="btn-group open" title="文件操作">
                             <button class="btn btn-flat btn-sm dropdown-toggle" type="button" id="more" data-toggle="dropdown" aria-expanded="true">
                                 <i class="glyphicon glyphicon-option-vertical"></i>
                             </button>
 
-                            <ul class="dropdown-menu scrollable-menu animated fast fadeIn pull-right" role="menu" aria-labelledby="more">
-                                <li role="presentation" ng-show="config.allowedActions.createFolder" ng-click="modal('newfolder') && prepareNewFolder()">
-                                    <a href="" role="menuitem" tabindex="-1">
-                                        <i class="glyphicon glyphicon-plus"></i> {{"new_folder" | translate}}
-                                    </a>
-                                </li>
-                                <li role="presentation" ng-show="config.allowedActions.upload" ng-click="modal('uploadfile')">
-                                    <a href="" role="menuitem" tabindex="-1">
-                                        <i class="glyphicon glyphicon-cloud-upload"></i> {{"upload_files" | translate}}
-                                    </a>
-                                </li>
-                                <li role="presentation" ng-click="showProgress()">
-                                    <a href="" role="menuitem" tabindex="-1">
-                                        <i class="glyphicon glyphicon-retweet"></i> 同步状态
-                                    </a>
-                                </li>
-                                <li role="presentation" ng-click="showSysteminfo()">
-                                    <a href="" role="menuitem" tabindex="-1">
-                                        <i class="glyphicon glyphicon-cog"></i> 系统信息
-                                    </a>
-                                </li> 
-                                <li role="presentation" ng-click="sysReconfig()">
-                                    <a href="" role="menuitem" tabindex="-1">
-                                        <i class="glyphicon glyphicon-wrench"></i> 系统配置
-                                    </a>
-                                </li> 
+                            <ul class="dropdown-menu scrollable-menu animated fast fadeIn pull-right " role="menu" aria-labelledby="more">
+                                <div >
+                                  <li class="mt-34px col-sm-6 col-md-6 text-center" role="presentation" ng-show="config.allowedActions.createFolder" ng-click="modal('newfolder') && prepareNewFolder()">
+                                    <svg class="icon" aria-hidden="true">
+                                      <use xlink:href="#iconxxinjianwenjianjia"></use>
+                                    </svg>
+                                    <div class="">
+                                      {{"new_folder" | translate}}
+                                    </div>
+                                  </li>
+                                  <li class="mt-34px col-sm-6 col-md-6 text-center" role="presentation" ng-show="config.allowedActions.upload" ng-click="modal('uploadfile')">
+                                    <svg class="icon" aria-hidden="true">
+                                      <use xlink:href="#iconxshangchuanwenjian"></use>
+                                    </svg>
+                                    <div class="">
+                                      {{"upload_files" | translate}}
+                                    </div>
+                                  </li>
+                                </div>
+                                <div class="">
+                                  <li class="mt-34px col-sm-6 col-md-6 text-center" role="presentation" ng-click="showProgress()">
+                                    <svg class="icon" aria-hidden="true">
+                                      <use xlink:href="#iconxtongbuliebiao"></use>
+                                    </svg>
+                                    <div class=" text-center">
+                                      同步状态
+                                    </div>
+                                  </li>
+                                  <li class="mt-34px col-sm-6 col-md-6 text-center" role="presentation" ng-click="showProgress()">
+                                    <svg class="icon" aria-hidden="true">
+                                      <use xlink:href="#iconxtongbulishi"></use>
+                                    </svg>
+                                    <div class=" text-center">
+                                      同步历史
+                                    </div>
+                                  </li>
+                                </div>
+                                <div class="">
+                                  <li class="mt-34px col-sm-6 col-md-6 text-center" role="presentation" ng-click="showSysteminfo()">
+                                    <svg class="icon" aria-hidden="true">
+                                      <use xlink:href="#iconxxitongxinxi"></use>
+                                    </svg>
+                                    <div class="">
+                                      系统信息
+                                    </div>
+                                  </li>
+                                  <li class="my-34px col-sm-6 col-md-6 text-center" role="presentation" ng-click="sysReconfig()">
+                                    <svg class="icon" aria-hidden="true">
+                                      <use xlink:href="#iconxxitongpeizhi"></use>
+                                    </svg>
+                                    <div class="">
+                                      系统配置
+                                    </div>
+                                  </li>
+                                </div>
                             </ul>
                         </div>
                     </div>

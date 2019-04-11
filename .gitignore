@@ -3,3 +3,4 @@ nbproject/
 node_modules/
 target/
 bower_components/
+yarn_lock

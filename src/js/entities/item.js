@@ -18,7 +18,7 @@
                     return ('/' + path.join('/') + '/' + this.name).replace(/\/\//, '/');
                 }
             };
-
+            console.log(rawModel,88);
             this.error = '';
             this.processing = false;
 
@@ -55,7 +55,7 @@
         Item.prototype.isVideo = function () {
             return fileManagerConfig.isVidoeFilePattern.test(this.model.name);
         };
-        
+
         Item.prototype.isCompressible = function () {
             return this.isFolder();
         };
