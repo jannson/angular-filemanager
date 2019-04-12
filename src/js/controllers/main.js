@@ -23,6 +23,7 @@
             $scope.historyTask = [];
             $scope.isPc = IsPC();
             $scope.selectIndex = undefined;
+            $scope.dropdownIndex = undefined;
 
             function IsPC() {
                 var userAgentInfo = navigator.userAgent;
@@ -468,7 +469,23 @@
             $scope.fileNavigator.deviceList = JSON.parse(localStorage.getItem('deviceList'));
             $scope.fileNavigator.getCurrentDevices();
 
-        //显示系统对话框
+            //显示系统对话框
+            // $scope.showSysteminfo = function () {
+            //     if ($('#progress').css('display') == 'block'){
+            //         $('#progress').toggle();
+            //     }
+            //     $('#systeminfo').toggle();
+            //     if ($('#systeminfo').css('display') == 'block') {
+            //         $scope.getSys();
+            //         //$scope.timer = $interval(function () {
+            //         //    $scope.getSys();
+            //         //}, 5000);
+            //     } else {
+            //         //$interval.cancel($scope.timer);
+            //     }
+            // };
+
+            //显示系统对话框
             $scope.showSysteminfo = function () {
                 if ($('#progress').css('display') == 'block'){
                     $('#progress').toggle();
@@ -543,8 +560,31 @@
                     $interval.cancel($scope.timer);
                 }
             };
+            //显示同步对话框
+            $scope.showProgress = function (index) {
+                if ($('#systeminfo').css('display') == 'block'){
+                    $('#systeminfo').toggle();
+                }
+                $('#progress').toggle();
+                if ($('#progress').css('display') == 'block' && $('.list-history').css('display') == 'block') {
+
+                    $scope.cogradient.getCurrentDevice();
+                    $scope.cogradient.refreshList();
+                    $scope.timer = $interval(function () {
+                        $scope.cogradient.refreshList();
+                    }, 5000);
+                } else {
+                    $interval.cancel($scope.timer);
+                }
+                // if (index==4) {
+                //   $scope.selectHistoryList('history-list')
+                // }else {
+                //   $scope.selectHistoryList('list-history')
+                // }
+            };
             //切换同步列表和同步历史界面
             $scope.selectHistoryList = function (className) {
+                
                 if (className == 'list-history') {
                     $scope.cogradient.refreshHistory();
                     $interval.cancel($scope.timer);

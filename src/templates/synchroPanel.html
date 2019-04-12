@@ -42,12 +42,9 @@
     }
 
     .file-box {
-        width: 50px;
-        height: 60px;
-        border: 1px solid #000;
+        width: 26px;
+        height: 32px;
         float: left;
-        padding: 4px;
-        line-height: 25px;
     }
 
     .progress-content {
@@ -118,8 +115,12 @@
                     <div ng-repeat="subItem in item.childs" ng-include="'synchro-branch-item'"></div>
                     <h6>---文件夹：{{item.key | formatName}} end---</h6>
                 </div>
+                <!-- 文件 -->
                 <div ng-hide="item.isDir">
-                    <div class="file-box">文件预览</div>
+                    <!-- <div class="file-box">文件预览</div> -->
+                    <div class="file-box">
+                      <img src="/static/assets/music.svg" alt="">
+                    </div>
                     <div class="progress-content">
                         <div>
                             <span class="left-63p" title="{{item.key | formatName}}">{{item.key | formatName}}</span>
@@ -150,7 +151,10 @@
                         <h6>---文件夹：{{subItem.key | formatName}} end---</h6>
                     </div>
                     <div ng-hide="subItem.isDir">
-                        <div class="file-box">文件预览</div>
+                        // <div class="file-box">文件预览</div>
+                        <div class="file-box">
+                          <img src="/static/assets/music.svg" alt="">
+                        </div>
                         <div class="progress-content">
                             <div>
                                 <span class="left-63p" title="{{subItem.key | formatName}}">{{subItem.key | formatName}}</span>
@@ -172,28 +176,6 @@
         </div>
         <div class="fill-after">
             <h5>其他设备</h5>
-            <!-- <div class="fill-after">
-                <h6>大爷的电脑
-                    <span class="detail-button" ng-click="$parent.progress('c9')">收起</span>
-                </h6>
-                <div style="margin:10px;" id="c9">
-                    <div class="file-box">文件预览</div>
-                    <div class="progress-content">
-                        <div>
-                            <span class="left-63p" title="文件1">文件1</span>
-                            <span class="center-33p">250KB/s</span>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-                                <span class="sr-only">40% 完成</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cancel-button">
-                        取消
-                    </div>
-                </div>
-            </div> -->
             <div class="fill-after" ng-repeat="item in cogradient.deviceLists">
                 <h6>{{item.name}}
                     <span class="detail-button" ng-click="$parent.showDetail(item.routerId)">
@@ -243,24 +225,31 @@
             <div ng-include="config.tplPath + '/spinner.html'"></div>
             <div style="text-align:center;">加载中，请稍后。。。</div>
         </div>
-        <div class="fill-after m10" ng-repeat="item in $parent.historyTask = cogradient.historyList">
-            <div class="file-box">文件预览</div>
-            <div class="progress-content">
+        <div class="m10 flex align-center" ng-repeat="item in $parent.historyTask = cogradient.historyList">
+            <!-- <div class="file-box">文件预览</div> -->
+            <div class="file-box">
+              <img src="/static/assets/music.svg" alt="">
+            </div>
+            <div class="progress-content flex-auto">
                 <div>
                     <span class="left-63p" title="{{item.fromPath | formatName}}">{{item.fromPath | formatName}}</span>
-                    <span></span>
-                    <span class="center-33p" style="color:red;" ng-show="item.progress !=100">同步失败</span>
-                    <span class="center-33p" style="color:blue;" ng-hide="item.progress !=100">同步成功</span>
+                    <!-- <span class="center-33p" style="color:red;" ng-show="item.progress !=100">同步失败</span>
+                    <span class="center-33p" style="color:blue;" ng-hide="item.progress !=100">同步成功</span> -->
                 </div>
-                <div>
-                    <span class="center-33p" title="{{item.fromRouterName}}">{{item.fromRouterName}}</span>
-                    <span class="center-33p w28p">----&gt;</span>
-                    <span class="center-33p" title="{{item.toRouterName}}">{{item.toRouterName}}</span>
+                <div class="flex justify-between fs-11px c-75">
+                    <span class="center-33p" title="{{item.fromRouterName}}">{{item.fromRouterName}}-&gt;{{item.toRouterName}}</span>
+                    <span class="center-33p" title="{{item.toRouterName}}"></span>
                 </div>
             </div>
             <div class="cancel-button" ng-click="reSynchro(item)">
-                <span ng-show="item.progress !=100">重新同步</span>
-                <span ng-hide="item.progress !=100">再次同步</span>
+                <!-- <span ng-show="item.progress !=100">重新同步</span>
+                <span ng-hide="item.progress !=100">再次同步</span> -->
+                <svg class="icon" ng-show="item.progress !=100" aria-hidden="true">
+                  <use xlink:href="#iconxtongbuzhuangtai"></use>
+                </svg>
+                <svg class="icon" ng-show="item.progress !=100" aria-hidden="true">
+                  <use xlink:href="#iconxlvdian"></use>
+                </svg>
             </div>
         </div>
         <div>

@@ -9,8 +9,7 @@ var concat = require('gulp-concat');
 var eslint = require('gulp-eslint');
 var del = require('del');
 var path = require('path');
-var imagemin = require('gulp-imagemin');
-var cache = require('gulp-cache');
+
 // Vars
 var src = 'src/';
 var dst = 'dist/';
@@ -20,20 +19,6 @@ var cssFile = 'angular-filemanager.min.css';
 
 gulp.task('clean', function (cb) {
   del(dst + '/*', cb);
-});
-
-// Images
-gulp.task('images', function() {
-  return gulp.src('src/assets/**/*')
-      .pipe(cache(imagemin({
-          optimizationLevel: 3,
-          progressive: true,
-          interlaced: true
-      })))
-      .pipe(gulp.dest('dist/assets'))
-      // .pipe(notify({
-      //     message: 'Images task complete'
-      // }));
 });
 
 gulp.task('cache-templates', function () {
@@ -59,7 +44,7 @@ gulp.task('concat-uglify-js', ['cache-templates'], function() {
 });
 
 gulp.task('minify-css', function() {
-  return gulp.src(src + 'css/*.css').watch('src/**/*.html', ['html'])
+  return gulp.src(src + 'css/*.css')
     .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe(concat(cssFile))
     .pipe(gulp.dest(dst));
@@ -86,5 +71,5 @@ gulp.task('lint', function () {
     .pipe(eslint.failOnError());
 });
 
-gulp.task('default', ['concat-uglify-js', 'minify-css, images']);
+gulp.task('default', ['concat-uglify-js', 'minify-css']);
 gulp.task('build', ['clean', 'lint', 'default']);
