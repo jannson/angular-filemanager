@@ -182,6 +182,7 @@
                             alert('取消请求！');
                         }
                     } else {
+
                         self.historyList = data.result;
                     }
                 }).finally(function () {
@@ -194,9 +195,10 @@
                 var deviceId = routerId || self.device.routerId;
                 // self.requesting = true;
                 // self.list = [];
-                self.list = [];
-                // self.deviceLists[1].list = self.testArray;
-                // self.deviceLists[1].child = true;
+
+                // mock data
+                // self.deviceLists[0].list = self.testArray;
+                // self.deviceLists[0].child = true;
                 // return;
                 return self.listTask(deviceId).then(function (data) {
                     if (deviceId == self.device.routerId) {

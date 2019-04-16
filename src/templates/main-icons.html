@@ -7,14 +7,15 @@
                     <div ng-show="item.model.type === 'file'" ng-class="{'item-extension': config.showExtensionIcons}">
                       <div >
                         <img data-ext="{{ item.model.name | fileExtension }}" ng-if="item.model.name.slice(item.model.name.lastIndexOf('.')+1) === 'xcel'" ng-src="static/assets/excel.svg">
-                        <img data-ext="{{ item.model.name | fileExtension }}" ng-if="item.model.name.slice(item.model.name.lastIndexOf('.')+1) === 'docx'" ng-src="static/assets/word.svg">
+                        <img data-ext="{{ item.model.name | fileExtension }}" ng-if="['docx', 'doc'].includes(item.model.name.slice(item.model.name.lastIndexOf('.')+1))" ng-src="static/assets/word.svg">
                         <img data-ext="{{ item.model.name | fileExtension }}" ng-if="item.model.name.slice(item.model.name.lastIndexOf('.')+1) === 'flv'" ng-src="static/assets/flash.svg">
                         <img data-ext="{{ item.model.name | fileExtension }}" ng-if="['mp4','mp3'].includes(item.model.name.slice(item.model.name.lastIndexOf('.')+1))" ng-src="static/assets/music.svg">
-                        <!-- <img data-ext="{{ item.model.name | fileExtension }}" ng-if="['mp4','mp3'].includes(item.model.name.slice(item.model.name.lastIndexOf('.')+1))" ng-src="static/assets/music.svg"> -->
+                        <img data-ext="{{ item.model.name | fileExtension }}" ng-if="item.model.name.slice(item.model.name.lastIndexOf('.')+1) === 'pdf'" ng-src="static/assets/pdf.svg">
                         <img data-ext="{{ item.model.name | fileExtension }}" ng-if="item.model.name.slice(item.model.name.lastIndexOf('.')+1) === 'ppt'" ng-src="static/assets/ppt.svg">
                         <img data-ext="{{ item.model.name | fileExtension }}" ng-if="item.model.name.slice(item.model.name.lastIndexOf('.')+1) === 'rar'" ng-src="static/assets/rar.svg">
                         <img data-ext="{{ item.model.name | fileExtension }}" ng-if="['jpeg','png','jpg'].includes(item.model.name.slice(item.model.name.lastIndexOf('.')+1))" ng-src="static/assets/img.svg">
-                        <i class="glyphicon glyphicon-file" ng-if="!['xcel','docx','flv','ppt','rar','jpeg','png','jpg','mp4','mp3'].includes(item.model.name.slice(item.model.name.lastIndexOf('.')+1))" data-ext="{{ item.model.name | fileExtension }}" ng-class="{'item-extension': config.showExtensionIcons}"></i>
+                        <img data-ext="{{ item.model.name | fileExtension }}" ng-if="!['xcel','doc','docx','flv','ppt','pdf','rar','jpeg','png','jpg','mp4','mp3'].includes(item.model.name.slice(item.model.name.lastIndexOf('.')+1))" ng-src="static/assets/others.svg">
+                        <!-- <i class="glyphicon glyphicon-file" ng-if="!['xcel','docx','flv','ppt','pdf','rar','jpeg','png','jpg','mp4','mp3'].includes(item.model.name.slice(item.model.name.lastIndexOf('.')+1))" data-ext="{{ item.model.name | fileExtension }}" ng-class="{'item-extension': config.showExtensionIcons}"></i> -->
                       </div>
                     </div>
                 </div>

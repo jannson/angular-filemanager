@@ -561,7 +561,7 @@
                 }
             };
             //显示同步对话框
-            $scope.showProgress = function (index) {
+            $scope.showProgress = function () {
                 if ($('#systeminfo').css('display') == 'block'){
                     $('#systeminfo').toggle();
                 }
@@ -584,7 +584,7 @@
             };
             //切换同步列表和同步历史界面
             $scope.selectHistoryList = function (className) {
-                
+
                 if (className == 'list-history') {
                     $scope.cogradient.refreshHistory();
                     $interval.cancel($scope.timer);

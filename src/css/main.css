@@ -1,6 +1,7 @@
 body {
   font-size: 14px;
   height: 100vh;
+  /* line-height: 1;//重置linehight */
 }
 
 *,
@@ -283,7 +284,7 @@ table th > a:focus {
 }
 
 .sortorder:after {
-  color: #2196f3;
+  color: rgba(0,0,0,0.85);
   content: '\25bc';
 }
 
@@ -467,3 +468,5 @@ table th > a:focus {
   right: 10px;
   bottom: 10px;
 }
+
+.w-8px {width: 8px;height: 8px;}
