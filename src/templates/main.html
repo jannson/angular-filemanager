@@ -17,7 +17,8 @@
     <button type="button" class="btn btn-primary operation-btn" ng-show="!isPc" ng-disabled="selectIndex === undefined" ng-click="showContextMenuInMobile($event)">操作</button>
 
     <div ng-include="config.tplPath + '/modals.html'" ></div>
-    <!-- <div ng-include="config.tplPath + '/synchroHistory.html'"></div> -->
+    <!-- 同步状态 -->
+    <div ng-include="config.tplPath + '/synchroHistory.html'"></div>
     <div ng-include="config.tplPath + '/synchroPanel.html'" ></div>
     <div ng-include="config.tplPath + '/systemInfo.html'" ></div>
     <div ng-include="config.tplPath + '/item-context-menu.html'" ></div>

@@ -23,7 +23,7 @@
             $scope.historyTask = [];
             $scope.isPc = IsPC();
             $scope.selectIndex = undefined;
-            $scope.dropdownIndex = undefined;
+            $scope.isShowStatus = false; // 是否显示同步状态
 
             function IsPC() {
                 var userAgentInfo = navigator.userAgent;
@@ -560,27 +560,18 @@
                     $interval.cancel($scope.timer);
                 }
             };
-            //显示同步对话框
-            $scope.showProgress = function () {
-                if ($('#systeminfo').css('display') == 'block'){
-                    $('#systeminfo').toggle();
-                }
-                $('#progress').toggle();
-                if ($('#progress').css('display') == 'block' && $('.list-history').css('display') == 'block') {
+            //显示同步状态
+            $scope.showStatus = function () {
+              if ($('#progress').css('display') == 'block'){
+                  $('#progress').toggle();
+              }
+              // $scope.isShowStatus = true
+              $('#sync-history').toggle();
+              $scope.timer = $interval(function () {
+                  $scope.cogradient.refreshList();
+              }, 5000);
+                  $scope.cogradient.refreshList();
 
-                    $scope.cogradient.getCurrentDevice();
-                    $scope.cogradient.refreshList();
-                    $scope.timer = $interval(function () {
-                        $scope.cogradient.refreshList();
-                    }, 5000);
-                } else {
-                    $interval.cancel($scope.timer);
-                }
-                // if (index==4) {
-                //   $scope.selectHistoryList('history-list')
-                // }else {
-                //   $scope.selectHistoryList('list-history')
-                // }
             };
             //切换同步列表和同步历史界面
             $scope.selectHistoryList = function (className) {
