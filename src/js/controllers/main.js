@@ -490,6 +490,9 @@
                 if ($('#progress').css('display') == 'block'){
                     $('#progress').toggle();
                 }
+                if ($('#sync-history').css('display') == 'block'){
+                    $('#sync-history').toggle();
+                }
                 $('#systeminfo').toggle();
                 if ($('#systeminfo').css('display') == 'block') {
                     $scope.getSys();
@@ -543,35 +546,39 @@
                     }
                 });
             };
-            //显示同步对话框
+            //显示同步历史对话框
             $scope.showProgress = function () {
                 if ($('#systeminfo').css('display') == 'block'){
                     $('#systeminfo').toggle();
                 }
-                $('#progress').toggle();
-                if ($('#progress').css('display') == 'block' && $('.list-history').css('display') == 'block') {
-
-                    $scope.cogradient.getCurrentDevice();
-                    $scope.cogradient.refreshList();
-                    $scope.timer = $interval(function () {
-                        $scope.cogradient.refreshList();
-                    }, 5000);
-                } else {
-                    $interval.cancel($scope.timer);
+                if ($('#sync-history').css('display') == 'block'){
+                    $('#sync-history').toggle();
                 }
+                $('#progress').toggle();
+                $scope.cogradient.refreshHistory();
             };
             //显示同步状态
             $scope.showStatus = function () {
               if ($('#progress').css('display') == 'block'){
                   $('#progress').toggle();
               }
-              // $scope.isShowStatus = true
+                if ($('#systeminfo').css('display') == 'block'){
+                    $('#systeminfo').toggle();
+                }
               $('#sync-history').toggle();
-              $scope.timer = $interval(function () {
-                  $scope.cogradient.refreshList();
-              }, 5000);
-                  $scope.cogradient.refreshList();
 
+                $scope.cogradient.getCurrentDevice();
+                $scope.cogradient.refreshList();
+                if ($('.list-history').css('display') == 'block') {
+
+                    $scope.timer = $interval(function () {
+                        $scope.cogradient.refreshList();
+
+                    }, 5000);
+                } else {
+
+                    $interval.cancel($scope.timer);
+                }
             };
             //切换同步列表和同步历史界面
             $scope.selectHistoryList = function (className) {
@@ -625,8 +632,8 @@
                 var r = confirm('是否再次同步？');
                 if (r == true) {
                     $scope.cogradient.reloadFile(param);
-                    $scope.selectHistoryList('list-history', 'list');
-
+                    // $scope.selectHistoryList('list-history', 'list');
+                    $scope.showStatus()
                 } else {
                     //console.log('再次同步取消');
                 }
