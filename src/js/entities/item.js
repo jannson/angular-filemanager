@@ -18,7 +18,7 @@
                     return ('/' + path.join('/') + '/' + this.name).replace(/\/\//, '/');
                 }
             };
-            console.log(rawModel,88);
+            //console.log(rawModel,88);
             this.error = '';
             this.processing = false;
 
