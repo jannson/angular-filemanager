@@ -506,7 +506,7 @@
 
             //重新进行配置
             $scope.sysReconfig = function () {
-                window.location.href='/static/config.html';
+                window.location.href='/static/sysConfig.html';
             };
 
             //获取系统状态信息

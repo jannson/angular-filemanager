@@ -1,0 +1,27 @@
+.bg-fff { background: #ffffff;}
+.bg-f8 { background-color: #f8f8f8;}
+.c-999 {color: #999999;}
+.c-666 {color: #666666;}
+.c-000 {color: #000000;}
+.mx-10 {margin: 0 10px;}
+.my-10 {margin: 10px 0;}
+.my-20 {margin: 20px 0;}
+.p-20 {padding: 20px;}
+.py-20 {padding: 20px 0;}
+.px-20 {padding: 0 20px;}
+.px-10 {padding: 0 10px;}
+.fs-12px {font-size: 12px!important;}
+.fs-13px {font-size: 13px;}
+.fs-14px {font-size: 14px;}
+.fixed { position: fixed;}
+.inline-block { display: inline-block;}
+.left-align { text-align: left; }
+.center {text-align: center;}
+.right-align { text-align: right; }
+.nowrap { white-space: nowrap; }
+.break-word { word-wrap: break-word; }
+.flex { display: flex; }
+.justify-between { justify-content: space-between;}
+.justify-around { justify-content: space-around;}
+.justify-center { justify-content: center;}
+.items-center {align-items: center;}
