@@ -1,13 +1,9 @@
 import axios from 'axios'
-import store from 'store'
+import { Modal,message } from 'ant-design-vue'
 // import appStore from '@/store'
 
 // 五华
-const baseURL = 'http://119.146.147.100:8081/jlbdc_gzh/'
-const imgURL = 'http://119.146.147.100:8081/rs/'
-// 局里
-// const baseURL = 'http://119.146.150.29:8081/jlbdc_gzh/'
-// const imgURL = 'http://119.146.150.29:8081/rs/'
+const baseURL = 'http://127.0.0.1:8899'
 const service = axios.create({
     baseURL,
     method: 'post',
@@ -18,11 +14,7 @@ service.interceptors.request.use(options => {
     const config = options
     // const method = options.method.toUpperCase()
     const field = 'data' // method === 'GET' ? 'params' : 'data'
-    // 添加token到查询参数中
-    if (store.token ) {
-        config.data.token = store.token
-    }
-    config[field] = { ...options[field], token:  store.get('token')}
+    config[field] = { ...options[field]}
 
     return config
 }, error => Promise.reject(error))
@@ -30,19 +22,18 @@ service.interceptors.request.use(options => {
 
 service.interceptors.response.use(
     response => {
-        console.log('response: ', response.data)
+        console.log('response: ', response)
         const { data } = response
-        const {code} = data.msg
+        // const {code} = data.msg
         // Do something
-        if (+code === 1) {
-            return data
-        } else if(code === 422) {
-            store.remove('user')
-            const url = "/dist/#/agree"
-            window.location = url
-        }
+        // if (+code === 1) {
+        //     return data
+        // } else if(code === 422) {
+        //     const url = "/dist/#/agree"
+        //     window.location = url
+        // }
 
-        return Promise.reject(data)
+        return data
     },
     error => Promise.reject(error)
 )
@@ -54,21 +45,24 @@ service.interceptors.response.use(
  * @return {Promise}             返回一个Promise对象
  */
 function request(params, ignoreError) {
-    const loading = weui.loading('加载中')
+    // const loading = weui.loading('加载中')
+    message.loading('加载中', 0)
     return service(params).then(res => {
-        loading.hide()
+        message.destroy()
         return res
     }).catch(res => {
         console.log('request.error: ', res)
-        loading.hide()
-        const {code, msg} = res.msg
+        message.destroy()
         // appStore.setLoading(false)
         // 网络异常等情况，拿到的是string类型的错误信息
         if (typeof res === 'string') {
             // 为兼容后端返回的数据，这里把res封装到message中
-            const error = { message: res }
-            if (ignoreError !== true && code !== 422) {
-                weui.alert(msg)
+            const error = { res }
+            if (ignoreError !== true) {
+                Modal.warning({
+                    title: '提示',
+                    content: res
+                })
                 // appStore.setError(error)
             }
             return Promise.reject(error)
@@ -82,9 +76,8 @@ function request(params, ignoreError) {
         // }
 
         // 接口如果需要在外边需要异常，需要设置ignoreError = true
-        if (ignoreError !== true && code !== 422) {
+        if (ignoreError !== true) {
             // appStore.setError(res)
-            weui.alert(msg)
         }
 
         return Promise.reject(res)
@@ -94,6 +87,5 @@ function request(params, ignoreError) {
 // function
 export {
     baseURL,
-    imgURL
 }
 export default request

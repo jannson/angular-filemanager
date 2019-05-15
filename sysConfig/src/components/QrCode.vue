@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <CommonHeader v-bind:hideButton="true"></CommonHeader> -->
     <a-modal
       title="扫码登录"
       v-model="visible"
@@ -18,6 +17,7 @@
 <script>
   import axios from 'axios';
   import jsonp from 'jsonp';
+  import store from 'store';
   import VueQrcode from '@chenfengyuan/vue-qrcode';
   function get_ddnsto_base() {
     if(window.location.hostname.indexOf("ngrokd.win") >= 0) {
@@ -54,7 +54,7 @@
       qr_refresh: function(retry) {
         var self = this;
             jsonp(DDNSTO_BASE + '/wechat/oauth/login/sso/', null, function (err, data) {
-                debugger
+                // debugger
                   if (err) {
                     console.error(err.message);
                     self.disable = false;
@@ -65,6 +65,8 @@
                       self.do_qr_listen(data.event_id, since_time);
                     } else {
                         console.log("login ok" + data.token);
+                        store.set('token', data.token)
+
                         function try_again() {
                             self.qr_refresh(true);
                         };
