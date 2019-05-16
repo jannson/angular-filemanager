@@ -164,8 +164,8 @@
                                 {{subItem.uploadSpeed | formatKB}}kb/s</span>
                             <span class="center-33p" ng-click="cancelTask(subItem.fromRouter,item.key)" style="width:10%;color:#00aaff;cursor:pointer;margin-left:10px;">取消</span>
                         </h6>
-                        <!--<div ng-repeat="subItem in subItem.childs" ng-include="'synchro-branch-item'"></div>-->
-                        <!--<h6>-&#45;&#45;文件夹：{{subItem.key | formatName}} end-&#45;&#45;</h6>-->
+                        <div ng-repeat="subItem in subItem.childs" ng-include="'synchro-branch-item'"></div>
+                        <h6>-&#45;&#45;文件夹：{{subItem.key | formatName}} end-&#45;&#45;</h6>
                     </div>
                     <div ng-hide="subItem.isDir">
                         <div class="file-box">
@@ -189,5 +189,39 @@
                 </div>
                 <div class="no-task" ng-show="!item.hidden&&!item.child">当前设备无同步任务</div>
             </div>
+            <script type="text/ng-template" id="synchro-branch-item">
+                <div class="fill-after">
+                    <div ng-show="subItem.isDir">
+                        <h6 title="{{subItem.key | formatName}}">
+                            <span class="left-63p" style="width:50%;" title="{{subItem.key | formatName}}">---文件夹： {{subItem.key | formatName}} start---</span>
+                            <span class="center-33p" title="{{subItem.uploadSpeed | formatKB}}kb">
+                                {{subItem.uploadSpeed | formatKB}}kb/s</span>
+                            <span class="center-33p" ng-click="cancelTask(subItem.fromRouter,item.key)" style="width:10%;color:#00aaff;cursor:pointer;margin-left:10px;">取消</span>
+                        </h6>
+                        <div ng-repeat="subItem in subItem.childs" ng-include="'synchro-branch-item'"></div>
+                        <h6>---文件夹：{{subItem.key | formatName}} end---</h6>
+                    </div>
+                    <div ng-hide="subItem.isDir">
+                        <div class="file-box">
+                          <img src="/static/assets/music.svg" alt="">
+                        </div>
+                        <div class="progress-content">
+                            <div>
+                                <span class="left-63p" title="{{subItem.key | formatName}}">{{subItem.key | formatName}}</span>
+                                <span class="center-33p" title="{{subItem.uploadSpeed | formatKB}}kb/s">{{subItem.uploadSpeed | formatKB}}kb/s</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{subItem.progress}}%;"
+                                    title="{{subItem.progress}}%">
+                                    <span class="sr-only">{{subItem.progress}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cancel-button" ng-click="cancelTask(subItem.fromRouter,subItem.key)">
+                            取消
+                        </div>
+                    </div>
+                </div>
+            </script>
         </div>
 </div>

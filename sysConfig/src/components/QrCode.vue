@@ -68,7 +68,7 @@
                     } else {
                         console.log("login ok" + data.token);
                         store.set('token', data.token)
-                        self.$emit('alertQr')
+                        self.$emit('alertQr') // 隐藏二维码
                         function try_again() {
                             self.qr_refresh(true);
                         };

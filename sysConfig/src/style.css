@@ -3,6 +3,8 @@
 .c-999 {color: #999999;}
 .c-666 {color: #666666;}
 .c-000 {color: #000000;}
+.c-C0 {color: #C0C0C0;}
+.c-red {color: #f5222d;;}
 .mx-10 {margin: 0 10px;}
 .my-10 {margin: 10px 0;}
 .my-20 {margin: 20px 0;}
@@ -10,6 +12,7 @@
 .py-20 {padding: 20px 0;}
 .px-20 {padding: 0 20px;}
 .px-10 {padding: 0 10px;}
+.fs-10px {font-size: 10px;}
 .fs-12px {font-size: 12px!important;}
 .fs-13px {font-size: 13px;}
 .fs-14px {font-size: 14px;}

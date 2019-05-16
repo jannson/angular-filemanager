@@ -28,7 +28,7 @@
                 <a-icon slot="suffix" type="folder-open" @click="renderTree" />
               </a-input>
             </a-form-item>
-            <a-form-item label="免授权访问：" :label-col="{ span: 5 }" :wrapper-col="{ span: 16 }">
+            <a-form-item label="免授权访问：" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
               <a-radio-group 
                 @change="handleChangeMode"
                 v-decorator="['loginMode',
@@ -38,9 +38,9 @@
                 <a-radio value="2">仅本机</a-radio>
                 <a-radio value="1">仅局域网</a-radio>
                 <a-radio value="0">全网</a-radio>
+                    <div v-if="tipsVisible" class="c-C0 fs-10px tips"><span class="c-red">*</span> 任何用户访问到本页面，都将不需要登录就可以访问，非常不安全</div>
               </a-radio-group>
             </a-form-item>
-            <span>任何用户访问到本页面，都将不需要登录就可以访问，非常不安全</span>
             <a-form-item v-if="modeVisible" label="内网网段：" :label-col="{ span: 5 }" :wrapper-col="{ span: 16 }">
               <a-textarea
                 placeholder="请输入网段"
@@ -75,7 +75,8 @@
             @ok="handleTreeOk"
             >
                 <div class="">
-                    <a-tree
+                    <a-directory-tree
+                        v-if="treeVisible"
                         showLine
                         :loadData="onLoadData"
                         :treeData="treeList"
@@ -86,7 +87,7 @@
                         <a-tree-node title="leaf 0-0" key="0-0-0" isLeaf />
                         <a-tree-node title="leaf 0-1" key="0-0-1" isLeaf />
                         </a-tree-node> -->
-                    </a-tree>
+                    </a-directory-tree>
                 </div>
             </a-modal>
       </div>
@@ -107,6 +108,7 @@ export default {
       config: {},
       noLogin: false,
       visible: false,
+      tipsVisible: false,
       modeVisible: false,
       treeVisible: false,
       treeList: [], // 文件管理
@@ -127,10 +129,11 @@ export default {
     handleChangeMode(e) {
         const {value} = e.target
         this.modeVisible = value == 1
+        this.tipsVisible = value == 0
     },
     chooseTreeNode(selectedKeys,e){
-        const {title} = e.node.dataRef
-        this.sharePath = title
+        const {title,path} = e.node.dataRef
+        this.sharePath = path
     },
     handleTreeOk() {
         this.treeVisible = false
@@ -138,18 +141,18 @@ export default {
             sharePath: this.sharePath
         })
     },
-    fetchTreeData(treeNode={},title="") {
+    fetchTreeData(treeNode={},path="") {
         return request({
             url: "/api/listAllDir",
             data: {
                 action:"list",
-                path: title
+                path
             }
         }).then(res => {
             // const path = this.treeList.
             const result = res.result.map((item,index) => ({
                 title: item.name,
-                // isLeaf: false,
+                path: item.path,
                 key: `${treeNode.eventKey}-${index}`
             }))
             return result
@@ -157,8 +160,8 @@ export default {
     },
     getRouterInfo() {
         request({
-            type: 'get',
-            baseURL,
+            method: 'get',
+            // baseURL,
             url: '/api/routerInfo',
         }).then(data => {
             if(data.result) {
@@ -186,7 +189,6 @@ export default {
                     deviceList.push(o);
                 }
                 localStorage.setItem('deviceList', JSON.stringify(deviceList));
-                window.location.href = '/'
             }
         })
     },            
@@ -202,9 +204,9 @@ export default {
           resolve()
           return
         }
-        const {title} = treeNode.dataRef
+        const {title,path} = treeNode.dataRef
 
-        this.fetchTreeData(treeNode,title).then(data => {
+        this.fetchTreeData(treeNode,path).then(data => {
             treeNode.dataRef.children = data
             this.treeList = [...this.treeList]
             resolve()
@@ -226,16 +228,19 @@ export default {
           console.log('Received values of form: ', values);
           const regex = /\r\n/g
             const {tips, ...rest} = values
-            if (values.loginLan) {
-                values.loginLan = values.loginLan.replace(regex,',')
+            if (rest.loginLan) {
+                rest.loginLan = rest.loginLan.replace(regex,',')
             }
+            
           rest.loginMode = +rest.loginMode
           request({
                 url: "/api/config",
                 data: {
+                    // username: 'd215133c-50ac-4442-af6f-e8ae22abfd1f',
                     username: store.get('token'),
                     ...rest,
                     upload: 0,
+                    // firstInitial: false,
                 }
             }).then(res => {
                 message.success('配置成功')
@@ -256,6 +261,7 @@ export default {
           tpl.loginMode = (tpl.loginMode).toString()
             this.config = tpl;
             this.modeVisible = res.loginMode == 1
+            this.tipsVisible = res.loginMode == 0
       });
     }
   }
@@ -300,5 +306,8 @@ img {
 }
 .ant-form-explain {
   margin-left: 14px !important;
+}
+.tips {
+    line-height: initial;
 }
 </style>

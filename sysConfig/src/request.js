@@ -26,7 +26,6 @@ service.interceptors.response.use(
         console.log('response: ', response)
         const { data } = response
         const code = data.success
-        debugger
         if (+code === 0) {
             return data
         } else if(code === 422) { // todo 过期
