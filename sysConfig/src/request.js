@@ -3,9 +3,10 @@ import { Modal,message } from 'ant-design-vue'
 // import appStore from '@/store'
 
 // 五华
-const baseURL = 'http://127.0.0.1:8899'
+const localBaseURL = 'http://127.0.0.1:8899'
+const baseURL = 'https://service.koolshare.cn'
 const service = axios.create({
-    baseURL,
+    baseURL: localBaseURL,
     method: 'post',
     timeout: 20000
 })
@@ -24,16 +25,16 @@ service.interceptors.response.use(
     response => {
         console.log('response: ', response)
         const { data } = response
-        // const {code} = data.msg
-        // Do something
-        // if (+code === 1) {
-        //     return data
-        // } else if(code === 422) {
-        //     const url = "/dist/#/agree"
-        //     window.location = url
-        // }
+        const code = data.success
+        debugger
+        if (+code === 0) {
+            return data
+        } else if(code === 422) { // todo 过期
+            const url = "/"
+            window.location = url
+        }
 
-        return data
+        return Promise.reject(data)
     },
     error => Promise.reject(error)
 )
@@ -45,7 +46,6 @@ service.interceptors.response.use(
  * @return {Promise}             返回一个Promise对象
  */
 function request(params, ignoreError) {
-    // const loading = weui.loading('加载中')
     message.loading('加载中', 0)
     return service(params).then(res => {
         message.destroy()
@@ -53,12 +53,13 @@ function request(params, ignoreError) {
     }).catch(res => {
         console.log('request.error: ', res)
         message.destroy()
-        // appStore.setLoading(false)
+        const code = res.success
+
         // 网络异常等情况，拿到的是string类型的错误信息
         if (typeof res === 'string') {
             // 为兼容后端返回的数据，这里把res封装到message中
             const error = { res }
-            if (ignoreError !== true) {
+            if (ignoreError !== true && code !== 0) {
                 Modal.warning({
                     title: '提示',
                     content: res
@@ -76,8 +77,11 @@ function request(params, ignoreError) {
         // }
 
         // 接口如果需要在外边需要异常，需要设置ignoreError = true
-        if (ignoreError !== true) {
-            // appStore.setError(res)
+        if (ignoreError !== true && code !== 0) {
+            Modal.warning({
+                title: '错误提示',
+                content: res.error
+            })
         }
 
         return Promise.reject(res)

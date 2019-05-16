@@ -5,11 +5,15 @@
         <div>
           <img src="./assets/bg.png" alt>
         </div>
-        <div class="form">
+        <div v-if="noLogin">
+
+        </div>
+        <div v-else class="form">
           <a-form :form="form" @submit="handleSubmit">
-              <!-- v-if="config.firstInitial" -->
             <a-form-item label="登录服务：" :label-col="{ span: 5 }" :wrapper-col="{ span: 16 }">
-              <a-button type="primary" icon="wechat" @click="alertQr">微信授权</a-button>
+                <!-- <a-button type="primary" icon="wechat" @click="alertQr">微信授权</a-button> -->
+              <a-button v-if="!config.firstInitial" type="primary" icon="wechat">微信已授权</a-button>
+              <a-button v-else type="primary" icon="wechat" @click="alertQr">微信授权</a-button>
             </a-form-item>
             <a-form-item label="共享路径：" :label-col="{ span: 5 }" :wrapper-col="{ span: 16 }">
               <!-- prefix="folder-open" -->
@@ -36,6 +40,7 @@
                 <a-radio value="0">全网</a-radio>
               </a-radio-group>
             </a-form-item>
+            <span>任何用户访问到本页面，都将不需要登录就可以访问，非常不安全</span>
             <a-form-item v-if="modeVisible" label="内网网段：" :label-col="{ span: 5 }" :wrapper-col="{ span: 16 }">
               <a-textarea
                 placeholder="请输入网段"
@@ -93,14 +98,14 @@
 <script>
 import store from 'store';
 import {message} from 'ant-design-vue';
-import request from "./request.js";
-// import leftBg from './assets/bg.png';
+import request, {baseURL} from "./request";
 import QrCode from "./components/QrCode";
 export default {
   name: "app",
   data() {
     return {
       config: {},
+      noLogin: false,
       visible: false,
       modeVisible: false,
       treeVisible: false,
@@ -109,6 +114,7 @@ export default {
     };
   },
   created() {
+
     this.fetchLinkCfg();
   },
   components: {
@@ -149,6 +155,41 @@ export default {
             return result
         });
     },
+    getRouterInfo() {
+        request({
+            type: 'get',
+            baseURL,
+            url: '/api/routerInfo',
+        }).then(data => {
+            if(data.result) {
+                data = data.result;
+            }
+            let deviceList = []
+            if (!data.routers) {
+                var r = confirm('获取路信息失败请重试');
+                if (r == true) {
+                    this.getRouterInfo();
+                } else {
+                    alert('取消重试')
+                }
+            } else {
+                var array = data.routers;
+                for (var i = 0, len = array.length; i < len; i++) {
+                    var o = {};
+                    o.routerId = array[i].routerId;
+                    o.name = array[i].name;
+                    if (data.routerId == array[i].routerId) {
+                        o.isCurrentDevice = true;
+                    } else {
+                        o.isCurrentDevice = false;
+                    }
+                    deviceList.push(o);
+                }
+                localStorage.setItem('deviceList', JSON.stringify(deviceList));
+                window.location.href = '/'
+            }
+        })
+    },            
     renderTree() {
         this.fetchTreeData().then(result => {
             this.treeVisible = true
@@ -195,10 +236,10 @@ export default {
                     username: store.get('token'),
                     ...rest,
                     upload: 0,
-                    // loginLan: '10.98.0.8/21'
                 }
             }).then(res => {
                 message.success('配置成功')
+                this.getRouterInfo().then(() => window.location = "/")
             });
         }
       });

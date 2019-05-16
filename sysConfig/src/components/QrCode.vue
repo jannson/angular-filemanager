@@ -3,14 +3,14 @@
     <a-modal
       title="扫码登录"
       v-model="visible"
-      @ok="handleOk"
+      :footer="null"
       @cancel="alertQr"
     >
         <div class="center">
 
             <qrcode v-if="qrlink" :value="qrlink" :options="{ size: 330 }"></qrcode>
         </div>
-        <md-button v-if="!disable" class="md-raised" @click="qr_refresh()">超时刷新</md-button>
+        <a-button v-if="!disable" @click="qr_refresh()">超时刷新</a-button>
     </a-modal>
   </div>
 </template>
@@ -39,6 +39,8 @@
     },
     created: function () {
       this.qr_refresh();
+    //   this.alertQr
+    debugger
     },
     data() {
       return {
@@ -66,7 +68,7 @@
                     } else {
                         console.log("login ok" + data.token);
                         store.set('token', data.token)
-
+                        self.$emit('alertQr')
                         function try_again() {
                             self.qr_refresh(true);
                         };
