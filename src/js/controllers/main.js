@@ -470,22 +470,6 @@
             $scope.fileNavigator.getCurrentDevices();
 
             //显示系统对话框
-            // $scope.showSysteminfo = function () {
-            //     if ($('#progress').css('display') == 'block'){
-            //         $('#progress').toggle();
-            //     }
-            //     $('#systeminfo').toggle();
-            //     if ($('#systeminfo').css('display') == 'block') {
-            //         $scope.getSys();
-            //         //$scope.timer = $interval(function () {
-            //         //    $scope.getSys();
-            //         //}, 5000);
-            //     } else {
-            //         //$interval.cancel($scope.timer);
-            //     }
-            // };
-
-            //显示系统对话框
             $scope.showSysteminfo = function () {
                 if ($('#progress').css('display') == 'block'){
                     $('#progress').toggle();

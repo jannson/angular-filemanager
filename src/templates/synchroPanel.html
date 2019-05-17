@@ -78,7 +78,7 @@
     .cancel-button {
         width: 10%;
         float: left;
-        margin-left: 20px;
+        /* margin-left: 20px; */
         color: #00aaff;
         cursor: pointer;
     }
@@ -127,6 +127,7 @@
 
                     <!-- <span class="center-33p" style="color:red;" ng-show="item.progress !=100">同步失败</span>
                     <span class="center-33p" style="color:blue;" ng-hide="item.progress !=100">同步成功</span> -->
+                <div ng-show="item.progress !=100" style="color: red;">{{item.error}}</div>
 
                 <div class="flex justify-between fs-10px c-75">
                     <span class="" title="{{item.fromRouterName}}">{{item.fromRouterName}}-&gt;{{item.toRouterName}}</span>

@@ -159,9 +159,8 @@ export default {
         });
     },
     getRouterInfo() {
-        request({
+        return request({
             method: 'get',
-            // baseURL,
             url: '/api/routerInfo',
         }).then(data => {
             if(data.result) {
