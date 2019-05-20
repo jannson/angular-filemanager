@@ -2,7 +2,6 @@ import axios from 'axios'
 import { Modal,message } from 'ant-design-vue'
 // import appStore from '@/store'
 
-// 五华
 const localBaseURL = 'http://127.0.0.1:8899'
 const baseURL = 'https://service.koolshare.cn'
 const service = axios.create({

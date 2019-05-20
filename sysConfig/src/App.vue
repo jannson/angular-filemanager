@@ -5,13 +5,12 @@
         <div>
           <img src="./assets/bg.png" alt>
         </div>
-        <div v-if="noLogin">
-
+        <div v-if="noLogin" class="form">
+            <a-button type="primary" icon="wechat" @click="alertQr">微信授权</a-button>
         </div>
         <div v-else class="form">
           <a-form :form="form" @submit="handleSubmit">
             <a-form-item label="登录服务：" :label-col="{ span: 5 }" :wrapper-col="{ span: 16 }">
-                <!-- <a-button type="primary" icon="wechat" @click="alertQr">微信授权</a-button> -->
               <a-button v-if="!config.firstInitial" type="primary" icon="wechat">微信已授权</a-button>
               <a-button v-else type="primary" icon="wechat" @click="alertQr">微信授权</a-button>
             </a-form-item>
@@ -82,11 +81,6 @@
                         :treeData="treeList"
                         @select="chooseTreeNode"
                     >
-                        <!-- :defaultExpandAll="true" -->
-                        <!-- <a-tree-node title="parent 0" key="0-0">
-                        <a-tree-node title="leaf 0-0" key="0-0-0" isLeaf />
-                        <a-tree-node title="leaf 0-1" key="0-0-1" isLeaf />
-                        </a-tree-node> -->
                     </a-directory-tree>
                 </div>
             </a-modal>
@@ -97,6 +91,7 @@
 </template>
 
 <script>
+import qs from 'qs';
 import store from 'store';
 import {message} from 'ant-design-vue';
 import request, {baseURL} from "./request";
@@ -116,7 +111,9 @@ export default {
     };
   },
   created() {
-
+    // console.log('qs',qs.parse(window.location.search,{ ignoreQueryPrefix: true }))
+    const {nologin} = qs.parse(window.location.search,{ ignoreQueryPrefix: true })
+    this.noLogin = nologin == 1
     this.fetchLinkCfg();
   },
   components: {
@@ -124,7 +121,11 @@ export default {
   },
   methods: {
     alertQr() {
-      this.visible = !this.visible;
+        this.visible = !this.visible;
+        // if (!store.get('token')) {
+        // } else {
+        //     this.login()
+        // }
     },
     handleChangeMode(e) {
         const {value} = e.target
@@ -141,6 +142,7 @@ export default {
             sharePath: this.sharePath
         })
     },
+    
     fetchTreeData(treeNode={},path="") {
         return request({
             url: "/api/listAllDir",
@@ -210,14 +212,6 @@ export default {
             this.treeList = [...this.treeList]
             resolve()
         })
-        // setTimeout(() => {
-        //   treeNode.dataRef.children = [
-        //     { title: 'Child Node', key: `${treeNode.eventKey}-0` },
-        //     { title: 'Child Node', key: `${treeNode.eventKey}-1` },
-        //   ]
-        //   this.treeData = [...this.treeData]
-        //   resolve()
-        // }, 1000)
       })
     },
     handleSubmit(e) {

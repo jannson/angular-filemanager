@@ -16,6 +16,7 @@
 </template>
 <script>
   import axios from 'axios';
+  import qs from 'qs';
   import jsonp from 'jsonp';
   import store from 'store';
   import VueQrcode from '@chenfengyuan/vue-qrcode';
@@ -39,8 +40,6 @@
     },
     created: function () {
       this.qr_refresh();
-    //   this.alertQr
-    debugger
     },
     data() {
       return {
@@ -50,8 +49,15 @@
       }
     },
     methods: {
-        handleOk() {
-
+        login() {
+            return request({
+                url: "/api/loginByToken",
+                data: {
+                    token: store.get('token'),
+                }
+            }).then(res => {
+                window.location = '/'
+            });
         },
       qr_refresh: function(retry) {
         var self = this;
@@ -66,18 +72,23 @@
                       var since_time = (new Date(Date.now())).getTime();
                       self.do_qr_listen(data.event_id, since_time);
                     } else {
-                        console.log("login ok" + data.token);
+                        const {nologin} = qs.parse(window.location.search,{ ignoreQueryPrefix: true })
+                        if (nologin) { // 登录页面而来
+                            window.location = '/'
+                            return
+                        }
+
                         store.set('token', data.token)
                         self.$emit('alertQr') // 隐藏二维码
-                        function try_again() {
-                            self.qr_refresh(true);
-                        };
-                        if (retry) {
-                            // already retry, error
-                            console.log("retry error");
-                        } else {
-                            setTimeout(try_again, 200);
-                        }
+                        // function try_again() {
+                        //     self.qr_refresh(true);
+                        // };
+                        // if (retry) {
+                        //     // already retry, error
+                        //     console.log("retry error");
+                        // } else {
+                        //     setTimeout(try_again, 200);
+                        // }
                     }
                   }
                 });
@@ -107,7 +118,12 @@
                 } else {
                     var event = response.data.events[response.data.events.length-1];
                     console.log("login ok: " + event.data);
-                    self.qr_refresh(true);
+                    const {nologin} = qs.parse(window.location.search,{ ignoreQueryPrefix: true })
+                    if (nologin) { // 登录页面而来
+                        this.login()
+                    } else {
+                        self.qr_refresh(true);
+                    }
                 }
             }).catch(function (error) {
                 setTimeout(listen_qr, 2000);
