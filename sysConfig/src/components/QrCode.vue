@@ -62,7 +62,6 @@
       qr_refresh: function(retry) {
         var self = this;
             jsonp(DDNSTO_BASE + '/wechat/oauth/login/sso/', null, function (err, data) {
-                // debugger
                   if (err) {
                     console.error(err.message);
                     self.disable = false;
