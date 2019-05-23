@@ -85,7 +85,7 @@
                 </div>
             </a-modal>
       </div>
-      <qrcode v-if="visible" :alertQr="alertQr"></qrcode>
+      <qrcode v-if="visible" :alertQr="alertQr" v-on:alertQr1="alertQr"></qrcode>
     </div>
   </div>
 </template>
@@ -114,6 +114,9 @@ export default {
     // console.log('qs',qs.parse(window.location.search,{ ignoreQueryPrefix: true }))
     const {nologin} = qs.parse(window.location.search,{ ignoreQueryPrefix: true })
     this.noLogin = nologin == 1
+    if (this.noLogin) {
+        return
+    }
     this.fetchLinkCfg();
   },
   components: {
@@ -121,6 +124,7 @@ export default {
   },
   methods: {
     alertQr() {
+        
         this.visible = !this.visible;
         // if (!store.get('token')) {
         // } else {
@@ -151,7 +155,6 @@ export default {
                 path
             }
         }).then(res => {
-            // const path = this.treeList.
             const result = res.result.map((item,index) => ({
                 title: item.name,
                 path: item.path,

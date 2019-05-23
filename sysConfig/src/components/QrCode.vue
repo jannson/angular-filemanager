@@ -20,6 +20,10 @@
   import jsonp from 'jsonp';
   import store from 'store';
   import VueQrcode from '@chenfengyuan/vue-qrcode';
+    import request, {baseURL} from "../request";
+
+    import { message } from 'ant-design-vue'
+
   function get_ddnsto_base() {
     if(window.location.hostname.indexOf("ngrokd.win") >= 0) {
         return "https://service.ngrokd.win:9443";
@@ -28,7 +32,6 @@
     }
   }
   var DDNSTO_BASE = get_ddnsto_base();
-  console.log(DDNSTO_BASE);
   
   export default {
     name: 'WeixinLogin',
@@ -70,34 +73,29 @@
                       self.qrlink = data.image;
                       var since_time = (new Date(Date.now())).getTime();
                       self.do_qr_listen(data.event_id, since_time);
-                    } else {
+                    } else { // 已登录过 https://service.koolshare.cn 
                         const {nologin} = qs.parse(window.location.search,{ ignoreQueryPrefix: true })
                         if (nologin) { // 登录页面而来
                             window.location = '/'
                             return
                         }
-
+                        // console.log('我是jsonp '+DDNSTO_BASE + '/wechat/oauth/login/sso/',data.status)
+                        
                         store.set('token', data.token)
-                        self.$emit('alertQr') // 隐藏二维码
-                        // function try_again() {
-                        //     self.qr_refresh(true);
-                        // };
-                        // if (retry) {
-                        //     // already retry, error
-                        //     console.log("retry error");
-                        // } else {
-                        //     setTimeout(try_again, 200);
-                        // }
+                        // 登录ddnsto
+                        self.login().then(() => {
+                            message.info('授权成功', () => {
+                                self.$emit('alertQr1') // 隐藏二维码
+                            })
+                        })
+
                     }
                   }
-                });
+            });
       },
-      do_qr_listen: function(event_id2, since_time2) {
-        var self = this;
-        var param = {"listen_id": event_id2, "since_time": since_time2};
-        //a polling implement to listen the event of scanning qr
-        var listen_qr = function() {
-            var listen_id = param.listen_id;
+      listen_qr(param) {
+            var self = this;
+              var listen_id = param.listen_id;
             var since_time = param.since_time;
             if(!since_time || !listen_id || self.qrlink === "") {
                 return;
@@ -113,7 +111,7 @@
             //use CORS
             axios.get(pollUrl).then(function (response) {
                 if(response.data.timeout) {
-                    setTimeout(listen_qr, 200);
+                    setTimeout(()=> self.listen_qr(param), 200);
                 } else {
                     var event = response.data.events[response.data.events.length-1];
                     console.log("login ok: " + event.data);
@@ -127,8 +125,11 @@
             }).catch(function (error) {
                 setTimeout(listen_qr, 2000);
             });
-        };
-        listen_qr();
+      },
+      do_qr_listen: function(event_id2, since_time2) {
+        var param = {"listen_id": event_id2, "since_time": since_time2};
+        //a polling implement to listen the event of scanning qr
+        this.listen_qr(param);
       }
     }
   }
