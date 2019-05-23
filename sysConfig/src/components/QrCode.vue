@@ -77,7 +77,7 @@
                             store.set('token', data.token)
                             // 登录ddnsto
                             self.login().then(() => {
-                                message.info('授权成功', () => {
+                                message.success('授权成功', () => {
                                     self.$emit('alertQr1') // 隐藏二维码
                                     window.location = '/'
                                 })
@@ -86,8 +86,6 @@
                         }
                         // console.log('我是jsonp '+DDNSTO_BASE + '/wechat/oauth/login/sso/',data.status)
                         self.$emit('alertQr1') // 隐藏二维码
-                        
-
                     }
                   }
             });
