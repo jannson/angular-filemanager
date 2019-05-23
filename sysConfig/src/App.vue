@@ -85,7 +85,7 @@
                 </div>
             </a-modal>
       </div>
-      <qrcode v-if="visible" :alertQr="alertQr" v-on:alertQr1="alertQr"></qrcode>
+      <qrcode v-if="visible" :alertQr="alertQr" v-on:alertQr1="alertQrCallBack"></qrcode>
     </div>
   </div>
 </template>
@@ -111,7 +111,6 @@ export default {
     };
   },
   created() {
-    // console.log('qs',qs.parse(window.location.search,{ ignoreQueryPrefix: true }))
     const {nologin} = qs.parse(window.location.search,{ ignoreQueryPrefix: true })
     this.noLogin = nologin == 1
     if (this.noLogin) {
@@ -124,12 +123,11 @@ export default {
   },
   methods: {
     alertQr() {
-        
         this.visible = !this.visible;
-        // if (!store.get('token')) {
-        // } else {
-        //     this.login()
-        // }
+    },
+    alertQrCallBack() {
+        this.visible = false;
+        this.config.firstInitial = false
     },
     handleChangeMode(e) {
         const {value} = e.target
