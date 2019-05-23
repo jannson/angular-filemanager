@@ -58,9 +58,7 @@
                 data: {
                     token: store.get('token'),
                 }
-            }).then(res => {
-                window.location = '/'
-            });
+            })
         },
       qr_refresh: function(retry) {
         var self = this;
@@ -76,18 +74,19 @@
                     } else { // 已登录过 https://service.koolshare.cn 
                         const {nologin} = qs.parse(window.location.search,{ ignoreQueryPrefix: true })
                         if (nologin) { // 登录页面而来
-                            window.location = '/'
+                            store.set('token', data.token)
+                            // 登录ddnsto
+                            self.login().then(() => {
+                                message.info('授权成功', () => {
+                                    self.$emit('alertQr1') // 隐藏二维码
+                                    window.location = '/'
+                                })
+                            })
                             return
                         }
                         // console.log('我是jsonp '+DDNSTO_BASE + '/wechat/oauth/login/sso/',data.status)
+                        self.$emit('alertQr1') // 隐藏二维码
                         
-                        store.set('token', data.token)
-                        // 登录ddnsto
-                        self.login().then(() => {
-                            message.info('授权成功', () => {
-                                self.$emit('alertQr1') // 隐藏二维码
-                            })
-                        })
 
                     }
                   }
