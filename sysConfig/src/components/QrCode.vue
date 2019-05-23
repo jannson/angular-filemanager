@@ -73,8 +73,8 @@
                       self.do_qr_listen(data.event_id, since_time);
                     } else { // 已登录过 https://service.koolshare.cn 
                         const {nologin} = qs.parse(window.location.search,{ ignoreQueryPrefix: true })
+                        store.set('token', data.token)
                         if (nologin) { // 登录页面而来
-                            store.set('token', data.token)
                             // 登录ddnsto
                             self.login().then(() => {
                                 message.success('授权成功', () => {
