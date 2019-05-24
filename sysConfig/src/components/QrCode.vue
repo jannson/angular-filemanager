@@ -120,7 +120,9 @@
                     }
                 }
             }).catch(function (error) {
-                setTimeout(listen_qr, 2000);
+                console.log('错误')
+                
+                setTimeout(()=> self.listen_qr(param), 2000);
             });
       },
       do_qr_listen: function(event_id2, since_time2) {
