@@ -114,7 +114,12 @@
                     console.log("login ok: " + event.data);
                     const {nologin} = qs.parse(window.location.search,{ ignoreQueryPrefix: true })
                     if (nologin) { // 登录页面而来
-                        this.login()
+                        self.login().then(() => {
+                            message.success('授权成功', () => {
+                                self.$emit('alertQr1') // 隐藏二维码
+                                window.location = '/'
+                            })
+                        })
                     } else {
                         self.qr_refresh(true);
                     }
