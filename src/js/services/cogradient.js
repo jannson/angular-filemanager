@@ -26,7 +26,7 @@
                         'uploadSpeed': 262994,
                         'isDir': false,
                         'error': '',
-                        "childs": null
+                        'childs': null
                     },
                     {
                         'key': '/test11-13/test/hello',
@@ -42,23 +42,22 @@
                         'uploadSpeed': 150482,
                         'isDir': true,
                         'error': '',
-                        'fromRouter': 'C494ACB40260',
 
                         'childs': [{
-                            "key": "/test11-13/test/test/client-11-11.exe",
-                            "parentKey": "/test11-13/test/test",
-                            "fromRouter": "C494ACB40260",
-                            "fromRouterName": "",
-                            "fromPath": "/test/hello",
-                            "toPath": "/test11-13/test/test/client-11-11.exe",
-                            "toRouter": "8B46EC49E550",
-                            "toRouterName": "",
-                            "progress": 7,
-                            "downloadSpeed": 5,
-                            "uploadSpeed": 10000,
-                            "isDir": false,
-                            "error": "",
-                            "childs": null
+                            'key': '/test11-13/test/test/client-11-11.exe',
+                            'parentKey': '/test11-13/test/test',
+                            'fromRouter': 'C494ACB40260',
+                            'fromRouterName': '',
+                            'fromPath': '/test/hello',
+                            'toPath': '/test11-13/test/test/client-11-11.exe',
+                            'toRouter': '8B46EC49E550',
+                            'toRouterName': '',
+                            'progress': 7,
+                            'downloadSpeed': 5,
+                            'uploadSpeed': 10000,
+                            'isDir': false,
+                            'error': '',
+                            'childs': null
                         }]
                     }
                 ];

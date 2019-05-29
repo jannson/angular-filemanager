@@ -112,7 +112,7 @@
                     localStorage.setItem('deviceList', JSON.stringify(self.deviceList));
                     self.refresh2(self.deviceList);
                 }).catch(function(error) {
-                    if(error && error.error === "login-require") {
+                    if(error && error.error === 'login-require') {
                         alert('未登录，请登录再进行访问');
                         window.location.href='/static/config.html?nologin=1';
                     }
