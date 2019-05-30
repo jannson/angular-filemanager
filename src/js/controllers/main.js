@@ -30,7 +30,7 @@
                 var Agents = new Array('Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod');
                 var flag = true;
                 for (var v = 0; v < Agents.length; v++) {
-                  if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+                    if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
                 }
                 return flag;
             }
@@ -78,13 +78,13 @@
                 var pos = item.getBoundingClientRect();
 
                 menu.hide().css({
-                  left: pos.left + 30,
-                  top: pos.top + 20
+                    left: pos.left + 30,
+                    top: pos.top + 20
                 }).appendTo('body').show();
             };
 
-            $scope.clickContainer = function() {
-              $('#context-menu').hide();
+            $scope.clickContainer = function () {
+                $('#context-menu').hide();
             };
 
             $scope.selectOrUnselect = function (item, $event, index) {
@@ -128,8 +128,8 @@
                     return;
                 }
 
-                if(!isRightClick && !$scope.isPc) {
-                  $scope.selectIndex = index;
+                if (!isRightClick && !$scope.isPc) {
+                    $scope.selectIndex = index;
                 }
                 $scope.temps = [item];
             };
@@ -204,18 +204,18 @@
             $scope.openVideoPreview = function () {
                 var item = $scope.singleSelection();
                 $scope.apiMiddleware.apiHandler.inprocess = true;
-                var item_url=$scope.apiMiddleware.getUrl(item);
-                var index1=item_url.lastIndexOf('.');
-                var index2=item_url.length;
-                var postf=item_url.substring(index1+1,index2);//后缀名
-                var strTem1=postf.toLocaleLowerCase();
-                if('mp4'==strTem1){
+                var item_url = $scope.apiMiddleware.getUrl(item);
+                var index1 = item_url.lastIndexOf('.');
+                var index2 = item_url.length;
+                var postf = item_url.substring(index1 + 1, index2);//后缀名
+                var strTem1 = postf.toLocaleLowerCase();
+                if ('mp4' == strTem1) {
                     // Play directly
                     $scope.modal('videopreview', null, true)
                         .find('#videopreview-target')
-                        .attr('controls','controls')
-                        .attr('autoplay','autoplay')
-                        .attr('preload','auto')
+                        .attr('controls', 'controls')
+                        .attr('autoplay', 'autoplay')
+                        .attr('preload', 'auto')
                         .attr('src', item_url)
                         .unbind('load error')
                         .on('load error', function () {
@@ -228,15 +228,15 @@
                     item_url = item_url.slice(sfile.length);
                     if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
                         // Use VLC to play
-                        window.open('vlc://'+window.location.href+$scope.apiMiddleware.getUrl(item).slice(1));
+                        window.open('vlc://' + window.location.href + $scope.apiMiddleware.getUrl(item).slice(1));
                     } else {
-                        item_url = '/res-video?path='+item_url+'&transcode=chromecast';
+                        item_url = '/res-video?path=' + item_url + '&transcode=chromecast';
                         //alert(item_url);
                         $scope.modal('videopreview', null, true)
                             .find('#videopreview-target')
-                            .attr('controls','controls')
-                            .attr('autoplay','autoplay')
-                            .attr('preload','auto')
+                            .attr('controls', 'controls')
+                            .attr('autoplay', 'autoplay')
+                            .attr('preload', 'auto')
                             .attr('src', item_url)
                             .unbind('load error')
                             .on('load error', function () {
@@ -471,10 +471,10 @@
 
             //显示系统对话框
             $scope.showSysteminfo = function () {
-                if ($('#progress').css('display') == 'block'){
+                if ($('#progress').css('display') == 'block') {
                     $('#progress').toggle();
                 }
-                if ($('#sync-history').css('display') == 'block'){
+                if ($('#sync-history').css('display') == 'block') {
                     $('#sync-history').toggle();
                 }
                 $('#systeminfo').toggle();
@@ -490,13 +490,13 @@
 
             //重新进行配置
             $scope.sysReconfig = function () {
-                window.location.href='/static/config.html';
+                window.location.href = '/static/config.html';
             };
 
             //获取系统状态信息
-             $scope.getSys = function(){
-                $.get('/api/routerInfo', function(result){
-                    if(result.result) {
+            $scope.getSys = function () {
+                $.get('/api/routerInfo', function (result) {
+                    if (result.result) {
                         //get inner result
                         result = result.result;
                     }
@@ -504,38 +504,38 @@
                     $('#wudp').text(result.natUdpExternalAddr);
                     $('#ntcp').text(result.natTcpLocalAddr);
                     $('#nattype').text(result.natType);
-                    $('#routerid').html('<a target="_blank" href="http://www.ddnsto.com:5000/desktop.html?ksdev='+result.routerId+'">'+result.routerId+'</a>');
+                    $('#routerid').html('<a target="_blank" href="http://www.ddnsto.com:5000/desktop.html?ksdev=' + result.routerId + '">' + result.routerId + '</a>');
                     $('#sharePath').text(result.sharePath);
                     $('#userToken').text(result.userToken);
                     $('#version').text(result.version);
                     var listHtml = '';
-                    for (var i=0;i<result.routers.length; i++) {
+                    for (var i = 0; i < result.routers.length; i++) {
                         if (result.routers[i]['routerId'] != result.routerId) {
-                            listHtml+='<ul><li class="info">设备编号：'+result.routers[i]['routerId']+'</li>';
-                            listHtml+='<li class="info">设备名称：'+result.routers[i]['name']+'</li>';
-                            listHtml+='<li class="info">本地设备：'+result.routers[i]['useLan']+'</li>';
-                            listHtml+='<li class="info">P2P类型：'+result.routers[i]['p2pType']+'</li>';
-                            listHtml+='<li class="info">是否直连：'+result.routers[i]['useDirect']+'</li>';
-                            listHtml+='<li class="info">正在连接：'+result.routers[i]['isConnect']+'</li></ul>';
+                            listHtml += '<ul><li class="info">设备编号：' + result.routers[i]['routerId'] + '</li>';
+                            listHtml += '<li class="info">设备名称：' + result.routers[i]['name'] + '</li>';
+                            listHtml += '<li class="info">本地设备：' + result.routers[i]['useLan'] + '</li>';
+                            listHtml += '<li class="info">P2P类型：' + result.routers[i]['p2pType'] + '</li>';
+                            listHtml += '<li class="info">是否直连：' + result.routers[i]['useDirect'] + '</li>';
+                            listHtml += '<li class="info">正在连接：' + result.routers[i]['isConnect'] + '</li></ul>';
                         }
                     }
                     $('#dlist').html(listHtml);
                 });
-                $.get('/static/version.json', function(result){
+                $.get('/static/version.json', function (result) {
                     $('#newversion').text(result.version);
                 });
-                $.get('/api/createShare', function(result){
-                    if (typeof(result.result) === 'string') {
+                $.get('/api/createShare', function (result) {
+                    if (typeof (result.result) === 'string') {
                         $('#shareKey').text(result.result);
                     }
                 });
             };
             //显示同步历史对话框
             $scope.showProgress = function () {
-                if ($('#systeminfo').css('display') == 'block'){
+                if ($('#systeminfo').css('display') == 'block') {
                     $('#systeminfo').toggle();
                 }
-                if ($('#sync-history').css('display') == 'block'){
+                if ($('#sync-history').css('display') == 'block') {
                     $('#sync-history').toggle();
                 }
                 $('#progress').toggle();
@@ -543,13 +543,13 @@
             };
             //显示同步状态
             $scope.showStatus = function () {
-              if ($('#progress').css('display') == 'block'){
-                  $('#progress').toggle();
-              }
-                if ($('#systeminfo').css('display') == 'block'){
+                if ($('#progress').css('display') == 'block') {
+                    $('#progress').toggle();
+                }
+                if ($('#systeminfo').css('display') == 'block') {
                     $('#systeminfo').toggle();
                 }
-              $('#sync-history').toggle();
+                $('#sync-history').toggle();
 
                 $scope.cogradient.getCurrentDevice();
                 $scope.cogradient.refreshList();
@@ -617,7 +617,7 @@
                 if (r == true) {
                     $scope.cogradient.reloadFile(param);
                     // $scope.selectHistoryList('list-history', 'list');
-                    $scope.showStatus()
+                    $scope.showStatus();
                 } else {
                     //console.log('再次同步取消');
                 }

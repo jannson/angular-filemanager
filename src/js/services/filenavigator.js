@@ -12,7 +12,7 @@
                 this.history = [];
                 this.error = '';
                 this.deviceList = [];
-                this.onRefresh = function () {};
+                this.onRefresh = function () { };
             };
 
             FileNavigator.prototype.getBasePath = function () {
@@ -83,27 +83,27 @@
                 var self = this;
                 self.requesting = true;
                 return self.getRouterInfo().then(function (data) {
-                    if(data.result) {
+                    if (data.result) {
                         data = data.result;
                     }
                     var array = data.routers;
-                    if(!array){
+                    if (!array) {
                         if (data.err === 'unready') {
                             alert('未初始化，请填写正确的信息');
-                            window.location.href='/static/config.html';
+                            window.location.href = '/static/config.html';
                         } else {
                             alert('网络存在问题，请重试！');
                         }
                         return;
-                    }else{
+                    } else {
                         self.deviceList = [];
                         for (var i = 0, len = array.length; i < len; i++) {
                             var o = {};
                             o.routerId = array[i].routerId;
                             o.name = array[i].name;
-                            if(data.routerId==array[i].routerId){
+                            if (data.routerId == array[i].routerId) {
                                 o.isCurrentDevice = true;
-                            }else{
+                            } else {
                                 o.isCurrentDevice = false;
                             }
                             self.deviceList.push(o);
@@ -111,10 +111,10 @@
                     }
                     localStorage.setItem('deviceList', JSON.stringify(self.deviceList));
                     self.refresh2(self.deviceList);
-                }).catch(function(error) {
-                    if(error && error.error === "login-require") {
+                }).catch(function (error) {
+                    if (error && error.error === 'login-require') {
                         alert('未登录，请登录再进行访问');
-                        window.location.href='/static/config.html?nologin=1';
+                        window.location.href = '/static/config.html?nologin=1';
                     }
                 }).finally(function () {
                     self.requesting = false;
@@ -133,9 +133,9 @@
                         return new Item(file, self.currentPath);
                     });
                     // 根据routerId相同进行赋名字
-                    for(var i = 0,len = list.length;i < len; i++){
-                        for(var j = 0,jLen = self.fileList.length; j < jLen; j++){
-                            if(list[i].routerId == self.fileList[j].model.name){
+                    for (var i = 0, len = list.length; i < len; i++) {
+                        for (var j = 0, jLen = self.fileList.length; j < jLen; j++) {
+                            if (list[i].routerId == self.fileList[j].model.name) {
                                 self.fileList[j].model.key = list[i].name;
                                 continue;
                             }
@@ -205,10 +205,10 @@
                     var item = this.fileList[o];
                     item instanceof Item && item.isFolder() && recursive(this.history[0], item, path);
                 }
-                for(var i = 0,iLen = this.history[0].nodes.length; i < iLen;i++){
-                    for(var j = 0,jLen = this.deviceList.length; j < jLen; j++){
-                        if (this.history[0].nodes[i].name == this.deviceList[j].routerId&&this.deviceList[j].isCurrentDevice){
-                            var temp = this.history[0].nodes.splice(i,1);
+                for (var i = 0, iLen = this.history[0].nodes.length; i < iLen; i++) {
+                    for (var j = 0, jLen = this.deviceList.length; j < jLen; j++) {
+                        if (this.history[0].nodes[i].name == this.deviceList[j].routerId && this.deviceList[j].isCurrentDevice) {
+                            var temp = this.history[0].nodes.splice(i, 1);
                             this.history[0].nodes.unshift(temp[0]);
                             break;
                         }
