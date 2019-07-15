@@ -32,7 +32,7 @@
     }
   }
   var DDNSTO_BASE = get_ddnsto_base();
-  
+
   export default {
     name: 'WeixinLogin',
     components: {
@@ -71,7 +71,7 @@
                       self.qrlink = data.image;
                       var since_time = (new Date(Date.now())).getTime();
                       self.do_qr_listen(data.event_id, since_time);
-                    } else { // 已登录过 https://service.koolshare.cn 
+                    } else { // 已登录过 https://service.koolshare.cn
                         const {nologin} = qs.parse(window.location.search,{ ignoreQueryPrefix: true })
                         store.set('token', data.token)
                         if (nologin) { // 登录页面而来
@@ -121,12 +121,14 @@
                             })
                         })
                     } else {
-                        self.qr_refresh(true);
+                        //self.qr_refresh(true);
+                        store.set('token', event.data);
+                        self.$emit('alertQr1') // 隐藏二维码
                     }
                 }
             }).catch(function (error) {
                 console.log('错误')
-                
+
                 setTimeout(()=> self.listen_qr(param), 2000);
             });
       },
