@@ -8,6 +8,14 @@ module.exports = {
       publicPath: process.env.NODE_ENV === 'production' ? '/static/dist/' : '/dist/',
     filename: 'build.js'
   },
+  proxyTable: {
+            '/goods/*': {
+                target: 'http://localhost:3000'
+            },
+            '/users/*': {
+                target: 'http://localhost:3000'
+            }
+        },
   module: {
     rules: [
       {
