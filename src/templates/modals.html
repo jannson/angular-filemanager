@@ -445,11 +445,28 @@
 <script type="text/ng-template" id="path-selector">
   <div class="panel panel-primary mt10 mb0">
     <div class="panel-body">
+        <!-- 当前设备 -->
+        <div class="detail-sources">
+          <div class="like-code mr5"><b>{{"current_device" | translate}}:</b>
+            {{cogradient.device.name}}
+          </div>
+        </div>
+        <!-- 选择 -->
         <div class="detail-sources">
           <div class="like-code mr5"><b>{{"selection" | translate}}:</b>
             <span ng-include="'selected-files-msg'"></span>
           </div>
         </div>
+        <!-- 同步类型 -->
+        <div class="detail-sources">
+          <div class="like-code mr5">
+            <b>{{"sync_type" | translate}}:</b> {{ syncMode?'单向同步' : '双向同步' }}
+          </div>
+          <a href="" class="label label-primary" ng-click="toggleSyncType()">
+            {{'change' | translate}}
+          </a>
+        </div>
+        <!-- 目的地 -->
         <div class="detail-sources">
           <div class="like-code mr5">
             <b>{{"destination" | translate}}:</b> {{ getSelectedPath() }}
@@ -472,6 +489,7 @@
 <script type="text/ng-template" id="selected-files-msg">
   <span ng-show="temps.length == 1">
     {{singleSelection().model.name}}
+    <!-- {{localPath}} -->
   </span>
   <span ng-show="temps.length > 1">
     {{'these_elements' | translate:totalSelecteds()}}

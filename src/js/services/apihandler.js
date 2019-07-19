@@ -18,6 +18,9 @@
             if (code == 404) {
                 this.error = 'Error 404 - Backend bridge is not working, please check the ajax response.';
             }
+            if (data.success !== 0) {
+                alert(data.error)
+            }
             if (data.result && data.result.error) {
                 this.error = data.result.error;
             }
@@ -209,17 +212,49 @@
             return deferred.promise;
         };
 
-        ApiHandler.prototype.rsync = function(apiUrl, items, path) {
+        ApiHandler.prototype.rsync = function(apiUrl, path, syncMode,localPath,targetId,routerId) {
             var self = this;
             var deferred = $q.defer();
             var data = {
-                action: 'bisync',
-                items: items,
-                newPath: path
+                localPath: localPath,
+                targetId: targetId,
+                targetPath: path, // 6894455/文件
+                syncMode: syncMode
             };
+            // $scope.fileNavigator.currentPath
             self.inprocess = true;
             self.error = '';
-            $http.post(apiUrl, data).success(function(data, code) {
+            $http.post(apiUrl+'?routerId='+routerId, data).success(function(data, code) {
+                self.deferredHandler(data, deferred, code);
+            }).error(function(data, code) {
+                self.deferredHandler(data, deferred, code, $translate.instant('error_moving'));
+            })['finally'](function() {
+                self.inprocess = false;
+            });
+            return deferred.promise;
+        };
+
+        ApiHandler.prototype.getsessionAll = function(apiUrl) {
+            var self = this;
+            var deferred = $q.defer();
+            self.inprocess = true;
+            self.error = '';
+            $http.post(apiUrl).success(function(data, code) {
+                self.deferredHandler(data, deferred, code);
+            }).error(function(data, code) {
+                self.deferredHandler(data, deferred, code, $translate.instant('error_moving'));
+            })['finally'](function() {
+                self.inprocess = false;
+            });
+            return deferred.promise;
+        };
+
+        ApiHandler.prototype.getsessionInfo = function(apiUrl) {
+            var self = this;
+            var deferred = $q.defer();
+            self.inprocess = true;
+            self.error = '';
+            $http.get(apiUrl).success(function(data, code) {
                 self.deferredHandler(data, deferred, code);
             }).error(function(data, code) {
                 self.deferredHandler(data, deferred, code, $translate.instant('error_moving'));

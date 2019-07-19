@@ -1,0 +1,107 @@
+<style>
+    #sync-list {
+        width: 360px;
+        display: block;
+        background-color: #fff;
+        position: absolute;
+        top: 55px;
+        right: 5px;
+        border-radius: 5px;
+        box-shadow: 1px 1px 5px rgba(146, 142, 142, 0.911);
+        height: 80vh;
+        overflow: auto
+    }
+
+    #sync-list>.panel-heading {
+        color: #212121;
+        background-color: #f5f5f5;
+        border-color: #dddddd;
+    }
+
+    #sync-list .mb-0 {
+        margin: 0;
+    }
+
+    #sync-list .btn.btn-link {
+        margin: 0;
+        width: 100%;
+        text-align: left;
+    }
+    #sync-list .btn.btn-link span{
+        color: #999;
+    }
+    #sync-list .online {
+        color: #157EFB;
+    }
+    #sync-list .left-folder-img{width:32px;height: 32px;}
+    #sync-list .card-body:hover {
+        background-color: rgb(124, 176, 240);
+        opacity: .5;
+    }
+    #sync-list .card-body:hover .btn-sm{
+        display: block !important;
+    }
+    #sync-list .card-body:hover .sr-only{
+        display: none !important;
+    }
+    #sync-list .arrow {
+        display: inline-block;
+        height: 10px;
+        width: 10px;
+        border-width: 1px 1px 0 0;
+        border-color: #999;
+        border-style: solid;
+        transform: rotate(-45deg);
+        position: relative;
+        top: 7px;
+        float: right;
+    }
+</style>
+<div class="" id="sync-list" ng-show="itemIndex==5">
+    <div class="panel-heading history-list flex justify-between">
+        双向同步列表
+        <span ng-click="closePanel()" class="pointer">
+            <img src="/static/assets/close.png" alt="">
+        </span>
+    </div>
+    <div class="accordion" id="accordionExample">
+        <div class="card" ng-repeat="item in staticSyncList">
+            <div class="card-header" id="headingOne">
+                <div class="mb-0">
+                    <div class="btn btn-link" ng-click="getSessionInfo(item[0])" type="button" data-toggle="collapse" data-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne">
+                        <span ng-class="{online: item.alphaConnected}">{{item[0]}}({{item.alphaConnected?'online':'offline'}})</span>
+                        <!-- <span ng-class="item.alphaConnected?'online'}">{{item[0]}}</span> -->
+                        <span class="arrow right"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body flex align-center px-20px" ng-repeat="subItem in item[1]">
+                        <img class="left-folder-img mr-10px" src="/static/assets/folder.png" alt="">
+                    <!-- <div class="left-folder">
+                    </div> -->
+                    <div class="sync-content flex-auto">
+                        <div>
+                            {{subItem.localId | formatName}}
+                            <!-- {{subItem.localPath | formatName}} -->
+                        </div>
+                        <div>
+                            {{subItem.localId | formatName}} 
+                            <span>{{subItem.syncModal?'->' : '<->'}}</span>
+                            {{subItem.targetId | formatName}}
+                            <!-- {{subItem.localId | formatName}} ->{{subItem.targetPath | formatName}} -->
+                        </div>
+                    </div>
+                    <div class="cancel-button flex align-center" ng-click="modalWithPathSelector('rsync')">
+                        <span class="sr-only">{{subItem.status}}</span>
+                        <button class="btn btn-primary btn-sm" type="button" style="display: none;">
+                            修改
+                        </button>
+                    </div>
+                </div>                    
+            </div>
+        </div>
+    </div>
+</div>

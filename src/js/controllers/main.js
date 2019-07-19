@@ -24,6 +24,10 @@
             $scope.isPc = IsPC();
             $scope.selectIndex = undefined;
             $scope.isShowStatus = false; // 是否显示同步状态
+            $scope.itemIndex = true; // 右侧navbar点击item下标
+            $scope.syncMode = 0; // 0 表示双向同步，1 表示单向同步
+            $scope.syncList = []; // 同步列表
+            $scope.syncData = {}; // 合集
 
             function IsPC() {
                 var userAgentInfo = navigator.userAgent;
@@ -265,6 +269,7 @@
             };
 
             $scope.modalWithPathSelector = function (id) {
+                $scope.cogradient.getCurrentDevice();
                 $rootScope.selectedModalPath = $scope.fileNavigator.currentPath;
                 return $scope.modal(id);
             };
@@ -390,18 +395,6 @@
                 $scope.apiMiddleware.move($scope.temps, $rootScope.selectedModalPath).then(function () {
                     $scope.fileNavigator.refresh();
                     $scope.modal('move', true);
-                });
-            };
-
-            $scope.rsync = function () {
-                var anyItem = $scope.singleSelection() || $scope.temps[0];
-                if (anyItem && validateSamePath(anyItem)) {
-                    $scope.apiMiddleware.apiHandler.error = $translate.instant('error_cannot_move_same_path');
-                    return false;
-                }
-                $scope.apiMiddleware.rsync($scope.temps, $rootScope.selectedModalPath).then(function () {
-                    $scope.fileNavigator.refresh();
-                    $scope.modal('rsync', true);
                 });
             };
 
@@ -543,6 +536,7 @@
             };
             //显示同步状态
             $scope.showStatus = function () {
+                $scope.itemIndex = 3
                 if ($('#progress').css('display') == 'block') {
                     $('#progress').toggle();
                 }
@@ -566,7 +560,7 @@
             };
             //切换同步列表和同步历史界面
             $scope.selectHistoryList = function (className) {
-
+                
                 if (className == 'list-history') {
                     $scope.cogradient.refreshHistory();
                     $interval.cancel($scope.timer);
@@ -621,6 +615,63 @@
                 } else {
                     //console.log('再次同步取消');
                 }
+            };
+            // 关闭panel
+            $scope.closePanel = function () {
+                $scope.itemIndex = 0
+            };
+            // 静态双向同步列表
+            $scope.syncList = function () {
+                $scope.itemIndex = 5
+                $scope.apiMiddleware.fetchAllSession().then(function (data) {
+                    $scope.syncList = data.sessions
+                    $scope.dealSyncData(data.sessions)
+                })
+            };
+            // 动态双向同步列表
+            $scope.getSessionInfo = function (item) {
+                // getSessionInfo
+                $scope.apiMiddleware.fetchSessionInfo(item).then(function (data) {
+                    var sessionInfo = data.sessions
+                    debugger
+                })
+            };
+            $scope.dealSyncData = function (originData) {
+                // var originData = $scope.syncList
+                // var tmp = {
+                //     'localId': [{session...}]
+                // }
+                originData.forEach(function(item){
+                    if ($scope.syncData[item.localId]) {
+                        // if (condition) {
+                            
+                        // }
+                        $scope.syncData[item.localId].push(item)
+                    }else {
+                        $scope.syncData[item.localId] = [item]
+                    }
+                });
+                $scope.staticSyncList = Object.entries($scope.syncData)
+                console.log($scope.syncData)
+                
+            }
+            // 0 表示双向同步，1 表示单向同步
+            $scope.toggleSyncType = function () {
+                $scope.syncMode = +(!$scope.syncMode)
+            };
+            // 创建双向同步
+            $scope.rsync = function () {
+                var anyItem = $scope.singleSelection() || $scope.temps[0];
+                if (anyItem && validateSamePath(anyItem)) {
+                    $scope.apiMiddleware.apiHandler.error = $translate.instant('error_cannot_move_same_path');
+                    return false;
+                }
+                var localPath = $scope.fileNavigator.currentPath.join('/') + '/' + anyItem.model.name
+                var routerId = $scope.fileNavigator.currentPath[0]
+                $scope.apiMiddleware.rsync($rootScope.selectedModalPath,$scope.syncMode,localPath,routerId).then(function () {
+                    $scope.fileNavigator.refresh();
+                    $scope.modal('rsync', true);
+                });
             };
         }
     ]);
