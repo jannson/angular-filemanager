@@ -56,6 +56,9 @@
         top: 7px;
         float: right;
     }
+    #sync-list .arrow-img {
+        width:16px;height: 16px;
+    }
 </style>
 <div class="" id="sync-list" ng-show="itemIndex==5">
     <div class="panel-heading history-list flex justify-between">
@@ -65,11 +68,11 @@
         </span>
     </div>
     <div class="accordion" id="accordionExample">
-        <div class="card" ng-repeat="item in staticSyncList">
+        <div class="card" ng-repeat="item in staticSyncList track by $index">
             <div class="card-header" id="headingOne">
                 <div class="mb-0">
-                    <div class="btn btn-link" ng-click="getSessionInfo(item[0])" type="button" data-toggle="collapse" data-target="#collapseOne"
-                        aria-expanded="true" aria-controls="collapseOne">
+                    <div class="btn btn-link" ng-click="getSessionInfo(item[0])" type="button" data-toggle="collapse" data-target="#collapse-{{$index}}"
+                        aria-expanded="false" aria-controls="collapse-{{$index}}">
                         <span ng-class="{online: item.alphaConnected}">{{item[0]}}({{item.alphaConnected?'online':'offline'}})</span>
                         <!-- <span ng-class="item.alphaConnected?'online'}">{{item[0]}}</span> -->
                         <span class="arrow right"></span>
@@ -77,24 +80,29 @@
                 </div>
             </div>
 
-            <div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div class="card-body flex align-center px-20px" ng-repeat="subItem in item[1]">
+            <div id="collapse-{{$index}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body flex items-center px-20px" ng-repeat="subItem in item[1]">
                         <img class="left-folder-img mr-10px" src="/static/assets/folder.png" alt="">
-                    <!-- <div class="left-folder">
-                    </div> -->
                     <div class="sync-content flex-auto">
+                        {{index}}
                         <div>
+                            11
                             {{subItem.localId | formatName}}
                             <!-- {{subItem.localPath | formatName}} -->
                         </div>
                         <div>
                             {{subItem.localId | formatName}} 
-                            <span>{{subItem.syncModal?'->' : '<->'}}</span>
+                            <span ng-show="subItem.syncMode">
+                                <img class="arrow-img mx-10px" src="/static/assets/single_arrow.svg" alt="">
+                            </span>
+                            <span ng-show="!subItem.syncMode">
+                                <img class="arrow-img mx-10px" src="/static/assets/to_both.svg" alt="">                                
+                            </span>
                             {{subItem.targetId | formatName}}
                             <!-- {{subItem.localId | formatName}} ->{{subItem.targetPath | formatName}} -->
                         </div>
                     </div>
-                    <div class="cancel-button flex align-center" ng-click="modalWithPathSelector('rsync')">
+                    <div class="cancel-button flex align-center" ng-click="modalWithPathSelector('rsync',subItem)">
                         <span class="sr-only">{{subItem.status}}</span>
                         <button class="btn btn-primary btn-sm" type="button" style="display: none;">
                             修改

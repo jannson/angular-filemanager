@@ -268,9 +268,11 @@
                 return returnElement ? element : true;
             };
 
-            $scope.modalWithPathSelector = function (id) {
+            $scope.modalWithPathSelector = function (id,item) {
                 $scope.cogradient.getCurrentDevice();
-                $rootScope.selectedModalPath = $scope.fileNavigator.currentPath;
+                $scope.syncMode = item.syncMode; // 0 表示双向同步，1 表示单向同步
+                // $scope.fileNavigator.currentPath = item.localPath
+                // $rootScope.selectedModalPath = $scope.fileNavigator.currentPath;
                 return $scope.modal(id);
             };
 
@@ -625,34 +627,50 @@
                 $scope.itemIndex = 5
                 $scope.apiMiddleware.fetchAllSession().then(function (data) {
                     $scope.syncList = data.sessions
-                    $scope.dealSyncData(data.sessions)
+                    $scope.dealSyncData(data.sessions, false)
                 })
             };
             // 动态双向同步列表
             $scope.getSessionInfo = function (item) {
                 // getSessionInfo
+                
                 $scope.apiMiddleware.fetchSessionInfo(item).then(function (data) {
                     var sessionInfo = data.sessions
-                    debugger
+                    $scope.dealSyncData(sessionInfo, true)
+                            // $scope.syncData[item.localId].push({sessionId: 414})
                 })
             };
-            $scope.dealSyncData = function (originData) {
+            $scope.dealSyncData = function (originData,isInfo) {
                 // var originData = $scope.syncList
                 // var tmp = {
                 //     'localId': [{session...}]
                 // }
-                originData.forEach(function(item){
+                for (var index = 0; index < originData.length; index++) {
+                    var item = originData[index];
                     if ($scope.syncData[item.localId]) {
-                        // if (condition) {
-                            
-                        // }
+                        var targetValuesArr = $scope.syncData[item.localId]
+                        if (targetValuesArr.indexOf(item.sessionId) && isInfo) {
+                            continue
+                        }
                         $scope.syncData[item.localId].push(item)
                     }else {
                         $scope.syncData[item.localId] = [item]
                     }
-                });
+                }
+                // originData.forEach(function(item){
+                //     // {localId: [item,...]}
+                //     if ($scope.syncData[item.localId]) {
+                //         var targetValuesArr = $scope.syncData[item.localId]
+                //         if (targetValuesArr.indexOf(item.sessionId)) {
+                //             continue
+                //         }
+                //         $scope.syncData[item.localId].push(item)
+                //     }else {
+                //         $scope.syncData[item.localId] = [item]
+                //     }
+                // });
                 $scope.staticSyncList = Object.entries($scope.syncData)
-                console.log($scope.syncData)
+                console.log($scope.staticSyncList)
                 
             }
             // 0 表示双向同步，1 表示单向同步
