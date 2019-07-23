@@ -54,9 +54,9 @@
                 return this.apiHandler.move(fileManagerConfig.moveUrl, items, this.getPath(path));
             };
 
-            ApiMiddleware.prototype.rsync = function (path, syncMode,currentPath,routerId) {
-                var targetId = path[0] // path = ['6894455','文件'，。。。]
-                return this.apiHandler.rsync(fileManagerConfig.rsyncUrl, this.getPath(path), syncMode,currentPath,targetId,routerId);
+            ApiMiddleware.prototype.rsync = function (files,path) {
+                var items = this.getFileList(files);
+                return this.apiHandler.rsync(fileManagerConfig.rsyncUrl, items, this.getPath(path));
             };
 
             ApiMiddleware.prototype.fetchAllSession = function () {

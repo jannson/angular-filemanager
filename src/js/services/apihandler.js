@@ -212,19 +212,25 @@
             return deferred.promise;
         };
 
-        ApiHandler.prototype.rsync = function(apiUrl, path, syncMode,localPath,targetId,routerId) {
+        ApiHandler.prototype.rsync = function(apiUrl, items, path) {
             var self = this;
             var deferred = $q.defer();
+            // var data = {
+            //     localPath: localPath,
+            //     targetId: targetId,
+            //     targetPath: path, // 6894455/文件
+            //     syncMode: syncMode
+            // };
             var data = {
-                localPath: localPath,
-                targetId: targetId,
-                targetPath: path, // 6894455/文件
-                syncMode: syncMode
+                action: 'bisync',
+                items: items,
+                newPath: path
             };
+
             // $scope.fileNavigator.currentPath
             self.inprocess = true;
             self.error = '';
-            $http.post(apiUrl+'?routerId='+routerId, data).success(function(data, code) {
+            $http.post(apiUrl, data).success(function(data, code) {
                 self.deferredHandler(data, deferred, code);
             }).error(function(data, code) {
                 self.deferredHandler(data, deferred, code, $translate.instant('error_moving'));

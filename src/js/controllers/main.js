@@ -92,6 +92,7 @@
             };
 
             $scope.selectOrUnselect = function (item, $event, index) {
+                // debugger
                 var indexInTemp = $scope.temps.indexOf(item);
                 var isRightClick = $event && $event.which == 3;
 
@@ -270,7 +271,7 @@
 
             $scope.modalWithPathSelector = function (id,item) {
                 $scope.cogradient.getCurrentDevice();
-                $scope.syncMode = item.syncMode; // 0 表示双向同步，1 表示单向同步
+                $scope.syncMode = item && item.syncMode; // 0 表示双向同步，1 表示单向同步
                 // $scope.fileNavigator.currentPath = item.localPath
                 // $rootScope.selectedModalPath = $scope.fileNavigator.currentPath;
                 return $scope.modal(id);
@@ -685,8 +686,9 @@
                     return false;
                 }
                 var localPath = $scope.fileNavigator.currentPath.join('/') + '/' + anyItem.model.name
-                var routerId = $scope.fileNavigator.currentPath[0]
-                $scope.apiMiddleware.rsync($rootScope.selectedModalPath,$scope.syncMode,localPath,routerId).then(function () {
+                var routerName = $scope.fileNavigator.currentPath[0]
+
+                $scope.apiMiddleware.rsync($scope.temps,$rootScope.selectedModalPath).then(function () {
                     $scope.fileNavigator.refresh();
                     $scope.modal('rsync', true);
                 });
