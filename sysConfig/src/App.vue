@@ -28,7 +28,7 @@
               </a-input>
             </a-form-item>
             <a-form-item label="免授权访问：" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
-              <a-radio-group 
+              <a-radio-group
                 @change="handleChangeMode"
                 v-decorator="['loginMode',
                     {initialValue: config.loginMode},
@@ -63,6 +63,7 @@
             </a-form-item>
             <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
               <a-button type="primary" html-type="submit">配 置</a-button>
+              <a-button type="primary" @click="wechatpay">微信支付</a-button>
             </a-form-item>
           </a-form>
         </div>
@@ -86,6 +87,18 @@
             </a-modal>
       </div>
       <qrcode v-if="visible" :alertQr="alertQr" v-on:alertQr1="alertQrCallBack"></qrcode>
+
+      <a-modal
+        @cancel="closePayQr"
+        title="扫码支付"
+        v-model="payVisible"
+        :footer="null"
+      >
+          <div class="center">
+              <vueqrcode :value="payQrContent" :options="{ size: 330 }"></vueqrcode>
+          </div>
+      </a-modal>
+
     </div>
   </div>
 </template>
@@ -95,6 +108,8 @@ import qs from 'qs';
 import store from 'store';
 import {message} from 'ant-design-vue';
 import request, {baseURL} from "./request";
+import VueQrcode from '@chenfengyuan/vue-qrcode';
+
 import QrCode from "./components/QrCode";
 export default {
   name: "app",
@@ -106,6 +121,8 @@ export default {
       tipsVisible: false,
       modeVisible: false,
       treeVisible: false,
+      payQrContent: '',
+      payVisible: false,
       treeList: [], // 文件管理
       form: this.$form.createForm(this)
     };
@@ -119,9 +136,28 @@ export default {
     this.fetchLinkCfg();
   },
   components: {
-    qrcode: QrCode
+    qrcode: QrCode,
+    vueqrcode: VueQrcode
   },
   methods: {
+    wechatpay() {
+      request({
+            url: "/sdkpay",
+            baseURL: 'http://localhost:7001/',
+            method: 'get'
+            // data: {
+            //     action:"list",
+            //     path
+            // }
+        }).then(res => {
+          this.payQrContent = res.data.code_url
+          this.payVisible = true
+          debugger
+        })
+    },
+    closePayQr() {
+        this.payVisible = !this.payVisible;
+    },
     alertQr() {
         this.visible = !this.visible;
     },
@@ -144,7 +180,7 @@ export default {
             sharePath: this.sharePath
         })
     },
-    
+
     fetchTreeData(treeNode={},path="") {
         return request({
             url: "/api/listAllDir",
@@ -193,7 +229,7 @@ export default {
                 localStorage.setItem('deviceList', JSON.stringify(deviceList));
             }
         })
-    },            
+    },
     renderTree() {
         this.fetchTreeData().then(result => {
             this.treeVisible = true
@@ -225,7 +261,7 @@ export default {
             if (rest.loginLan) {
                 rest.loginLan = rest.loginLan.replace(regex,',')
             }
-            
+
           rest.loginMode = +rest.loginMode
           request({
                 url: "/api/config",
